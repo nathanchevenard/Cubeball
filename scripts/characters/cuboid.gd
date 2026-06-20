@@ -3,8 +3,8 @@ class_name Cuboid
 
 const gravity : float = -9.81
 
-var speed : float = 10
-var rotation_speed : float = 5
+var speed : float = 8
+var rotation_speed : float = 3
 var jump_force : float = 10
 
 

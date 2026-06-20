@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://de0ttsg3yqrmo" path="res://scripts/characters/cuboid.gd" id="1_k8rju"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tsay5"]
+friction = 0.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_4hqto"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4hqto"]
@@ -15,6 +18,7 @@ albedo_color = Color(0.552962, 1.3596937e-06, 4.813075e-07, 1)
 albedo_color = Color(0, 0, 0, 1)
 
 [node name="Cuboid" type="RigidBody3D" unique_id=1014611617]
+physics_material_override = SubResource("PhysicsMaterial_tsay5")
 gravity_scale = 3.0
 max_contacts_reported = 10
 script = ExtResource("1_k8rju")
