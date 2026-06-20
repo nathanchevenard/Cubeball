@@ -1,0 +1,2 @@
+extends PhysicsEntity
+class_name Obstacle

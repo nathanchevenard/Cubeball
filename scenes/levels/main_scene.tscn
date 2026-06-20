@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bhmx2ef7li351"]
+
+[ext_resource type="PackedScene" uid="uid://cadw1tm2smlnp" path="res://scenes/characters/cuboid.tscn" id="1_ybdc1"]
+[ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
+
+[sub_resource type="Sky" id="Sky_nu5rl"]
+sky_material = SubResource("ProceduralSkyMaterial_coy0t")
+
+[sub_resource type="Environment" id="Environment_xmwv8"]
+background_mode = 2
+sky = SubResource("Sky_nu5rl")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ssao_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2ia5b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52fb6"]
+albedo_color = Color(0.19434929, 0.19434926, 0.19434926, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nu5rl"]
+size = Vector3(20, 1, 20)
+
+[node name="MainScene" type="Node3D" unique_id=1884238872]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=820187566]
+transform = Transform3D(0.02916027, 0.7940768, -0.6071176, 0, 0.60737586, 0.79441464, 0.9995748, -0.023165343, 0.017711245, -14.43799, 10.548815, 0.29705822)
+
+[node name="Environment" type="Node3D" parent="." unique_id=569441626]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=1629036772]
+transform = Transform3D(0.9626256, 0.006631303, 0.2707545, -0.27083567, 0.023569504, 0.9623371, 0, -0.99970025, 0.0244846, 0.04210663, 36, 0.028419495)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=2022907163]
+environment = SubResource("Environment_xmwv8")
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=1916671475]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_2ia5b")
+surface_material_override/0 = SubResource("StandardMaterial3D_52fb6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground" unique_id=463148720 groups=["ground"]]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D" unique_id=1793254359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_nu5rl")
+
+[node name="Cuboid" parent="." unique_id=217531851 instance=ExtResource("1_ybdc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.338903, 0)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+
+[node name="ObstacleCube" parent="." unique_id=697217802 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1552842, 1.1150647, 0)
+
+[node name="ObstacleCube2" parent="." unique_id=75264786 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4246652, 1.1150647, 0)
+
+[node name="ObstacleCube3" parent="." unique_id=1672857391 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4246652, 1.1150647, 1.8898115)
+
+[node name="ObstacleCube4" parent="." unique_id=800936167 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.615033, 1.1150647, 1.8898115)
+
+[node name="ObstacleCube5" parent="." unique_id=1088813187 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.615033, 1.1150647, -2.5167007)
+
+[node name="ObstacleCube6" parent="." unique_id=1667894519 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 0.9981284, 0.06115306, 0, -0.06115306, 0.9981284, -4.615033, 3.906024, -2.5167007)
+
+[node name="ObstacleCube7" parent="." unique_id=1081709986 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 0.9981284, 0.06115306, 0, -0.06115306, 0.9981284, -2.0191908, 3.906024, -2.5167007)
