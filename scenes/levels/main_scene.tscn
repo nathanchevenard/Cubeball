@@ -1,7 +1,15 @@
 [gd_scene format=3 uid="uid://bhmx2ef7li351"]
 
+[ext_resource type="Script" uid="uid://b7y1410p0iyh2" path="res://scripts/managers/teams_manager.gd" id="1_fiowe"]
 [ext_resource type="PackedScene" uid="uid://cadw1tm2smlnp" path="res://scenes/characters/cuboid.tscn" id="1_ybdc1"]
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
+[ext_resource type="Script" uid="uid://bjjid4bpxj820" path="res://scripts/team.gd" id="2_brv2t"]
+[ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
+[ext_resource type="Resource" uid="uid://cvj3lg7ofyfcf" path="res://resources/teams/red_team.tres" id="3_iusvx"]
+[ext_resource type="Resource" uid="uid://di86mbxg10ljc" path="res://resources/teams/blue_team.tres" id="4_p61ap"]
+[ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="4_q46b8"]
+[ext_resource type="PackedScene" uid="uid://de4treqjoblnx" path="res://scenes/level_design/goal.tscn" id="5_43vid"]
+[ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -23,18 +31,26 @@ albedo_color = Color(0.19434929, 0.19434926, 0.19434926, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nu5rl"]
 size = Vector3(20, 1, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ulyp"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43vid"]
 resource_local_to_scene = true
 albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ybdc1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fiowe"]
 resource_local_to_scene = true
 albedo_color = Color(0.17478684, 0.19893786, 0.6848099, 1)
 
 [node name="MainScene" type="Node3D" unique_id=1884238872]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=820187566]
-transform = Transform3D(0.02916027, 0.7940768, -0.6071176, 0, 0.60737586, 0.79441464, 0.9995748, -0.023165343, 0.017711245, -14.43799, 10.548815, 0.29705822)
+transform = Transform3D(-4.371139e-08, 0.9472103, -0.32061294, 0, 0.32061294, 0.9472103, 1, 4.140388e-08, -1.4014437e-08, -8.80653, 17.513277, 0.29705822)
+fov = 85.0
+
+[node name="Node" type="Node" parent="." unique_id=1476131778]
+
+[node name="TeamsManager" type="Node" parent="Node" unique_id=759582375]
+script = ExtResource("1_fiowe")
+team_list = Array[ExtResource("2_brv2t")]([ExtResource("3_iusvx"), ExtResource("4_p61ap")])
+metadata/_custom_type_script = "uid://b7y1410p0iyh2"
 
 [node name="Environment" type="Node3D" parent="." unique_id=569441626]
 
@@ -45,60 +61,141 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=2022907163]
 environment = SubResource("Environment_xmwv8")
 
-[node name="Ground" type="MeshInstance3D" parent="." unique_id=1916671475]
+[node name="Level" type="Node3D" parent="." unique_id=162575387]
+
+[node name="Ground" type="MeshInstance3D" parent="Level" unique_id=1916671475]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 mesh = SubResource("PlaneMesh_2ia5b")
 surface_material_override/0 = SubResource("StandardMaterial3D_52fb6")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ground" unique_id=463148720 groups=["ground"]]
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/Ground" unique_id=463148720 groups=["ground"]]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D" unique_id=1793254359]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Ground/StaticBody3D" unique_id=1793254359]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_nu5rl")
 
-[node name="Cuboid" parent="." unique_id=217531851 instance=ExtResource("1_ybdc1")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.261099, 6.338903, 0)
+[node name="Walls" type="Node3D" parent="Level" unique_id=732653716]
+
+[node name="Wall1" parent="Level/Walls" unique_id=132552248 instance=ExtResource("4_q46b8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+
+[node name="Wall2" parent="Level/Walls" unique_id=725509613 instance=ExtResource("4_q46b8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+
+[node name="Wall3_1" parent="Level/Walls" unique_id=159646457 instance=ExtResource("4_q46b8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
+
+[node name="CollisionShape3D" parent="Level/Walls/Wall3_1" index="0" unique_id=62819371]
+transform = Transform3D(1, 0, 0, 0, 10, 0, 0, 0, 20, 0, 5, -15.485)
+
+[node name="Wall3_2" parent="Level/Walls" unique_id=1849386138 instance=ExtResource("4_q46b8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
+
+[node name="CollisionShape3D" parent="Level/Walls/Wall3_2" index="0" unique_id=62819371]
+transform = Transform3D(1, 0, 0, 0, 10, 0, 0, 0, 20, 0, 5, 15.485)
+
+[node name="Wall3_3" parent="Level/Walls" unique_id=1104404095 instance=ExtResource("4_q46b8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 20)
+
+[node name="CollisionShape3D" parent="Level/Walls/Wall3_3" index="0" unique_id=62819371]
+transform = Transform3D(1, 0, 0, 0, 5.328, 0, 0, 0, 10.97, 0, 7.335747, 0)
+
+[node name="Wall4_1" parent="Level/Walls" unique_id=757435585 instance=ExtResource("4_q46b8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -20)
+
+[node name="CollisionShape3D" parent="Level/Walls/Wall4_1" index="0" unique_id=62819371]
+transform = Transform3D(1, 0, 0, 0, 10, 0, 0, 0, 20, 0, 5, -15.485)
+
+[node name="Wall4_2" parent="Level/Walls" unique_id=1728002457 instance=ExtResource("4_q46b8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -20)
+
+[node name="CollisionShape3D" parent="Level/Walls/Wall4_2" index="0" unique_id=62819371]
+transform = Transform3D(1, 0, 0, 0, 10, 0, 0, 0, 20, 0, 5, 15.485)
+
+[node name="Wall4_3" parent="Level/Walls" unique_id=1472772718 instance=ExtResource("4_q46b8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -20)
+
+[node name="CollisionShape3D" parent="Level/Walls/Wall4_3" index="0" unique_id=62819371]
+transform = Transform3D(1, 0, 0, 0, 5.328, 0, 0, 0, 10.97, 0, 7.335747, 0)
+
+[node name="Characters" type="Node3D" parent="Level" unique_id=1790852761]
+
+[node name="Cuboid1" parent="Level/Characters" unique_id=217531851 instance=ExtResource("1_ybdc1")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 3.3305335, -6.261)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 contact_monitor = true
 
-[node name="MeshInstance3D" parent="Cuboid/CollisionShape3D" parent_id_path=PackedInt32Array(217531851, 1787623806) index="0" unique_id=367118247]
-surface_material_override/0 = SubResource("StandardMaterial3D_3ulyp")
+[node name="MeshInstance3D" parent="Level/Characters/Cuboid1/CollisionShape3D" parent_id_path=PackedInt32Array(217531851, 1787623806) index="0" unique_id=367118247]
+surface_material_override/0 = SubResource("StandardMaterial3D_43vid")
 
-[node name="Cuboid2" parent="." unique_id=1014611617 instance=ExtResource("1_ybdc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52245116, 3.2086568, -0.01601088)
+[node name="Cuboid2" parent="Level/Characters" unique_id=1014611617 instance=ExtResource("1_ybdc1")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 3.331, 6.261)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 contact_monitor = true
 is_controlled = false
 
-[node name="CuboidTool" parent="Cuboid2" index="0" unique_id=1692329800]
+[node name="CuboidTool" parent="Level/Characters/Cuboid2" index="0" unique_id=1692329800]
 color = Color(0.17478684, 0.19893786, 0.6848099, 1)
 
-[node name="MeshInstance3D" parent="Cuboid2/CollisionShape3D" parent_id_path=PackedInt32Array(1014611617, 1787623806) index="0" unique_id=367118247]
-surface_material_override/0 = SubResource("StandardMaterial3D_ybdc1")
+[node name="MeshInstance3D" parent="Level/Characters/Cuboid2/CollisionShape3D" parent_id_path=PackedInt32Array(1014611617, 1787623806) index="0" unique_id=367118247]
+surface_material_override/0 = SubResource("StandardMaterial3D_fiowe")
 
-[node name="ObstacleCube" parent="." unique_id=697217802 instance=ExtResource("2_3ulyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.419927, 1.1150647, 0.2646432)
+[node name="Obstacles" type="Node3D" parent="Level" unique_id=405345508]
 
-[node name="ObstacleCube2" parent="." unique_id=75264786 instance=ExtResource("2_3ulyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4246652, 1.1150647, -0.4962051)
+[node name="ObstacleCube1" parent="Level/Obstacles" unique_id=697217802 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1670656, 1.1150647, 5.664318)
 
-[node name="ObstacleCube3" parent="." unique_id=1672857391 instance=ExtResource("2_3ulyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4246652, 1.1150647, 1.8898115)
+[node name="ObstacleCube2" parent="Level/Obstacles" unique_id=75264786 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3639, 1.1150647, -9.160302)
 
-[node name="ObstacleCube4" parent="." unique_id=800936167 instance=ExtResource("2_3ulyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.615033, 1.1150647, 1.8898115)
+[node name="ObstacleCube3" parent="Level/Obstacles" unique_id=1672857391 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.241846, 1.1150647, 6.831627)
 
-[node name="ObstacleCube5" parent="." unique_id=1088813187 instance=ExtResource("2_3ulyp")]
+[node name="ObstacleCube4" parent="Level/Obstacles" unique_id=800936167 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8018341, 1.1150647, 2.9901614)
+
+[node name="ObstacleCube5" parent="Level/Obstacles" unique_id=1088813187 instance=ExtResource("2_3ulyp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.615033, 1.1150647, -2.5167007)
 
-[node name="ObstacleCube6" parent="." unique_id=1667894519 instance=ExtResource("2_3ulyp")]
+[node name="ObstacleCube6" parent="Level/Obstacles" unique_id=1667894519 instance=ExtResource("2_3ulyp")]
 transform = Transform3D(1, 0, 0, 0, 0.9981284, 0.06115306, 0, -0.06115306, 0.9981284, -4.615033, 3.906024, -2.5167007)
 
-[node name="ObstacleCube7" parent="." unique_id=1081709986 instance=ExtResource("2_3ulyp")]
-transform = Transform3D(1, 0, 0, 0, 0.9981284, 0.06115306, 0, -0.06115306, 0.9981284, -2.0191908, 3.906024, -2.5167007)
+[node name="ObstacleCube7" parent="Level/Obstacles" unique_id=1081709986 instance=ExtResource("2_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 0.9981284, 0.06115306, 0, -0.06115306, 0.9981284, 7.1935263, 3.906024, -6.271209)
 
-[editable path="Cuboid"]
-[editable path="Cuboid2"]
+[node name="Ball" parent="Level" unique_id=725462091 instance=ExtResource("3_3ulyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.167, 0)
+
+[node name="Goal1" parent="Level" unique_id=2072586225 instance=ExtResource("5_43vid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.783833, -21.197529)
+team = ExtResource("3_iusvx")
+
+[node name="Goal2" parent="Level" unique_id=1658707778 instance=ExtResource("5_43vid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784, 20.297623)
+team = ExtResource("4_p61ap")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=813368]
+
+[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1826399325]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.5
+offset_right = 41.5
+offset_bottom = 55.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+alignment = 1
+script = ExtResource("7_quawd")
+
+[editable path="Level/Walls/Wall3_1"]
+[editable path="Level/Walls/Wall3_2"]
+[editable path="Level/Walls/Wall3_3"]
+[editable path="Level/Walls/Wall4_1"]
+[editable path="Level/Walls/Wall4_2"]
+[editable path="Level/Walls/Wall4_3"]
+[editable path="Level/Characters/Cuboid1"]
+[editable path="Level/Characters/Cuboid2"]

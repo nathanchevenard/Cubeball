@@ -25,6 +25,7 @@ size = Vector3(0.95, 0.047132812, 0.95)
 [node name="Cuboid" type="RigidBody3D" unique_id=1014611617]
 physics_material_override = SubResource("PhysicsMaterial_tsay5")
 gravity_scale = 4.0
+continuous_cd = true
 max_contacts_reported = 10
 script = ExtResource("1_k8rju")
 dash_force = 32.0

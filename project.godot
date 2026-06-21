@@ -15,6 +15,10 @@ run/main_scene="uid://bhmx2ef7li351"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalsManager="*uid://bkkahvf80l10l"
+
 [display]
 
 window/size/viewport_width=1920
@@ -27,6 +31,7 @@ project/assembly_name="Cubeball"
 [file_customization]
 
 folder_colors={
+"res://resources/": "yellow",
 "res://scenes/": "blue",
 "res://scripts/": "red"
 }

@@ -54,10 +54,12 @@ func _physics_process(delta: float) -> void:
 	
 	if is_dashing == true && dash_timer > dash_duration:
 		is_dashing = false
+		lock_rotation = false
 	
 	if Input.is_action_just_pressed("dash") && dash_timer >= dash_cooldown:
 		dash_timer = 0
 		is_dashing = true
+		lock_rotation = true
 		linear_velocity.x = dash_force * transform.basis.x.x
 		linear_velocity.z = dash_force * transform.basis.x.z
 
