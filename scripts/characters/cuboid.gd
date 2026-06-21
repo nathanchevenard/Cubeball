@@ -18,6 +18,10 @@ var dash_timer : float = 0
 var is_dashing : bool = false
 
 
+func _ready() -> void:
+	super()
+
+
 func _physics_process(delta: float) -> void:
 	if is_controlled == false:
 		linear_velocity.x = 0

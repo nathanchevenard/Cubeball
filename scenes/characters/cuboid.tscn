@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cadw1tm2smlnp"]
 
 [ext_resource type="Script" uid="uid://de0ttsg3yqrmo" path="res://scripts/characters/cuboid.gd" id="1_k8rju"]
+[ext_resource type="Script" uid="uid://b87006bnrmpvu" path="res://scripts/characters/cuboid_tool.gd" id="2_6oqb7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tsay5"]
 friction = 0.0
@@ -10,7 +11,8 @@ friction = 0.0
 [sub_resource type="BoxMesh" id="BoxMesh_4hqto"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8rju"]
-albedo_color = Color(0.552962, 1.3596937e-06, 4.813075e-07, 1)
+resource_local_to_scene = true
+albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_k8rju"]
 
@@ -27,6 +29,11 @@ max_contacts_reported = 10
 script = ExtResource("1_k8rju")
 dash_force = 32.0
 dash_duration = 0.1
+
+[node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cube_mesh")]
+script = ExtResource("2_6oqb7")
+cube_mesh = NodePath("../CollisionShape3D/MeshInstance3D")
+color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1787623806]
 shape = SubResource("BoxShape3D_4hqto")
