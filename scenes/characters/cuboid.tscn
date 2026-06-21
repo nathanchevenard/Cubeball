@@ -25,6 +25,8 @@ physics_material_override = SubResource("PhysicsMaterial_tsay5")
 gravity_scale = 4.0
 max_contacts_reported = 10
 script = ExtResource("1_k8rju")
+dash_force = 32.0
+dash_duration = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1787623806]
 shape = SubResource("BoxShape3D_4hqto")

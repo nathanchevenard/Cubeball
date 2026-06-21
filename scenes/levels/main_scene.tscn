@@ -54,6 +54,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.338903, 0)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 
+[node name="Cuboid2" parent="." unique_id=1014611617 instance=ExtResource("1_ybdc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4699595, 3.2086568, 4.8407545)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+is_controlled = false
+
 [node name="ObstacleCube" parent="." unique_id=697217802 instance=ExtResource("2_3ulyp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1552842, 1.1150647, 0)
 

@@ -3,33 +3,59 @@ class_name Cuboid
 
 const gravity : float = -9.81
 
-var speed : float = 8
-var rotation_speed : float = 3
-var jump_force : float = 12
+@export var is_controlled : bool = true
+
+@export var speed : float = 8
+@export var rotation_speed : float = 3
+@export var jump_force : float = 12
+
+@export var dash_force : float = 10
+@export var dash_cooldown : float = 2
+@export var dash_duration : float = 1
 
 var jump_colliding_bodies : Array[Node3D]
+var dash_timer : float = 0
+var is_dashing : bool = false
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("move_forward"):
-		linear_velocity.x = speed * transform.basis.x.x
-		linear_velocity.z = speed * transform.basis.x.z
-	elif Input.is_action_pressed("move_back"):
-		linear_velocity.x = -speed * transform.basis.x.x
-		linear_velocity.z = -speed * transform.basis.x.z
-	else:
+	if is_controlled == false:
 		linear_velocity.x = 0
 		linear_velocity.z = 0
-	
-	if Input.is_action_pressed("rotate_left"):
-		angular_velocity.y = rotation_speed
-	elif Input.is_action_pressed("rotate_right"):
-		angular_velocity.y = -rotation_speed
-	else:
 		angular_velocity.y = 0
+		return
+	
+	if is_dashing == false:
+		if Input.is_action_pressed("move_forward"):
+			linear_velocity.x = speed * transform.basis.x.x
+			linear_velocity.z = speed * transform.basis.x.z
+		elif Input.is_action_pressed("move_back"):
+			linear_velocity.x = -speed * transform.basis.x.x
+			linear_velocity.z = -speed * transform.basis.x.z
+		else:
+			linear_velocity.x = 0
+			linear_velocity.z = 0
+		
+		if Input.is_action_pressed("rotate_left"):
+			angular_velocity.y = rotation_speed
+		elif Input.is_action_pressed("rotate_right"):
+			angular_velocity.y = -rotation_speed
+		else:
+			angular_velocity.y = 0
 	
 	if Input.is_action_just_pressed("jump") && is_on_ground():
 		linear_velocity.y = jump_force
+	
+	dash_timer += delta
+	
+	if is_dashing == true && dash_timer > dash_duration:
+		is_dashing = false
+	
+	if Input.is_action_just_pressed("dash") && dash_timer >= dash_cooldown:
+		dash_timer = 0
+		is_dashing = true
+		linear_velocity.x = dash_force * transform.basis.x.x
+		linear_velocity.z = dash_force * transform.basis.x.z
 
 
 func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
