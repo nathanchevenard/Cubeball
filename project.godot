@@ -31,6 +31,7 @@ project/assembly_name="Cubeball"
 [file_customization]
 
 folder_colors={
+"res://assets/": "green",
 "res://resources/": "yellow",
 "res://scenes/": "blue",
 "res://scripts/": "red"

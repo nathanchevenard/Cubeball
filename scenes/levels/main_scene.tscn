@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://di86mbxg10ljc" path="res://resources/teams/blue_team.tres" id="4_p61ap"]
 [ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="4_q46b8"]
 [ext_resource type="PackedScene" uid="uid://de4treqjoblnx" path="res://scenes/level_design/goal.tscn" id="5_43vid"]
+[ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
@@ -31,14 +32,6 @@ albedo_color = Color(0.19434929, 0.19434926, 0.19434926, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nu5rl"]
 size = Vector3(20, 1, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43vid"]
-resource_local_to_scene = true
-albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fiowe"]
-resource_local_to_scene = true
-albedo_color = Color(0.17478684, 0.19893786, 0.6848099, 1)
-
 [node name="MainScene" type="Node3D" unique_id=1884238872]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=820187566]
@@ -50,6 +43,7 @@ fov = 85.0
 [node name="TeamsManager" type="Node" parent="Node" unique_id=759582375]
 script = ExtResource("1_fiowe")
 team_list = Array[ExtResource("2_brv2t")]([ExtResource("3_iusvx"), ExtResource("4_p61ap")])
+cuboid_scene = ExtResource("1_ybdc1")
 metadata/_custom_type_script = "uid://b7y1410p0iyh2"
 
 [node name="Environment" type="Node3D" parent="." unique_id=569441626]
@@ -62,9 +56,12 @@ shadow_enabled = true
 environment = SubResource("Environment_xmwv8")
 
 [node name="Level" type="Node3D" parent="." unique_id=162575387]
+script = ExtResource("5_p61ap")
+length = 24.0
+width = 36.0
 
 [node name="Ground" type="MeshInstance3D" parent="Level" unique_id=1916671475]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 24.344948, 0, 0, 0)
 mesh = SubResource("PlaneMesh_2ia5b")
 surface_material_override/0 = SubResource("StandardMaterial3D_52fb6")
 
@@ -121,28 +118,6 @@ transform = Transform3D(1, 0, 0, 0, 5.328, 0, 0, 0, 10.97, 0, 7.335747, 0)
 
 [node name="Characters" type="Node3D" parent="Level" unique_id=1790852761]
 
-[node name="Cuboid1" parent="Level/Characters" unique_id=217531851 instance=ExtResource("1_ybdc1")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 3.3305335, -6.261)
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-contact_monitor = true
-
-[node name="MeshInstance3D" parent="Level/Characters/Cuboid1/CollisionShape3D" parent_id_path=PackedInt32Array(217531851, 1787623806) index="0" unique_id=367118247]
-surface_material_override/0 = SubResource("StandardMaterial3D_43vid")
-
-[node name="Cuboid2" parent="Level/Characters" unique_id=1014611617 instance=ExtResource("1_ybdc1")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 3.331, 6.261)
-axis_lock_angular_x = true
-axis_lock_angular_z = true
-contact_monitor = true
-is_controlled = false
-
-[node name="CuboidTool" parent="Level/Characters/Cuboid2" index="0" unique_id=1692329800]
-color = Color(0.17478684, 0.19893786, 0.6848099, 1)
-
-[node name="MeshInstance3D" parent="Level/Characters/Cuboid2/CollisionShape3D" parent_id_path=PackedInt32Array(1014611617, 1787623806) index="0" unique_id=367118247]
-surface_material_override/0 = SubResource("StandardMaterial3D_fiowe")
-
 [node name="Obstacles" type="Node3D" parent="Level" unique_id=405345508]
 
 [node name="ObstacleCube1" parent="Level/Obstacles" unique_id=697217802 instance=ExtResource("2_3ulyp")]
@@ -170,11 +145,11 @@ transform = Transform3D(1, 0, 0, 0, 0.9981284, 0.06115306, 0, -0.06115306, 0.998
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.167, 0)
 
 [node name="Goal1" parent="Level" unique_id=2072586225 instance=ExtResource("5_43vid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.783833, -21.197529)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.012224674, -21.197529)
 team = ExtResource("3_iusvx")
 
 [node name="Goal2" parent="Level" unique_id=1658707778 instance=ExtResource("5_43vid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784, 20.297623)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.012, 21.198)
 team = ExtResource("4_p61ap")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=813368]
@@ -197,5 +172,3 @@ script = ExtResource("7_quawd")
 [editable path="Level/Walls/Wall4_1"]
 [editable path="Level/Walls/Wall4_2"]
 [editable path="Level/Walls/Wall4_3"]
-[editable path="Level/Characters/Cuboid1"]
-[editable path="Level/Characters/Cuboid2"]

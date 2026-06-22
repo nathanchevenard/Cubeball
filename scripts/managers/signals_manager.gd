@@ -3,6 +3,7 @@ extends Node
 var goal : GoalSignals = GoalSignals.new()
 var score : ScoreSignals = ScoreSignals.new()
 var team : TeamSignals = TeamSignals.new()
+var level : LevelSignals = LevelSignals.new()
 
 
 class GoalSignals:
@@ -25,3 +26,9 @@ class TeamSignals:
 	signal all_teams_initialized
 	func emit_all_teams_initialized():
 		all_teams_initialized.emit()
+
+
+class LevelSignals:
+	signal level_initialized(level : Level)
+	func emit_level_initialized(level : Level):
+		level_initialized.emit(level)

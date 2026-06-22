@@ -13,9 +13,13 @@ const gravity : float = -9.81
 @export var dash_cooldown : float = 2
 @export var dash_duration : float = 1
 
+var team : Team
+
 var jump_colliding_bodies : Array[Node3D]
 var dash_timer : float = 0
 var is_dashing : bool = false
+
+signal color_changed(color : Color)
 
 
 func _ready() -> void:
@@ -72,6 +76,11 @@ func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
 			return true
 	
 	return false
+
+
+func set_team(new_team : Team):
+	team = new_team
+	color_changed.emit(team.color)
 
 
 func _on_jump_detection_area_3d_body_entered(body: Node3D) -> void:

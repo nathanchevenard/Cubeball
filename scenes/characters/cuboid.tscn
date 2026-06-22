@@ -23,16 +23,20 @@ albedo_color = Color(0, 0, 0, 1)
 size = Vector3(0.95, 0.047132812, 0.95)
 
 [node name="Cuboid" type="RigidBody3D" unique_id=1014611617]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_tsay5")
 gravity_scale = 4.0
 continuous_cd = true
 max_contacts_reported = 10
 script = ExtResource("1_k8rju")
+is_controlled = false
 dash_force = 32.0
 dash_duration = 0.1
 
-[node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cube_mesh")]
+[node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh")]
 script = ExtResource("2_6oqb7")
+cuboid = NodePath("..")
 cube_mesh = NodePath("../CollisionShape3D/MeshInstance3D")
 color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
