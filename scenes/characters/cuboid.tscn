@@ -34,6 +34,10 @@ is_controlled = false
 dash_force = 32.0
 dash_duration = 0.1
 
+[node name="Camera3D" type="Camera3D" parent="." unique_id=368455836]
+transform = Transform3D(-4.2187605e-08, 0.26173443, -0.9651399, 1.1440774e-08, 0.96514, 0.26173443, 1, -8.881785e-16, -4.3711385e-08, -2.1867986, 2.3368554, 0)
+visible = false
+
 [node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh")]
 script = ExtResource("2_6oqb7")
 cuboid = NodePath("..")
@@ -41,6 +45,7 @@ cube_mesh = NodePath("../CollisionShape3D/MeshInstance3D")
 color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1787623806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_4hqto")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=367118247]
@@ -66,6 +71,7 @@ mesh = SubResource("CylinderMesh_k8rju")
 surface_material_override/0 = SubResource("StandardMaterial3D_asqqw")
 
 [node name="JumpDetectionArea3D" type="Area3D" parent="." unique_id=965274337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="JumpDetectionArea3D" unique_id=1802142945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5140328, 0)

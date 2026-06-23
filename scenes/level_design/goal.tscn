@@ -1,55 +1,24 @@
 [gd_scene format=3 uid="uid://de4treqjoblnx"]
 
 [ext_resource type="Script" uid="uid://ck0c0gwjxbem4" path="res://scripts/level_design/goal.gd" id="1_34d8l"]
+[ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="2_sgfkh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgfkh"]
+albedo_color = Color(0.65834004, 0.6583399, 0.6583399, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q46b8"]
-size = Vector3(10.970947, 5.1436768, 2.4926758)
 
-[sub_resource type="BoxMesh" id="BoxMesh_34d8l"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_34d8l"]
-
-[node name="Goal" type="Area3D" unique_id=2072586225]
+[node name="Goal" type="Area3D" unique_id=2072586225 node_paths=PackedStringArray("csg_box")]
 script = ExtResource("1_34d8l")
+wall_scene = ExtResource("2_sgfkh")
+wall_override_material = SubResource("StandardMaterial3D_sgfkh")
+csg_box = NodePath("CollisionShape3D/CSGBox3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2055226746]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0718384, 0.44528008)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0)
 shape = SubResource("BoxShape3D_q46b8")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1813255877]
-transform = Transform3D(-1, 0, -2.061649e-07, 0, 5, 0, 8.742278e-08, 0, -2.3582516, -5.9692283, 2.5, 1.026561)
-mesh = SubResource("BoxMesh_34d8l")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=948495925]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=134915516]
-shape = SubResource("BoxShape3D_34d8l")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1666429016]
-transform = Transform3D(-1, 0, -2.061649e-07, 0, 5, 0, 8.742278e-08, 0, -2.3582516, 5.9692287, 2.5, 1.0260754)
-mesh = SubResource("BoxMesh_34d8l")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" unique_id=1298664838]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" unique_id=1916196890]
-shape = SubResource("BoxShape3D_34d8l")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=427572587]
-transform = Transform3D(-12.946, 0, -2.1234992e-07, 0, 1.07, 0, 1.1317753e-06, 0, -2.429, 0.00022868124, 5.5175443, 1.0351386)
-mesh = SubResource("BoxMesh_34d8l")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3" unique_id=289805191]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D" unique_id=1162918937]
-shape = SubResource("BoxShape3D_34d8l")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=205472503]
-transform = Transform3D(-12.945999, 0, -9.1531646e-08, 0, 6.0469995, 0, 1.1317753e-06, 0, -1.047, 0.0002285315, 3.0310278, -0.6776233)
-mesh = SubResource("BoxMesh_34d8l")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4" unique_id=2079445772]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D" unique_id=2081585438]
-shape = SubResource("BoxShape3D_34d8l")
+[node name="CSGBox3D" type="CSGBox3D" parent="CollisionShape3D" unique_id=1367846146]
+operation = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

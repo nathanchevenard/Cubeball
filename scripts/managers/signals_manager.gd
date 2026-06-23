@@ -32,3 +32,7 @@ class LevelSignals:
 	signal level_initialized(level : Level)
 	func emit_level_initialized(level : Level):
 		level_initialized.emit(level)
+	
+	signal level_spawn_node_at_random_pos(node : Node)
+	func emit_level_spawn_node_at_random_pos(node : Node):
+		level_spawn_node_at_random_pos.emit(node)

@@ -1,8 +1,6 @@
 extends PhysicsEntity
 class_name Cuboid
 
-const gravity : float = -9.81
-
 @export var is_controlled : bool = true
 
 @export var speed : float = 8
