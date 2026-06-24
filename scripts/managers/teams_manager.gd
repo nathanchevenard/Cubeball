@@ -1,35 +1,59 @@
 extends Node
 class_name TeamsManager
 
-@export var team_list : Array[Team]
-@export var team_size : int = 1
 @export var cuboid_scene : PackedScene
+
+var team_list : Array[Team]
 
 
 func _init() -> void:
 	SignalsManager.level.level_initialized.connect(_on_level_initialized)
+	SignalsManager.level.level_reset.connect(_on_level_resetted)
+	SignalsManager.game.game_reset.connect(_on_game_reset)
 
 
 func initialize_teams(level : Level):
 	var is_first_cuboid : bool = true
 	
-	for team in team_list:
+	for game_mode_team in level.game_mode.team_list:
+		var team : Team = game_mode_team.team
+		team_list.append(team)
 		team.initialize()
 		
-		for i in team_size:
+		for goal : Goal in level.goal_list:
+			if goal.team == null:
+				goal.team = team
+				goal.wall_override_material.albedo_color = team.color
+				break
+		
+		for i in game_mode_team.players_number:
 			var cuboid : Cuboid = cuboid_scene.instantiate() as Cuboid
 			add_child(cuboid)
 			cuboid.set_team(team)
-			var random_x : float = randf_range((-level.size_x / 2), (level.size_x / 2))
-			var random_z : float = randf_range((-level.size_z / 2), (level.size_z / 2))
-			cuboid.global_position = Vector3(random_x, 0, random_z)
+			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)
 			
 			if OS.has_feature("editor") == true && is_first_cuboid == true:
 				is_first_cuboid = false
 				cuboid.is_controlled = true
+				
+				if DebugManager.instance.camera_on_cuboid == true:
+					cuboid.camera.current = true
 
 
 func _on_level_initialized(level : Level):
 	initialize_teams(level)
 	
 	SignalsManager.team.emit_all_teams_initialized()
+
+
+func _on_game_reset():
+	for team in team_list:
+		team.set_score(0)
+
+
+func _on_level_resetted(level : Level):
+	for game_mode_team in level.game_mode.team_list:
+		var team : Team = game_mode_team.team
+		for cuboid in team.cuboid_list:
+			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)
+			cuboid.reset()

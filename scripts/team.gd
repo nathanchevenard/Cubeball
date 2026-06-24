@@ -13,6 +13,11 @@ func initialize():
 	SignalsManager.team.emit_team_initialized(self)
 
 
+func set_score(value : int):
+	score = value
+	SignalsManager.score.emit_score_updated(self, score)
+
+
 func add_score(value : int):
 	score += value
 	SignalsManager.score.emit_score_updated(self, score)

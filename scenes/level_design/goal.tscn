@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="2_sgfkh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgfkh"]
-albedo_color = Color(0.65834004, 0.6583399, 0.6583399, 1)
+resource_local_to_scene = true
+albedo_color = Color(0.9889, 0.44360888, 0.6721573, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q46b8"]
 

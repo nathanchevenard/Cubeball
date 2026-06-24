@@ -22,3 +22,8 @@ func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
 				return true
 	
 	return false
+
+
+func reset():
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO

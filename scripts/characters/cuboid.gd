@@ -11,6 +11,8 @@ class_name Cuboid
 @export var dash_cooldown : float = 2
 @export var dash_duration : float = 1
 
+@export var camera : Camera3D
+
 var team : Team
 
 var jump_colliding_bodies : Array[Node3D]
@@ -78,6 +80,7 @@ func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
 
 func set_team(new_team : Team):
 	team = new_team
+	team.cuboid_list.append(self)
 	color_changed.emit(team.color)
 
 

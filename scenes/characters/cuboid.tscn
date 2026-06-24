@@ -22,7 +22,7 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_tsay5"]
 size = Vector3(0.95, 0.047132812, 0.95)
 
-[node name="Cuboid" type="RigidBody3D" unique_id=1014611617]
+[node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("camera")]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_tsay5")
@@ -33,6 +33,7 @@ script = ExtResource("1_k8rju")
 is_controlled = false
 dash_force = 32.0
 dash_duration = 0.1
+camera = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=368455836]
 transform = Transform3D(-4.2187605e-08, 0.26173443, -0.9651399, 1.1440774e-08, 0.96514, 0.26173443, 1, -8.881785e-16, -4.3711385e-08, -2.1867986, 2.3368554, 0)

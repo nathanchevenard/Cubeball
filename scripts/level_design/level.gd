@@ -1,26 +1,37 @@
 extends Node3D
 class_name Level
 
-@export var size_x : float
-@export var size_z : float
-@export var size_y : float
-
-@export var goal_scale : Vector3 = Vector3.ONE
 
 @export var ground_scene : PackedScene
 @export var wall_scene : PackedScene
 @export var goal_scene : PackedScene
-
+@export var ball_scene : PackedScene
 @export var obstacle_scene : PackedScene
-@export var obstacle_number_min : int
-@export var obstacle_number_max : int
+
+var goal_list : Array[Goal]
+var ball_list : Array[Ball]
+var obstacle_list : Array[Obstacle]
+
+var game_mode : GameMode
 
 
 func _init() -> void:
+	SignalsManager.game.game_mode_set.connect(_on_game_mode_set)
+	SignalsManager.game.game_reset.connect(_on_game_reset)
 	SignalsManager.level.level_spawn_node_at_random_pos.connect(_on_spawn_node_at_random_pos)
+	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
 
 
-func _ready() -> void:
+func _on_game_mode_set(new_game_mode : GameMode) -> void:
+	game_mode = new_game_mode
+	var size_x : float = game_mode.level_size.x
+	var size_y : float = game_mode.level_size.y
+	var size_z : float = game_mode.level_size.z
+	var goal_scale : Vector3 = game_mode.goal_size
+	var ball_number : int = game_mode.ball_number
+	var obstacle_number_min : int = game_mode.obstacle_number_min
+	var obstacle_number_max : int = game_mode.obstacle_number_max
+	
 	# Spawn Ground
 	var ground : Node3D = ground_scene.instantiate()
 	add_child(ground)
@@ -33,14 +44,18 @@ func _ready() -> void:
 	spawn_wall(Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), Vector3(1, size_y, size_z))
 	
 	# Spawn Goals
-	var goal1 : Goal = spawn_goal(Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), goal_scale)
-	goal1.csg_box.reparent(wall1.csg_combiner)
-	wall1.collision_shape.shape = wall1.csg_combiner.bake_collision_shape()
+	goal_list.append(spawn_goal(Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), goal_scale, wall1))
+	goal_list.append(spawn_goal(Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), goal_scale, wall2))
 	
-	var goal2 : Goal = spawn_goal(Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), goal_scale)
-	goal2.csg_box.reparent(wall2.csg_combiner)
-	wall2.collision_shape.shape = wall2.csg_combiner.bake_collision_shape()
+	# Spawn Ball
+	for i in range(0, ball_number):
+		var ball : Ball = ball_scene.instantiate() as Ball
+		add_child(ball)
+		_on_spawn_node_at_random_pos(ball)
+		ball.global_position.y = 1
+		ball_list.append(ball)
 	
+	# Spawn Obstacles
 	var obstacle_random_number : int = randi_range(obstacle_number_min, obstacle_number_max)
 	for i in obstacle_random_number:
 		spawn_obstacle()
@@ -58,25 +73,55 @@ func spawn_wall(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale 
 	return wall
 
 
-func spawn_goal(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale : Vector3) -> Goal:
+func spawn_goal(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale : Vector3, parent_wall : Wall) -> Goal:
 	var goal : Goal = goal_scene.instantiate() as Goal
 	add_child(goal)
 	goal.global_position = spawn_position
 	goal.global_rotation = spawn_rotation
 	goal.initialize(spawn_scale)
 	
+	goal.csg_box.reparent(parent_wall.csg_combiner)
+	parent_wall.collision_shape.shape = parent_wall.csg_combiner.bake_collision_shape()
+	for csg_box in goal.wall_csg_box_list:
+		csg_box.reparent(parent_wall.csg_combiner)
+		parent_wall.csg_combiner.move_child(csg_box, 1)
+	
 	return goal
 
 
 func _on_spawn_node_at_random_pos(node : Node3D):
+	var size_x : float = game_mode.level_size.x
+	var size_z : float = game_mode.level_size.z
 	var offset_x : float = node.scale.x / 2
 	var offset_z : float = node.scale.z / 2
 	var random_x : float = randf_range(-size_x / 2 + offset_x, size_x / 2 - offset_x)
 	var random_z : float = randf_range(-size_z / 2 + offset_z, size_z / 2 - offset_z)
 	node.global_position = Vector3(random_x, 0, random_z)
+	node.global_rotation = Vector3(0, randf_range(0, 2 * PI), 0)
 
 
 func spawn_obstacle():
 	var obstacle : Obstacle = obstacle_scene.instantiate() as Obstacle
 	add_child(obstacle)
 	_on_spawn_node_at_random_pos(obstacle)
+	obstacle_list.append(obstacle)
+
+
+func _on_goal_scored(_team : Team):
+	reset_level()
+
+
+func _on_game_reset():
+	reset_level()
+
+
+func reset_level():
+	for ball in ball_list:
+		_on_spawn_node_at_random_pos(ball)
+		ball.reset()
+	
+	for obstacle in obstacle_list:
+		_on_spawn_node_at_random_pos(obstacle)
+		obstacle.reset()
+	
+	SignalsManager.level.emit_level_reset(self)
