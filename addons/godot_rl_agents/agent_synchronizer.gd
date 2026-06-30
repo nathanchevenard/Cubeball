@@ -1,4 +1,5 @@
 extends Node
+class_name AgentSynchronizer
 
 # --fixed-fps 2000 --disable-render-loop
 

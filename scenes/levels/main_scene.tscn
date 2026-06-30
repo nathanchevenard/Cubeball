@@ -4,12 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://cadw1tm2smlnp" path="res://scenes/characters/cuboid.tscn" id="1_ybdc1"]
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
+[ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
 [ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="4_q46b8"]
 [ext_resource type="PackedScene" uid="uid://de4treqjoblnx" path="res://scenes/level_design/goal.tscn" id="5_43vid"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/debug_manager.gd" id="6_6u8e5"]
 [ext_resource type="Script" uid="uid://b7fnsvb8f18gw" path="res://scripts/managers/game_state_manager.gd" id="6_84bhp"]
 [ext_resource type="Script" uid="uid://cnwlwnghcjbcu" path="res://scripts/managers/game_mode_manager.gd" id="7_84bhp"]
+[ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/agent_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="8_df41j"]
 [ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_solo_simple.tres" id="8_jtcbb"]
@@ -39,9 +41,9 @@ script = ExtResource("1_fiowe")
 cuboid_scene = ExtResource("1_ybdc1")
 metadata/_custom_type_script = "uid://b7y1410p0iyh2"
 
-[node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
-script = ExtResource("6_6u8e5")
-metadata/_custom_type_script = "uid://tinwq43u68p7"
+[node name="EntityManager" type="Node" parent="Managers" unique_id=570161374]
+script = ExtResource("3_jtcbb")
+metadata/_custom_type_script = "uid://b806wpb14q2fm"
 
 [node name="GameModeManager" type="Node" parent="Managers" unique_id=272543316]
 script = ExtResource("7_84bhp")
@@ -51,6 +53,15 @@ metadata/_custom_type_script = "uid://cnwlwnghcjbcu"
 [node name="GameStateManager" type="Node" parent="Managers" unique_id=376915082]
 script = ExtResource("6_84bhp")
 metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
+
+[node name="AgentSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
+script = ExtResource("7_jtcbb")
+control_mode = 0
+metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
+
+[node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
+script = ExtResource("6_6u8e5")
+metadata/_custom_type_script = "uid://tinwq43u68p7"
 
 [node name="Environment" type="Node3D" parent="." unique_id=569441626]
 

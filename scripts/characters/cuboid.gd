@@ -12,6 +12,7 @@ class_name Cuboid
 @export var dash_duration : float = 1
 
 @export var camera : Camera3D
+@export var cuboid_ai_controller : CuboidAIController
 
 var team : Team
 
@@ -19,11 +20,14 @@ var jump_colliding_bodies : Array[Node3D]
 var dash_timer : float = 0
 var is_dashing : bool = false
 
+
 signal color_changed(color : Color)
 
 
 func _ready() -> void:
 	super()
+	
+	cuboid_ai_controller.init(self)
 
 
 func _physics_process(delta: float) -> void:
@@ -91,3 +95,12 @@ func _on_jump_detection_area_3d_body_entered(body: Node3D) -> void:
 
 func _on_jump_detection_area_3d_body_exited(body: Node3D) -> void:
 	jump_colliding_bodies.erase(body)
+
+
+func get_observation_informations(caller : Cuboid) -> Dictionary:
+	var dictionary : Dictionary = super.get_observation_informations(caller)
+	
+	dictionary["is_same_team"] = 1 if caller.team == team else 0
+	dictionary["dash_cooldown"] = clampf(dash_timer / dash_cooldown, 0, 1)
+	
+	return dictionary

@@ -50,6 +50,7 @@ func _on_game_mode_set(new_game_mode : GameMode) -> void:
 	# Spawn Ball
 	for i in range(0, ball_number):
 		var ball : Ball = ball_scene.instantiate() as Ball
+		ball.level = self
 		add_child(ball)
 		_on_spawn_node_at_random_pos(ball)
 		ball.global_position.y = 1
@@ -102,6 +103,7 @@ func _on_spawn_node_at_random_pos(node : Node3D):
 
 func spawn_obstacle():
 	var obstacle : Obstacle = obstacle_scene.instantiate() as Obstacle
+	obstacle.level = self
 	add_child(obstacle)
 	_on_spawn_node_at_random_pos(obstacle)
 	obstacle_list.append(obstacle)

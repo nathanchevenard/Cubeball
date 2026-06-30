@@ -28,6 +28,7 @@ func initialize_teams(level : Level):
 		
 		for i in game_mode_team.players_number:
 			var cuboid : Cuboid = cuboid_scene.instantiate() as Cuboid
+			cuboid.level = level
 			add_child(cuboid)
 			cuboid.set_team(team)
 			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)

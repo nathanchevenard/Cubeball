@@ -28,6 +28,10 @@ window/size/viewport_height=1080
 
 project/assembly_name="Cubeball"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_rl_agents/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
