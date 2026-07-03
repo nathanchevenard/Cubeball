@@ -39,11 +39,11 @@ func _physics_process(delta: float) -> void:
 	
 	if is_dashing == false:
 		if Input.is_action_pressed("move_forward"):
-			linear_velocity.x = speed * transform.basis.x.x
-			linear_velocity.z = speed * transform.basis.x.z
+			linear_velocity.x = speed * transform.basis.z.x
+			linear_velocity.z = speed * transform.basis.z.z
 		elif Input.is_action_pressed("move_back"):
-			linear_velocity.x = -speed * transform.basis.x.x
-			linear_velocity.z = -speed * transform.basis.x.z
+			linear_velocity.x = -speed * transform.basis.z.x
+			linear_velocity.z = -speed * transform.basis.z.z
 		else:
 			linear_velocity.x = 0
 			linear_velocity.z = 0
@@ -68,8 +68,8 @@ func _physics_process(delta: float) -> void:
 		dash_timer = 0
 		is_dashing = true
 		lock_rotation = true
-		linear_velocity.x = dash_force * transform.basis.x.x
-		linear_velocity.z = dash_force * transform.basis.x.z
+		linear_velocity.x = dash_force * transform.basis.z.x
+		linear_velocity.z = dash_force * transform.basis.z.z
 
 
 func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:

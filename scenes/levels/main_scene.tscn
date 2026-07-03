@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/agent_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="8_df41j"]
-[ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_solo_simple.tres" id="8_jtcbb"]
+[ext_resource type="Resource" uid="uid://ccodgvagvchq4" path="res://resources/game_modes/game_mode_solo_simple.tres" id="8_jtcbb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -50,13 +50,13 @@ script = ExtResource("7_84bhp")
 game_mode = ExtResource("8_jtcbb")
 metadata/_custom_type_script = "uid://cnwlwnghcjbcu"
 
-[node name="GameStateManager" type="Node" parent="Managers" unique_id=376915082]
+[node name="GameStateManager" type="Node" parent="Managers" unique_id=376915082 node_paths=PackedStringArray("timer_label")]
 script = ExtResource("6_84bhp")
+timer_label = NodePath("../../CanvasLayer/Timer")
 metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
 [node name="AgentSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
-control_mode = 0
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
@@ -97,3 +97,11 @@ grow_horizontal = 2
 theme_override_constants/separation = 0
 alignment = 1
 script = ExtResource("7_quawd")
+
+[node name="Timer" type="Label" parent="CanvasLayer" unique_id=1521735442]
+offset_left = 10.0
+offset_right = 60.0
+offset_bottom = 55.0
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 40
+text = "XX"

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GameMode" format=3 uid="uid://ccodgvagvchq4"]
+[gd_resource type="Resource" script_class="GameMode" format=3 uid="uid://b0yykp3ietxuo"]
 
 [ext_resource type="Script" uid="uid://culgsafxumoi6" path="res://scripts/game_mode.gd" id="1_wkqog"]
 [ext_resource type="Script" uid="uid://n7sn8ufocqac" path="res://scripts/game_mode_team.gd" id="2_wkqog"]
@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://n7sn8ufocqac"
 script = ExtResource("1_wkqog")
 team_list = Array[ExtResource("2_wkqog")]([SubResource("Resource_6wuse"), SubResource("Resource_4t5hi")])
 max_duration_seconds = 30.0
-level_size = Vector3(10, 4, 10)
+level_size = Vector3(24, 8, 36)
 goal_size = Vector3(4, 4, 10)
 obstacle_number_min = 0
 obstacle_number_max = 0
