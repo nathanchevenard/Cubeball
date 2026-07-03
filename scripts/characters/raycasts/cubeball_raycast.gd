@@ -13,6 +13,8 @@ class_name CubeballRaycast
 @export var display_raycasts_colliding : bool = false
 @export var display_raycasts_not_colliding : bool = false
 
+@export var has_ray_additional_data : bool = false
+
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint() == false:
@@ -34,7 +36,9 @@ func calculate_raycasts() -> Array:
 		ray.force_raycast_update()
 		var distance = _get_raycast_distance(ray)
 		result.append(distance)
-		result.append(get_ray_additional_data(ray))
+		
+		if has_ray_additional_data == true:
+			result.append(get_ray_additional_data(ray))
 		
 		if display_raycasts_colliding == true && ray.is_colliding() == true:
 			var start = ray.global_position

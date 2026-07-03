@@ -53,8 +53,10 @@ cuboid = NodePath("..")
 cube_mesh = NodePath("../CollisionShape3D/MeshInstance3D")
 color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
-[node name="CuboidAIController" type="Node3D" parent="." unique_id=128244418]
+[node name="CuboidAIController" type="Node3D" parent="." unique_id=128244418 node_paths=PackedStringArray("raycast_list")]
 script = ExtResource("3_ei4nd")
+raycast_list = [NodePath("../Raycasts/CuboidRaycast"), NodePath("../Raycasts/BallRaycast"), NodePath("../Raycasts/BallFrontRaycast"), NodePath("../Raycasts/ObstacleRaycast"), NodePath("../Raycasts/GoalRaycast")]
+print_obs = true
 metadata/_custom_type_script = "uid://b0rv2qryq5hpq"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1787623806]
@@ -97,24 +99,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="CuboidRaycast" parent="Raycasts" unique_id=493931242 node_paths=PackedStringArray("cuboid") instance=ExtResource("4_08f1a")]
 visible = false
 cuboid = NodePath("../..")
-display_raycasts_colliding = true
+has_ray_additional_data = true
 
 [node name="BallRaycast" parent="Raycasts" unique_id=96493536 node_paths=PackedStringArray("cuboid") instance=ExtResource("5_qwoea")]
 visible = false
 cuboid = NodePath("../..")
-display_raycasts_colliding = true
+has_ray_additional_data = null
 
 [node name="BallFrontRaycast" parent="Raycasts" unique_id=1283191751 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_xtfnx")]
 cuboid = NodePath("../..")
-display_raycasts_colliding = true
+has_ray_additional_data = null
 
 [node name="ObstacleRaycast" parent="Raycasts" unique_id=1003394821 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_f4xdk")]
 visible = false
 cuboid = NodePath("../..")
+has_ray_additional_data = null
 
 [node name="GoalRaycast" parent="Raycasts" unique_id=526238269 node_paths=PackedStringArray("cuboid") instance=ExtResource("7_23rco")]
 visible = false
 cuboid = NodePath("../..")
+has_ray_additional_data = true
 
 [connection signal="body_entered" from="JumpDetectionArea3D" to="." method="_on_jump_detection_area_3d_body_entered"]
 [connection signal="body_exited" from="JumpDetectionArea3D" to="." method="_on_jump_detection_area_3d_body_exited"]
