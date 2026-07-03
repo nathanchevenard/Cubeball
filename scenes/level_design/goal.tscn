@@ -10,6 +10,8 @@ albedo_color = Color(0.9889, 0.44360888, 0.6721573, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_q46b8"]
 
 [node name="Goal" type="Area3D" unique_id=2072586225 node_paths=PackedStringArray("csg_box")]
+collision_layer = 16
+collision_mask = 2
 script = ExtResource("1_34d8l")
 wall_scene = ExtResource("2_sgfkh")
 wall_override_material = SubResource("StandardMaterial3D_sgfkh")

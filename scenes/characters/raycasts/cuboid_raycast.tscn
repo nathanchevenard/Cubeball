@@ -1,0 +1,412 @@
+[gd_scene format=3 uid="uid://dxpaq05awu7da"]
+
+[ext_resource type="Script" uid="uid://ct0pcdxlqnfw2" path="res://scripts/characters/raycasts/cuboid_raycast.gd" id="1_66ffn"]
+
+[node name="CuboidRaycast" type="Node3D" unique_id=493931242]
+script = ExtResource("1_66ffn")
+ray_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+n_rays_width = 20.0
+n_rays_height = 5.0
+ray_length = 100.0
+cone_width = 360.0
+cone_height = 180.0
+
+[node name="node_0_0 0_0" type="RayCast3D" parent="." unique_id=60542395]
+target_position = Vector3(-4.8340907, -95.10565, -30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_0_0 1_0" type="RayCast3D" parent="." unique_id=2129585712]
+target_position = Vector3(-12.655814, -58.778526, -79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_0_0 2_0" type="RayCast3D" parent="." unique_id=411290607]
+target_position = Vector3(-15.643447, 0, -98.76884)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_0_0 3_0" type="RayCast3D" parent="." unique_id=1432703288]
+target_position = Vector3(-12.655814, 58.778526, -79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_0_0 4_0" type="RayCast3D" parent="." unique_id=1224850222]
+target_position = Vector3(-4.8340907, 95.10565, -30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_1_0 0_0" type="RayCast3D" parent="." unique_id=2098796609]
+target_position = Vector3(-14.029078, -95.10565, -27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_1_0 1_0" type="RayCast3D" parent="." unique_id=865155182]
+target_position = Vector3(-36.728603, -58.778526, -72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_1_0 2_0" type="RayCast3D" parent="." unique_id=907738747]
+target_position = Vector3(-45.39905, 0, -89.100655)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_1_0 3_0" type="RayCast3D" parent="." unique_id=882269944]
+target_position = Vector3(-36.728603, 58.778526, -72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_1_0 4_0" type="RayCast3D" parent="." unique_id=1545058698]
+target_position = Vector3(-14.029078, 95.10565, -27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_2_0 0_0" type="RayCast3D" parent="." unique_id=1067714846]
+target_position = Vector3(-21.850801, -95.10565, -21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_2_0 1_0" type="RayCast3D" parent="." unique_id=1621661253]
+target_position = Vector3(-57.20614, -58.778526, -57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_2_0 2_0" type="RayCast3D" parent="." unique_id=565113798]
+target_position = Vector3(-70.71068, 0, -70.71068)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_2_0 3_0" type="RayCast3D" parent="." unique_id=511973039]
+target_position = Vector3(-57.20614, 58.778526, -57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_2_0 4_0" type="RayCast3D" parent="." unique_id=663690691]
+target_position = Vector3(-21.850801, 95.10565, -21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_3_0 0_0" type="RayCast3D" parent="." unique_id=14591999]
+target_position = Vector3(-27.533615, -95.10565, -14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_3_0 1_0" type="RayCast3D" parent="." unique_id=1362446582]
+target_position = Vector3(-72.08394, -58.778526, -36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_3_0 2_0" type="RayCast3D" parent="." unique_id=2118063269]
+target_position = Vector3(-89.100655, 0, -45.39905)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_3_0 3_0" type="RayCast3D" parent="." unique_id=2038244490]
+target_position = Vector3(-72.08394, 58.778526, -36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_3_0 4_0" type="RayCast3D" parent="." unique_id=2105167407]
+target_position = Vector3(-27.533615, 95.10565, -14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_4_0 0_0" type="RayCast3D" parent="." unique_id=1910576731]
+target_position = Vector3(-30.521248, -95.10565, -4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_4_0 1_0" type="RayCast3D" parent="." unique_id=2000868151]
+target_position = Vector3(-79.90566, -58.778526, -12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_4_0 2_0" type="RayCast3D" parent="." unique_id=1777486729]
+target_position = Vector3(-98.76884, 0, -15.643447)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_4_0 3_0" type="RayCast3D" parent="." unique_id=135282357]
+target_position = Vector3(-79.90566, 58.778526, -12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_4_0 4_0" type="RayCast3D" parent="." unique_id=1210339491]
+target_position = Vector3(-30.521248, 95.10565, -4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_5_0 0_0" type="RayCast3D" parent="." unique_id=673516915]
+target_position = Vector3(-30.521248, -95.10565, 4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_5_0 1_0" type="RayCast3D" parent="." unique_id=1389882270]
+target_position = Vector3(-79.90566, -58.778526, 12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_5_0 2_0" type="RayCast3D" parent="." unique_id=589694416]
+target_position = Vector3(-98.76884, 0, 15.643447)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_5_0 3_0" type="RayCast3D" parent="." unique_id=10447054]
+target_position = Vector3(-79.90566, 58.778526, 12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_5_0 4_0" type="RayCast3D" parent="." unique_id=1618388658]
+target_position = Vector3(-30.521248, 95.10565, 4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_6_0 0_0" type="RayCast3D" parent="." unique_id=60491145]
+target_position = Vector3(-27.533615, -95.10565, 14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_6_0 1_0" type="RayCast3D" parent="." unique_id=1848310439]
+target_position = Vector3(-72.08394, -58.778526, 36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_6_0 2_0" type="RayCast3D" parent="." unique_id=2024939598]
+target_position = Vector3(-89.100655, 0, 45.39905)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_6_0 3_0" type="RayCast3D" parent="." unique_id=80047237]
+target_position = Vector3(-72.08394, 58.778526, 36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_6_0 4_0" type="RayCast3D" parent="." unique_id=1407179199]
+target_position = Vector3(-27.533615, 95.10565, 14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_7_0 0_0" type="RayCast3D" parent="." unique_id=94849895]
+target_position = Vector3(-21.850801, -95.10565, 21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_7_0 1_0" type="RayCast3D" parent="." unique_id=1576275645]
+target_position = Vector3(-57.20614, -58.778526, 57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_7_0 2_0" type="RayCast3D" parent="." unique_id=426273269]
+target_position = Vector3(-70.71068, 0, 70.71068)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_7_0 3_0" type="RayCast3D" parent="." unique_id=703353104]
+target_position = Vector3(-57.20614, 58.778526, 57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_7_0 4_0" type="RayCast3D" parent="." unique_id=1946123396]
+target_position = Vector3(-21.850801, 95.10565, 21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_8_0 0_0" type="RayCast3D" parent="." unique_id=253067891]
+target_position = Vector3(-14.029078, -95.10565, 27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_8_0 1_0" type="RayCast3D" parent="." unique_id=1617956394]
+target_position = Vector3(-36.728603, -58.778526, 72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_8_0 2_0" type="RayCast3D" parent="." unique_id=1988825683]
+target_position = Vector3(-45.39905, 0, 89.100655)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_8_0 3_0" type="RayCast3D" parent="." unique_id=1112721293]
+target_position = Vector3(-36.728603, 58.778526, 72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_8_0 4_0" type="RayCast3D" parent="." unique_id=1614776947]
+target_position = Vector3(-14.029078, 95.10565, 27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_9_0 0_0" type="RayCast3D" parent="." unique_id=679984465]
+target_position = Vector3(-4.8340907, -95.10565, 30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_9_0 1_0" type="RayCast3D" parent="." unique_id=1056437380]
+target_position = Vector3(-12.655814, -58.778526, 79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_9_0 2_0" type="RayCast3D" parent="." unique_id=1007853794]
+target_position = Vector3(-15.643447, 0, 98.76884)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_9_0 3_0" type="RayCast3D" parent="." unique_id=1925430155]
+target_position = Vector3(-12.655814, 58.778526, 79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_9_0 4_0" type="RayCast3D" parent="." unique_id=161367232]
+target_position = Vector3(-4.8340907, 95.10565, 30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_10_0 0_0" type="RayCast3D" parent="." unique_id=1671826866]
+target_position = Vector3(4.8340907, -95.10565, 30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_10_0 1_0" type="RayCast3D" parent="." unique_id=1062094114]
+target_position = Vector3(12.655814, -58.778526, 79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_10_0 2_0" type="RayCast3D" parent="." unique_id=318395472]
+target_position = Vector3(15.643447, 0, 98.76884)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_10_0 3_0" type="RayCast3D" parent="." unique_id=2002376725]
+target_position = Vector3(12.655814, 58.778526, 79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_10_0 4_0" type="RayCast3D" parent="." unique_id=1735470746]
+target_position = Vector3(4.8340907, 95.10565, 30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_11_0 0_0" type="RayCast3D" parent="." unique_id=344697354]
+target_position = Vector3(14.029078, -95.10565, 27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_11_0 1_0" type="RayCast3D" parent="." unique_id=734451941]
+target_position = Vector3(36.728603, -58.778526, 72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_11_0 2_0" type="RayCast3D" parent="." unique_id=3221473]
+target_position = Vector3(45.39905, 0, 89.100655)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_11_0 3_0" type="RayCast3D" parent="." unique_id=621831060]
+target_position = Vector3(36.728603, 58.778526, 72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_11_0 4_0" type="RayCast3D" parent="." unique_id=2055910166]
+target_position = Vector3(14.029078, 95.10565, 27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_12_0 0_0" type="RayCast3D" parent="." unique_id=638030169]
+target_position = Vector3(21.850801, -95.10565, 21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_12_0 1_0" type="RayCast3D" parent="." unique_id=1536439627]
+target_position = Vector3(57.20614, -58.778526, 57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_12_0 2_0" type="RayCast3D" parent="." unique_id=693694615]
+target_position = Vector3(70.71068, 0, 70.71068)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_12_0 3_0" type="RayCast3D" parent="." unique_id=1115048598]
+target_position = Vector3(57.20614, 58.778526, 57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_12_0 4_0" type="RayCast3D" parent="." unique_id=1353837536]
+target_position = Vector3(21.850801, 95.10565, 21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_13_0 0_0" type="RayCast3D" parent="." unique_id=1748072370]
+target_position = Vector3(27.533615, -95.10565, 14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_13_0 1_0" type="RayCast3D" parent="." unique_id=22477905]
+target_position = Vector3(72.08394, -58.778526, 36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_13_0 2_0" type="RayCast3D" parent="." unique_id=1846125542]
+target_position = Vector3(89.100655, 0, 45.39905)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_13_0 3_0" type="RayCast3D" parent="." unique_id=1862103879]
+target_position = Vector3(72.08394, 58.778526, 36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_13_0 4_0" type="RayCast3D" parent="." unique_id=1106388501]
+target_position = Vector3(27.533615, 95.10565, 14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_14_0 0_0" type="RayCast3D" parent="." unique_id=1569597084]
+target_position = Vector3(30.521248, -95.10565, 4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_14_0 1_0" type="RayCast3D" parent="." unique_id=603689065]
+target_position = Vector3(79.90566, -58.778526, 12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_14_0 2_0" type="RayCast3D" parent="." unique_id=1322949361]
+target_position = Vector3(98.76884, 0, 15.643447)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_14_0 3_0" type="RayCast3D" parent="." unique_id=1363613225]
+target_position = Vector3(79.90566, 58.778526, 12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="node_14_0 4_0" type="RayCast3D" parent="." unique_id=850591037]
+target_position = Vector3(30.521248, 95.10565, 4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87759" type="RayCast3D" parent="." unique_id=1351087866]
+target_position = Vector3(30.521248, -95.10565, -4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87760" type="RayCast3D" parent="." unique_id=449383918]
+target_position = Vector3(79.90566, -58.778526, -12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87761" type="RayCast3D" parent="." unique_id=1676778261]
+target_position = Vector3(98.76884, 0, -15.643447)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87762" type="RayCast3D" parent="." unique_id=464363084]
+target_position = Vector3(79.90566, 58.778526, -12.655814)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87763" type="RayCast3D" parent="." unique_id=2057817183]
+target_position = Vector3(30.521248, 95.10565, -4.8340907)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87764" type="RayCast3D" parent="." unique_id=1766441155]
+target_position = Vector3(27.533615, -95.10565, -14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87765" type="RayCast3D" parent="." unique_id=884924481]
+target_position = Vector3(72.08394, -58.778526, -36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87766" type="RayCast3D" parent="." unique_id=908961527]
+target_position = Vector3(89.100655, 0, -45.39905)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87767" type="RayCast3D" parent="." unique_id=1189648618]
+target_position = Vector3(72.08394, 58.778526, -36.728603)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87768" type="RayCast3D" parent="." unique_id=944752922]
+target_position = Vector3(27.533615, 95.10565, -14.029078)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87769" type="RayCast3D" parent="." unique_id=945349387]
+target_position = Vector3(21.850801, -95.10565, -21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87770" type="RayCast3D" parent="." unique_id=1961914509]
+target_position = Vector3(57.20614, -58.778526, -57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87771" type="RayCast3D" parent="." unique_id=1580529885]
+target_position = Vector3(70.71068, 0, -70.71068)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87772" type="RayCast3D" parent="." unique_id=1217803244]
+target_position = Vector3(57.20614, 58.778526, -57.20614)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87773" type="RayCast3D" parent="." unique_id=1067086544]
+target_position = Vector3(21.850801, 95.10565, -21.850801)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87774" type="RayCast3D" parent="." unique_id=1050147075]
+target_position = Vector3(14.029078, -95.10565, -27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87775" type="RayCast3D" parent="." unique_id=1568440553]
+target_position = Vector3(36.728603, -58.778526, -72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87776" type="RayCast3D" parent="." unique_id=1664906183]
+target_position = Vector3(45.39905, 0, -89.100655)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87777" type="RayCast3D" parent="." unique_id=825180872]
+target_position = Vector3(36.728603, 58.778526, -72.08394)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87778" type="RayCast3D" parent="." unique_id=730840235]
+target_position = Vector3(14.029078, 95.10565, -27.533615)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87779" type="RayCast3D" parent="." unique_id=78837656]
+target_position = Vector3(4.8340907, -95.10565, -30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87780" type="RayCast3D" parent="." unique_id=1061052792]
+target_position = Vector3(12.655814, -58.778526, -79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87781" type="RayCast3D" parent="." unique_id=328924020]
+target_position = Vector3(15.643447, 0, -98.76884)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87782" type="RayCast3D" parent="." unique_id=216104952]
+target_position = Vector3(12.655814, 58.778526, -79.90566)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)
+
+[node name="@RayCast3D@87783" type="RayCast3D" parent="." unique_id=1336105201]
+target_position = Vector3(4.8340907, 95.10565, -30.521248)
+debug_shape_custom_color = Color(0.47479695, 1.1130236e-06, 3.6098064e-07, 1)

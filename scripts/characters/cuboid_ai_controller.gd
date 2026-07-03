@@ -1,6 +1,7 @@
 extends AIController3D
 class_name CuboidAIController
 
+@export var raycast_list : Array[CubeballRaycast]
 @export var print_obs : bool = false
 
 var cuboid : Cuboid
@@ -30,24 +31,29 @@ func init(player: Node3D):
 
 func _process(delta: float) -> void:
 	if print_obs == true:
+		print(get_obs()["obs"].size())
 		print(get_obs())
 
 
 func get_obs() -> Dictionary:
-	var dictionary : Dictionary
+	var obs : Array
 	
-	dictionary["self"] = cuboid.get_observation_informations(cuboid)
+	for raycast in raycast_list:
+		obs.append_array(raycast.get_observation())
 	
-	var i : int = 1
-	for entity in EntityManager.instance.entity_list:
-		if entity == cuboid:
-			continue
-		
-		dictionary["entity_" + str(i)] = entity.get_observation_informations(cuboid)
+	#var dictionary : Dictionary
+	#dictionary["self"] = cuboid.get_observation_informations(cuboid)
+	#
+	#var i : int = 1
+	#for entity in EntityManager.instance.entity_list:
+		#if entity == cuboid:
+			#continue
+		#
+		#dictionary["entity_" + str(i)] = entity.get_observation_informations(cuboid)
+	#
+	#dictionary["game_state"] = GameStateManager.instance.get_observation_informations(cuboid)
 	
-	dictionary["game_state"] = GameStateManager.instance.get_observation_informations(cuboid)
-	
-	return { "obs" : dictionary }
+	return { "obs" : obs }
 
 
 func get_reward() -> float:
