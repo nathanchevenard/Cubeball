@@ -7,6 +7,8 @@
 [sub_resource type="BoxMesh" id="BoxMesh_nu5rl"]
 
 [node name="ObstacleCube" type="RigidBody3D" unique_id=697217802]
+collision_layer = 8
+collision_mask = 31
 mass = 5.0
 script = ExtResource("1_6jr6p")
 entity_type = 2

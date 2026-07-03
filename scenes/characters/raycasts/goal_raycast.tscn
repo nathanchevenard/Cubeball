@@ -1,0 +1,358 @@
+[gd_scene format=3 uid="uid://qusbvpnja4rw"]
+
+[ext_resource type="Script" uid="uid://b2d3hy1y6imkc" path="res://scripts/characters/raycasts/goal_raycast.gd" id="1_7t023"]
+
+[node name="GoalRaycast" type="Node3D" unique_id=493931242]
+script = ExtResource("1_7t023")
+ray_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+collision_mask = 16
+n_rays_width = 7.0
+n_rays_height = 7.0
+ray_length = 100.0
+cone_width = 360.0
+cone_height = 180.0
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="node_0_0 0_0" type="RayCast3D" parent="." unique_id=253364322]
+target_position = Vector3(-9.654821, -97.49279, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_0_0 1_0" type="RayCast3D" parent="." unique_id=239485616]
+target_position = Vector3(-27.052208, -78.18315, -56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_0_0 2_0" type="RayCast3D" parent="." unique_id=1184635427]
+target_position = Vector3(-39.091576, -43.388374, -81.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_0_0 3_0" type="RayCast3D" parent="." unique_id=1552230508]
+target_position = Vector3(-43.388374, 0, -90.096886)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_0_0 4_0" type="RayCast3D" parent="." unique_id=1468006734]
+target_position = Vector3(-39.091576, 43.388374, -81.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_0_0 5_0" type="RayCast3D" parent="." unique_id=1376017253]
+target_position = Vector3(-27.052208, 78.18315, -56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_0_0 6_0" type="RayCast3D" parent="." unique_id=470640820]
+target_position = Vector3(-9.654821, 97.49279, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 0_0" type="RayCast3D" parent="." unique_id=1058873482]
+target_position = Vector3(-21.694187, -97.49279, -4.9515567)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 1_0" type="RayCast3D" parent="." unique_id=2022853002]
+target_position = Vector3(-60.785763, -78.18315, -13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 2_0" type="RayCast3D" parent="." unique_id=315799447]
+target_position = Vector3(-87.83797, -43.388374, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 3_0" type="RayCast3D" parent="." unique_id=1133436042]
+target_position = Vector3(-97.49279, 0, -22.252094)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 4_0" type="RayCast3D" parent="." unique_id=1048549455]
+target_position = Vector3(-87.83797, 43.388374, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 5_0" type="RayCast3D" parent="." unique_id=1294714491]
+target_position = Vector3(-60.785763, 78.18315, -13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_1_0 6_0" type="RayCast3D" parent="." unique_id=1583783067]
+target_position = Vector3(-21.694187, 97.49279, -4.9515567)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 0_0" type="RayCast3D" parent="." unique_id=1531568141]
+target_position = Vector3(-17.397387, -97.49279, 13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 1_0" type="RayCast3D" parent="." unique_id=635790853]
+target_position = Vector3(-48.746395, -78.18315, 38.873955)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 2_0" type="RayCast3D" parent="." unique_id=542849747]
+target_position = Vector3(-70.44058, -43.388374, 56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 3_0" type="RayCast3D" parent="." unique_id=1045134430]
+target_position = Vector3(-78.18315, 0, 62.34898)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 4_0" type="RayCast3D" parent="." unique_id=751233113]
+target_position = Vector3(-70.44058, 43.388374, 56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 5_0" type="RayCast3D" parent="." unique_id=1681058686]
+target_position = Vector3(-48.746395, 78.18315, 38.873955)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_2_0 6_0" type="RayCast3D" parent="." unique_id=956077512]
+target_position = Vector3(-17.397387, 97.49279, 13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 0_0" type="RayCast3D" parent="." unique_id=363776353]
+target_position = Vector3(0, -97.49279, 22.252094)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 1_0" type="RayCast3D" parent="." unique_id=924909675]
+target_position = Vector3(0, -78.18315, 62.34898)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 2_0" type="RayCast3D" parent="." unique_id=1693954546]
+target_position = Vector3(0, -43.388374, 90.096886)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 3_0" type="RayCast3D" parent="." unique_id=139079347]
+target_position = Vector3(0, 0, 100)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 4_0" type="RayCast3D" parent="." unique_id=1172816861]
+target_position = Vector3(0, 43.388374, 90.096886)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 5_0" type="RayCast3D" parent="." unique_id=1134618799]
+target_position = Vector3(0, 78.18315, 62.34898)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_3_0 6_0" type="RayCast3D" parent="." unique_id=1296116112]
+target_position = Vector3(0, 97.49279, 22.252094)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 0_0" type="RayCast3D" parent="." unique_id=96354912]
+target_position = Vector3(17.397387, -97.49279, 13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 1_0" type="RayCast3D" parent="." unique_id=492257187]
+target_position = Vector3(48.746395, -78.18315, 38.873955)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 2_0" type="RayCast3D" parent="." unique_id=274213943]
+target_position = Vector3(70.44058, -43.388374, 56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 3_0" type="RayCast3D" parent="." unique_id=1373265348]
+target_position = Vector3(78.18315, 0, 62.34898)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 4_0" type="RayCast3D" parent="." unique_id=26875104]
+target_position = Vector3(70.44058, 43.388374, 56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 5_0" type="RayCast3D" parent="." unique_id=1748937892]
+target_position = Vector3(48.746395, 78.18315, 38.873955)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_4_0 6_0" type="RayCast3D" parent="." unique_id=1192329677]
+target_position = Vector3(17.397387, 97.49279, 13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 0_0" type="RayCast3D" parent="." unique_id=533880740]
+target_position = Vector3(21.694187, -97.49279, -4.9515567)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 1_0" type="RayCast3D" parent="." unique_id=464750867]
+target_position = Vector3(60.785763, -78.18315, -13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 2_0" type="RayCast3D" parent="." unique_id=565992033]
+target_position = Vector3(87.83797, -43.388374, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 3_0" type="RayCast3D" parent="." unique_id=263712392]
+target_position = Vector3(97.49279, 0, -22.252094)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 4_0" type="RayCast3D" parent="." unique_id=1360492427]
+target_position = Vector3(87.83797, 43.388374, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 5_0" type="RayCast3D" parent="." unique_id=1502797702]
+target_position = Vector3(60.785763, 78.18315, -13.873953)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_5_0 6_0" type="RayCast3D" parent="." unique_id=2021394157]
+target_position = Vector3(21.694187, 97.49279, -4.9515567)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 0_0" type="RayCast3D" parent="." unique_id=799495584]
+target_position = Vector3(9.654821, -97.49279, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 1_0" type="RayCast3D" parent="." unique_id=1021120396]
+target_position = Vector3(27.052208, -78.18315, -56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 2_0" type="RayCast3D" parent="." unique_id=1213719130]
+target_position = Vector3(39.091576, -43.388374, -81.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 3_0" type="RayCast3D" parent="." unique_id=559784630]
+target_position = Vector3(43.388374, 0, -90.096886)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 4_0" type="RayCast3D" parent="." unique_id=520319668]
+target_position = Vector3(39.091576, 43.388374, -81.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 5_0" type="RayCast3D" parent="." unique_id=1341104217]
+target_position = Vector3(27.052208, 78.18315, -56.17449)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)
+
+[node name="node_6_0 6_0" type="RayCast3D" parent="." unique_id=1888641199]
+target_position = Vector3(9.654821, 97.49279, -20.048443)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.3690653, 0.5057864, 0.28523952, 1)

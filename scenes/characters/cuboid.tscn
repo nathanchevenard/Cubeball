@@ -3,6 +3,11 @@
 [ext_resource type="Script" uid="uid://de0ttsg3yqrmo" path="res://scripts/characters/cuboid.gd" id="1_k8rju"]
 [ext_resource type="Script" uid="uid://b87006bnrmpvu" path="res://scripts/characters/cuboid_tool.gd" id="2_6oqb7"]
 [ext_resource type="Script" uid="uid://b0rv2qryq5hpq" path="res://scripts/characters/cuboid_ai_controller.gd" id="3_ei4nd"]
+[ext_resource type="PackedScene" uid="uid://dxpaq05awu7da" path="res://scenes/characters/raycasts/cuboid_raycast.tscn" id="4_08f1a"]
+[ext_resource type="PackedScene" uid="uid://v6bvp4d7hfmg" path="res://scenes/characters/raycasts/ball_raycast.tscn" id="5_qwoea"]
+[ext_resource type="PackedScene" uid="uid://exm6ysiu6j2m" path="res://scenes/characters/raycasts/obstacle_raycast.tscn" id="6_f4xdk"]
+[ext_resource type="PackedScene" uid="uid://pjrprsaxvaqp" path="res://scenes/characters/raycasts/ball_front_raycast.tscn" id="6_xtfnx"]
+[ext_resource type="PackedScene" uid="uid://qusbvpnja4rw" path="res://scenes/characters/raycasts/goal_raycast.tscn" id="7_23rco"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tsay5"]
 friction = 0.0
@@ -24,6 +29,7 @@ albedo_color = Color(0, 0, 0, 1)
 size = Vector3(0.95, 0.047132812, 0.95)
 
 [node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("camera", "cuboid_ai_controller")]
+collision_mask = 31
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_tsay5")
@@ -38,7 +44,7 @@ camera = NodePath("Camera3D")
 cuboid_ai_controller = NodePath("CuboidAIController")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=368455836]
-transform = Transform3D(-4.2187605e-08, 0.26173443, -0.9651399, 1.1440774e-08, 0.96514, 0.26173443, 1, -8.881785e-16, -4.3711385e-08, -2.1867986, 2.3368554, 0)
+transform = Transform3D(-1, 2.2921306e-08, -8.436442e-08, 0, 0.9650165, 0.26218918, 8.742278e-08, 0.26218918, -0.9650165, 0, 2.337, -2.187)
 visible = false
 
 [node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh")]
@@ -69,7 +75,7 @@ mesh = SubResource("CylinderMesh_k8rju")
 surface_material_override/0 = SubResource("StandardMaterial3D_asqqw")
 
 [node name="Eye2" type="MeshInstance3D" parent="CollisionShape3D/MeshInstance3D" unique_id=868085672]
-transform = Transform3D(-8.742277e-09, -0.008559239, 0, 0.19999999, -3.7413622e-10, 0, 0, 0, 0.2, 0.49795026, 0.2531193, -0.2786086)
+transform = Transform3D(-8.742277e-09, -0.008559239, 0, 0.19999999, -3.7413622e-10, 0, 0, 0, 0.2, 0.498, 0.253, -0.259)
 mesh = SubResource("CylinderMesh_k8rju")
 
 [node name="Pupil" type="MeshInstance3D" parent="CollisionShape3D/MeshInstance3D/Eye2" unique_id=1472280693]
@@ -79,10 +85,36 @@ surface_material_override/0 = SubResource("StandardMaterial3D_asqqw")
 
 [node name="JumpDetectionArea3D" type="Area3D" parent="." unique_id=965274337]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_mask = 31
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="JumpDetectionArea3D" unique_id=1802142945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5140328, 0)
 shape = SubResource("BoxShape3D_tsay5")
+
+[node name="Raycasts" type="Node3D" parent="." unique_id=822660806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CuboidRaycast" parent="Raycasts" unique_id=493931242 node_paths=PackedStringArray("cuboid") instance=ExtResource("4_08f1a")]
+visible = false
+cuboid = NodePath("../..")
+display_raycasts_colliding = true
+
+[node name="BallRaycast" parent="Raycasts" unique_id=96493536 node_paths=PackedStringArray("cuboid") instance=ExtResource("5_qwoea")]
+visible = false
+cuboid = NodePath("../..")
+display_raycasts_colliding = true
+
+[node name="BallFrontRaycast" parent="Raycasts" unique_id=1283191751 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_xtfnx")]
+cuboid = NodePath("../..")
+display_raycasts_colliding = true
+
+[node name="ObstacleRaycast" parent="Raycasts" unique_id=1003394821 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_f4xdk")]
+visible = false
+cuboid = NodePath("../..")
+
+[node name="GoalRaycast" parent="Raycasts" unique_id=526238269 node_paths=PackedStringArray("cuboid") instance=ExtResource("7_23rco")]
+visible = false
+cuboid = NodePath("../..")
 
 [connection signal="body_entered" from="JumpDetectionArea3D" to="." method="_on_jump_detection_area_3d_body_entered"]
 [connection signal="body_exited" from="JumpDetectionArea3D" to="." method="_on_jump_detection_area_3d_body_exited"]

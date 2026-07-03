@@ -65,7 +65,7 @@ class_name RayCastSensor3D
 
 @export var class_sensor := false
 
-var rays := []
+var rays : Array[RayCast3D] = []
 var geo = null
 
 
@@ -120,6 +120,8 @@ func _spawn_nodes():
 			ray.set_owner(get_tree().edited_scene_root)
 			rays.append(ray)
 			ray.force_raycast_update()
+		
+		
 
 
 #    if Engine.editor_hint:
