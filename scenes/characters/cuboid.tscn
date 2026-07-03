@@ -56,7 +56,6 @@ color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 [node name="CuboidAIController" type="Node3D" parent="." unique_id=128244418 node_paths=PackedStringArray("raycast_list")]
 script = ExtResource("3_ei4nd")
 raycast_list = [NodePath("../Raycasts/CuboidRaycast"), NodePath("../Raycasts/BallRaycast"), NodePath("../Raycasts/BallFrontRaycast"), NodePath("../Raycasts/ObstacleRaycast"), NodePath("../Raycasts/GoalRaycast")]
-print_obs = true
 metadata/_custom_type_script = "uid://b0rv2qryq5hpq"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1787623806]
