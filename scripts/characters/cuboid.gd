@@ -1,7 +1,12 @@
 extends PhysicsEntity
 class_name Cuboid
 
-@export var is_controlled : bool = true
+enum InputMode {
+	HUMAN,
+	AI,
+}
+
+@export var input_mode : InputMode = InputMode.AI
 
 @export var speed : float = 8
 @export var rotation_speed : float = 3
@@ -31,31 +36,52 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if is_controlled == false:
-		linear_velocity.x = 0
-		linear_velocity.z = 0
-		angular_velocity.y = 0
-		return
+	handle_inputs(get_inputs(), delta)
+
+
+func get_inputs() -> Dictionary[String, bool]:
+	var inputs : Dictionary[String, bool]
 	
+	match input_mode:
+		InputMode.HUMAN:
+			inputs["move_forward"] = Input.is_action_pressed("move_forward")
+			inputs["move_back"] = Input.is_action_pressed("move_back")
+			inputs["rotate_left"] = Input.is_action_pressed("rotate_left")
+			inputs["rotate_right"] = Input.is_action_pressed("rotate_right")
+			inputs["jump"] = Input.is_action_pressed("jump")
+			inputs["dash"] = Input.is_action_pressed("dash")
+		InputMode.AI:
+			inputs["move_forward"] = cuboid_ai_controller.move_forward_action
+			inputs["move_back"] = cuboid_ai_controller.move_back_action
+			inputs["rotate_left"] = cuboid_ai_controller.rotate_left_action
+			inputs["rotate_right"] = cuboid_ai_controller.rotate_right_action
+			inputs["jump"] = cuboid_ai_controller.jump_action
+			inputs["dash"] = cuboid_ai_controller.dash_action
+	
+	return inputs
+
+
+func handle_inputs(inputs : Dictionary[String, bool], delta : float):
 	if is_dashing == false:
-		if Input.is_action_pressed("move_forward") or cuboid_ai_controller.move_forward_action:
+		if inputs.has("move_forward") && inputs["move_forward"] == true:
 			linear_velocity.x = speed * transform.basis.z.x
 			linear_velocity.z = speed * transform.basis.z.z
-		elif Input.is_action_pressed("move_back") or cuboid_ai_controller.move_back_action:
+		elif inputs.has("move_back") && inputs["move_back"] == true:
 			linear_velocity.x = -speed * transform.basis.z.x
 			linear_velocity.z = -speed * transform.basis.z.z
 		else:
 			linear_velocity.x = 0
 			linear_velocity.z = 0
 		
-		if Input.is_action_pressed("rotate_left") or cuboid_ai_controller.rotate_left_action:
+		if inputs.has("rotate_left") && inputs["rotate_left"] == true:
 			angular_velocity.y = rotation_speed
-		elif Input.is_action_pressed("rotate_right") or cuboid_ai_controller.rotate_right_action:
+		elif inputs.has("rotate_right") && inputs["rotate_right"] == true:
 			angular_velocity.y = -rotation_speed
 		else:
 			angular_velocity.y = 0
+
 	
-	if (Input.is_action_just_pressed("jump") or cuboid_ai_controller.jump_action) && is_on_ground():
+	if inputs.has("jump") && inputs["jump"] == true && is_on_ground():
 		linear_velocity.y = jump_force
 	
 	dash_timer += delta
@@ -64,7 +90,7 @@ func _physics_process(delta: float) -> void:
 		is_dashing = false
 		lock_rotation = false
 	
-	if (Input.is_action_just_pressed("dash") or cuboid_ai_controller.dash_action) && dash_timer >= dash_cooldown:
+	if inputs.has("dash") && inputs["dash"] == true && dash_timer >= dash_cooldown:
 		dash_timer = 0
 		is_dashing = true
 		lock_rotation = true

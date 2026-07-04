@@ -37,7 +37,6 @@ gravity_scale = 4.0
 continuous_cd = true
 max_contacts_reported = 10
 script = ExtResource("1_k8rju")
-is_controlled = false
 dash_force = 32.0
 dash_duration = 0.1
 camera = NodePath("Camera3D")

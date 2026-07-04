@@ -32,14 +32,13 @@ func initialize_teams(level : Level):
 			add_child(cuboid)
 			cuboid.set_team(team)
 			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)
-			cuboid.is_controlled = true
 			
-			#if OS.has_feature("editor") == true && is_first_cuboid == true:
-				#is_first_cuboid = false
-				#cuboid.is_controlled = true
-				#
-				#if DebugManager.instance.camera_on_cuboid == true:
-					#cuboid.camera.current = true
+			if OS.has_feature("editor") == true && is_first_cuboid == true:
+				is_first_cuboid = false
+				cuboid.input_mode = Cuboid.InputMode.HUMAN
+				
+				if DebugManager.instance.camera_on_cuboid == true:
+					cuboid.camera.current = true
 
 
 func _on_level_initialized(level : Level):
