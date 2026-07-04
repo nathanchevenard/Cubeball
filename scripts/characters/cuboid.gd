@@ -38,24 +38,24 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if is_dashing == false:
-		if Input.is_action_pressed("move_forward"):
+		if Input.is_action_pressed("move_forward") or cuboid_ai_controller.move_forward_action:
 			linear_velocity.x = speed * transform.basis.z.x
 			linear_velocity.z = speed * transform.basis.z.z
-		elif Input.is_action_pressed("move_back"):
+		elif Input.is_action_pressed("move_back") or cuboid_ai_controller.move_back_action:
 			linear_velocity.x = -speed * transform.basis.z.x
 			linear_velocity.z = -speed * transform.basis.z.z
 		else:
 			linear_velocity.x = 0
 			linear_velocity.z = 0
 		
-		if Input.is_action_pressed("rotate_left"):
+		if Input.is_action_pressed("rotate_left") or cuboid_ai_controller.rotate_left_action:
 			angular_velocity.y = rotation_speed
-		elif Input.is_action_pressed("rotate_right"):
+		elif Input.is_action_pressed("rotate_right") or cuboid_ai_controller.rotate_right_action:
 			angular_velocity.y = -rotation_speed
 		else:
 			angular_velocity.y = 0
 	
-	if Input.is_action_just_pressed("jump") && is_on_ground():
+	if (Input.is_action_just_pressed("jump") or cuboid_ai_controller.jump_action) && is_on_ground():
 		linear_velocity.y = jump_force
 	
 	dash_timer += delta
@@ -64,7 +64,7 @@ func _physics_process(delta: float) -> void:
 		is_dashing = false
 		lock_rotation = false
 	
-	if Input.is_action_just_pressed("dash") && dash_timer >= dash_cooldown:
+	if (Input.is_action_just_pressed("dash") or cuboid_ai_controller.dash_action) && dash_timer >= dash_cooldown:
 		dash_timer = 0
 		is_dashing = true
 		lock_rotation = true

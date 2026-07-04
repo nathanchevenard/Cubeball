@@ -103,16 +103,13 @@ has_ray_additional_data = true
 [node name="BallRaycast" parent="Raycasts" unique_id=96493536 node_paths=PackedStringArray("cuboid") instance=ExtResource("5_qwoea")]
 visible = false
 cuboid = NodePath("../..")
-has_ray_additional_data = null
 
 [node name="BallFrontRaycast" parent="Raycasts" unique_id=1283191751 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_xtfnx")]
 cuboid = NodePath("../..")
-has_ray_additional_data = null
 
 [node name="ObstacleRaycast" parent="Raycasts" unique_id=1003394821 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_f4xdk")]
 visible = false
 cuboid = NodePath("../..")
-has_ray_additional_data = null
 
 [node name="GoalRaycast" parent="Raycasts" unique_id=526238269 node_paths=PackedStringArray("cuboid") instance=ExtResource("7_23rco")]
 visible = false

@@ -16,6 +16,7 @@ var rotate_right_action : bool = false
 
 func _init() -> void:
 	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
+	SignalsManager.game.game_finish.connect(_on_game_finish)
 
 
 func _ready():
@@ -96,6 +97,9 @@ func get_action_space() -> Dictionary:
 
 
 func set_action(action) -> void:
+	#print("action : " + str(action))
+	#print("action : " + str(action["dash_action"] == 1))
+	
 	dash_action = action["dash_action"] == 1
 	jump_action = action["jump_action"] == 1
 	move_back_action = action["move_back_action"] == 1
@@ -109,3 +113,6 @@ func _on_goal_scored(receiving_team : Team):
 		reward -= 1
 	else:
 		reward += 1
+
+func _on_game_finish():
+	done = true
