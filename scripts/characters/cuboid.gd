@@ -100,11 +100,13 @@ func handle_inputs(inputs : Dictionary[String, bool], delta : float):
 
 func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
 	checked_collisions.append(self)
-	
+
 	for body in jump_colliding_bodies:
-		if body.is_in_group("ground") || body.is_on_ground(checked_collisions):
+		if body.is_in_group("ground"):
 			return true
-	
+		if body is PhysicsEntity && checked_collisions.has(body) == false && body.is_on_ground(checked_collisions):
+			return true
+
 	return false
 
 
