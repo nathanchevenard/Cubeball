@@ -38,10 +38,13 @@ func _process(delta: float) -> void:
 
 func get_obs() -> Dictionary:
 	var obs : Array
-	
+
 	for raycast in raycast_list:
 		obs.append_array(raycast.get_observation())
-	
+
+	obs.append(GameStateManager.instance.get_time_remaining_ratio())
+	obs.append(cuboid.get_dash_cooldown_ratio())
+
 	#var dictionary : Dictionary
 	#dictionary["self"] = cuboid.get_observation_informations(cuboid)
 	#
@@ -53,7 +56,7 @@ func get_obs() -> Dictionary:
 		#dictionary["entity_" + str(i)] = entity.get_observation_informations(cuboid)
 	#
 	#dictionary["game_state"] = GameStateManager.instance.get_observation_informations(cuboid)
-	
+
 	return { "obs" : obs }
 
 

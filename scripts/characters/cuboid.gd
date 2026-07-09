@@ -127,8 +127,12 @@ func _on_jump_detection_area_3d_body_exited(body: Node3D) -> void:
 
 func get_observation_informations(caller : Cuboid) -> Dictionary:
 	var dictionary : Dictionary = super.get_observation_informations(caller)
-	
+
 	dictionary["is_same_team"] = 1 if caller.team == team else 0
-	dictionary["dash_cooldown"] = clampf(dash_timer / dash_cooldown, 0, 1)
-	
+	dictionary["dash_cooldown"] = get_dash_cooldown_ratio()
+
 	return dictionary
+
+
+func get_dash_cooldown_ratio() -> float:
+	return clampf(dash_timer / dash_cooldown, 0, 1)

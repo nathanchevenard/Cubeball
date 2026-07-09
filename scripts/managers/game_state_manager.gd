@@ -30,11 +30,15 @@ func _process(delta: float) -> void:
 
 func get_observation_informations(caller : Cuboid) -> Dictionary:
 	var dictionary : Dictionary
-	
+
 	dictionary["timer"] = timer / game_mode.max_duration_seconds
 	dictionary["score"] = 0
-	
+
 	return dictionary
+
+
+func get_time_remaining_ratio() -> float:
+	return clampf(1.0 - (timer / game_mode.max_duration_seconds), 0.0, 1.0)
 
 
 func _on_game_mode_set(new_game_mode : GameMode):
