@@ -37,8 +37,8 @@ func get_observation_informations(caller : Cuboid) -> Dictionary:
 	return dictionary
 
 
-func get_time_remaining_ratio() -> float:
-	return clampf(1.0 - (timer / game_mode.max_duration_seconds), 0.0, 1.0)
+func get_timer() -> float:
+	return clampf(timer / game_mode.max_duration_seconds, 0.0, 1.0)
 
 
 func _on_game_mode_set(new_game_mode : GameMode):

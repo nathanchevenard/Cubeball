@@ -50,12 +50,14 @@ var _action_space_training: Array[Dictionary] = []
 var _action_space_inference: Array[Dictionary] = []
 var _obs_space_training: Array[Dictionary] = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	await get_tree().root.ready
+
+func _init() -> void:
+	SignalsManager.team.all_teams_initialized.connect(_on_all_teams_initialized)
+
+
+func _on_all_teams_initialized():
 	get_tree().set_pause(true)
 	_initialize()
-	await get_tree().create_timer(1.0).timeout
 	get_tree().set_pause(false)
 
 

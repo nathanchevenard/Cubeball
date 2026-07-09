@@ -129,10 +129,10 @@ func get_observation_informations(caller : Cuboid) -> Dictionary:
 	var dictionary : Dictionary = super.get_observation_informations(caller)
 
 	dictionary["is_same_team"] = 1 if caller.team == team else 0
-	dictionary["dash_cooldown"] = get_dash_cooldown_ratio()
+	dictionary["dash_cooldown"] = get_dash_cooldown()
 
 	return dictionary
 
 
-func get_dash_cooldown_ratio() -> float:
+func get_dash_cooldown() -> float:
 	return clampf(dash_timer / dash_cooldown, 0, 1)

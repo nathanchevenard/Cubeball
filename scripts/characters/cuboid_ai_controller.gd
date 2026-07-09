@@ -21,8 +21,6 @@ func _init() -> void:
 
 func _ready():
 	super()
-	if OS.has_feature("editor") == true:
-		control_mode = AIController3D.ControlModes.HUMAN
 
 
 func init(player: Node3D):
@@ -42,8 +40,8 @@ func get_obs() -> Dictionary:
 	for raycast in raycast_list:
 		obs.append_array(raycast.get_observation())
 
-	obs.append(GameStateManager.instance.get_time_remaining_ratio())
-	obs.append(cuboid.get_dash_cooldown_ratio())
+	obs.append(GameStateManager.instance.get_timer())
+	obs.append(cuboid.get_dash_cooldown())
 
 	#var dictionary : Dictionary
 	#dictionary["self"] = cuboid.get_observation_informations(cuboid)

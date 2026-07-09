@@ -33,7 +33,8 @@ func initialize_teams(level : Level):
 			cuboid.set_team(team)
 			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)
 			
-			if OS.has_feature("editor") == true && is_first_cuboid == true:
+			if DebugManager.instance.first_cuboid_human_input == true\
+			&& OS.has_feature("editor") == true && is_first_cuboid == true:
 				is_first_cuboid = false
 				cuboid.input_mode = Cuboid.InputMode.HUMAN
 				
