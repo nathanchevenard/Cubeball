@@ -1,11 +1,11 @@
 extends Control
-class_name GoalScoredUi
+class_name GoalScoredUI
 
 @export var show_time : float = 0.2
 @export var middle_time : float = 1.3
 @export var hide_time : float = 0.2
-@export var shake : float = 5
-@export var shake_duration : float = 0.1
+@export var shake_amplitude : float = 5
+@export var shake_time : float = 0.1
 @export var shake_count : int = 10
 @export var white_flash_panel : Control
 
@@ -63,4 +63,5 @@ func start_hide_phase():
 func start_shake():
 	var tween : Tween = get_tree().create_tween()
 	for i in shake_count:
-		tween.tween_property(self, "position", init_position + Vector2(randf_range(-shake, shake), randf_range(-shake, shake)), shake_duration)
+		tween.tween_property(self, "position", init_position + Vector2(randf_range(-shake_amplitude, shake_amplitude), randf_range(-shake_amplitude, shake_amplitude)), shake_time)
+	tween.tween_property(self, "position", init_position, shake_time)

@@ -15,8 +15,12 @@
 [ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/agent_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="8_df41j"]
+[ext_resource type="Theme" uid="uid://bx71pn8ahuqk2" path="res://assets/themes/panel_theme.tres" id="15_pkib5"]
+[ext_resource type="Theme" uid="uid://dg0lp3kp8o11c" path="res://assets/themes/base_text_theme.tres" id="16_o6frn"]
 [ext_resource type="Script" uid="uid://cme1l0m1g1q1x" path="res://scripts/ui/goal_scored_ui.gd" id="16_x7kll"]
 [ext_resource type="FontFile" uid="uid://cr6e435wycm2l" path="res://assets/fonts/impact.ttf" id="17_3jqmn"]
+[ext_resource type="Script" uid="uid://dn6wclu4cke80" path="res://scripts/ui/timer_ui.gd" id="18_efd43"]
+[ext_resource type="Script" uid="uid://ceykxvxv2olxb" path="res://scripts/ui/big_score_ui.gd" id="21_nxfq7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -57,12 +61,12 @@ metadata/_custom_type_script = "uid://cnwlwnghcjbcu"
 
 [node name="GameStateManager" type="Node" parent="Managers" unique_id=376915082 node_paths=PackedStringArray("timer_label")]
 script = ExtResource("6_84bhp")
-timer_label = NodePath("../../CanvasLayer/Timer")
+timer_label = NodePath("../../CanvasLayer/Timer/Timer")
 metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
 [node name="AgentSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
-onnx_model_path = "res://assets/onnx/shared_policy_v2.onnx"
+onnx_model_path = "res://assets/onnx/shared_policy_v1.onnx"
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
@@ -92,25 +96,65 @@ obstacle_scene = ExtResource("2_3ulyp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=813368]
 
-[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1826399325]
-anchors_preset = 5
+[node name="Score" type="MarginContainer" parent="CanvasLayer" unique_id=629919028]
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -41.5
-offset_right = 41.5
-offset_bottom = 55.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -65.0
+offset_right = 8.0
+offset_bottom = -10.0
 grow_horizontal = 2
-theme_override_constants/separation = 0
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Score" unique_id=1574549550]
+layout_mode = 2
+theme_override_constants/margin_left = -8
+theme_override_constants/margin_right = -8
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Score/MarginContainer" unique_id=1559711743]
+layout_mode = 2
+theme = ExtResource("15_pkib5")
+
+[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Score" unique_id=1826399325 node_paths=PackedStringArray("score_parent")]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
 alignment = 1
 script = ExtResource("7_quawd")
+score_parent = NodePath("..")
+text_theme = ExtResource("16_o6frn")
 
-[node name="Timer" type="Label" parent="CanvasLayer" unique_id=1521735442]
-offset_left = 10.0
-offset_right = 60.0
-offset_bottom = 55.0
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 40
-text = "XX"
+[node name="Timer" type="MarginContainer" parent="CanvasLayer" unique_id=136400182]
+offset_left = 8.0
+offset_top = 5.0
+offset_right = 63.0
+offset_bottom = 60.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+script = ExtResource("18_efd43")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Timer" unique_id=1123642984]
+layout_mode = 2
+theme_override_constants/margin_left = -8
+theme_override_constants/margin_right = -8
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Timer/MarginContainer" unique_id=1257340330]
+layout_mode = 2
+theme = ExtResource("15_pkib5")
+
+[node name="Timer" type="Label" parent="CanvasLayer/Timer" unique_id=1521735442]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme = ExtResource("16_o6frn")
+text = "xx.xx"
+horizontal_alignment = 1
 
 [node name="GoalScored" type="Control" parent="CanvasLayer" unique_id=1591044781 node_paths=PackedStringArray("white_flash_panel")]
 custom_minimum_size = Vector2(1000, 1000)
@@ -129,8 +173,8 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("16_x7kll")
 middle_time = 1.1
-shake = 10.0
-shake_duration = 0.03
+shake_amplitude = 10.0
+shake_time = 0.03
 white_flash_panel = NodePath("GoalLabel/WhiteFlashPanel")
 
 [node name="GoalLabel" type="RichTextLabel" parent="CanvasLayer/GoalScored" unique_id=267427408]
@@ -177,3 +221,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3jqmn")
+
+[node name="BigScore" type="Control" parent="CanvasLayer" unique_id=55827111]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+script = ExtResource("21_nxfq7")
+display_distance = 350.0
+text_theme = ExtResource("16_o6frn")

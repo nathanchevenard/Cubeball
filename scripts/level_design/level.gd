@@ -43,8 +43,8 @@ func _on_game_mode_set(new_game_mode : GameMode) -> void:
 	spawn_wall(Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), Vector3(1, size_y, size_z))
 	
 	# Spawn Goals
-	goal_list.append(spawn_goal(Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), goal_scale, wall1))
 	goal_list.append(spawn_goal(Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), goal_scale, wall2))
+	goal_list.append(spawn_goal(Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), goal_scale, wall1))
 	
 	# Spawn Ball
 	for i in range(0, ball_number):

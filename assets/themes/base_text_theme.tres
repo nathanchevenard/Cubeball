@@ -1,0 +1,19 @@
+[gd_resource type="Theme" format=3 uid="uid://dg0lp3kp8o11c"]
+
+[ext_resource type="FontFile" uid="uid://cr6e435wycm2l" path="res://assets/fonts/impact.ttf" id="1_safpp"]
+
+[resource]
+default_font = ExtResource("1_safpp")
+default_font_size = 40
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/line_spacing = 0
+Label/constants/outline_size = 10
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 0
+Label/constants/shadow_outline_size = 0
+Label/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("1_safpp")
+Label/styles/focus = null
+Label/styles/normal = null
