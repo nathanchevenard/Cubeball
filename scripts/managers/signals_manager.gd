@@ -15,6 +15,10 @@ class GoalSignals:
 	signal goal_scored(receiving_team : Team)
 	func emit_goal_scored(receiving_team : Team):
 		goal_scored.emit(receiving_team)
+	
+	signal goal_animation_finish
+	func emit_goal_animation_finish():
+		goal_animation_finish.emit()
 
 
 class ScoreSignals:

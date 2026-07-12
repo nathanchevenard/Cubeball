@@ -19,7 +19,6 @@ func _init() -> void:
 	SignalsManager.game.game_mode_set.connect(_on_game_mode_set)
 	SignalsManager.game.game_reset.connect(_on_game_reset)
 	SignalsManager.level.level_spawn_node_at_random_pos.connect(_on_spawn_node_at_random_pos)
-	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
 
 
 func _on_game_mode_set(new_game_mode : GameMode) -> void:
@@ -107,10 +106,6 @@ func spawn_obstacle():
 	add_child(obstacle)
 	_on_spawn_node_at_random_pos(obstacle)
 	obstacle_list.append(obstacle)
-
-
-func _on_goal_scored(_team : Team):
-	reset_level()
 
 
 func _on_game_reset():

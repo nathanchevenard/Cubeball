@@ -9,6 +9,8 @@ enum ControlModes { HUMAN, TRAINING, ONNX_INFERENCE }
 @export_range(0, 10, 0.1, "or_greater") var speed_up := 1.0
 @export var onnx_model_path := ""
 
+static var instance : AgentSynchronizer
+
 # Onnx model stored for each requested path
 var onnx_models: Dictionary
 
@@ -52,6 +54,7 @@ var _obs_space_training: Array[Dictionary] = []
 
 
 func _init() -> void:
+	instance = self
 	SignalsManager.team.all_teams_initialized.connect(_on_all_teams_initialized)
 
 
@@ -62,6 +65,9 @@ func _on_all_teams_initialized():
 
 
 func _initialize():
+	if OS.has_feature("editor") == true && control_mode == ControlModes.TRAINING:
+		control_mode = ControlModes.ONNX_INFERENCE
+	
 	_get_agents()
 	args = _get_args()
 	Engine.physics_ticks_per_second = _get_speedup() * 60  # Replace with function body.
