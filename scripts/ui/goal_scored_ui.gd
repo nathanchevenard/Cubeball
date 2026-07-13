@@ -7,6 +7,7 @@ class_name GoalScoredUI
 @export var shake_amplitude : float = 5
 @export var shake_time : float = 0.1
 @export var shake_count : int = 10
+@export var goal_scored_label : RichTextLabel
 @export var white_flash_panel : Control
 
 var init_position : Vector2
@@ -17,7 +18,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	init_position = position
+	init_position = goal_scored_label.position
 	hide()
 
 
@@ -34,12 +35,12 @@ func _on_goal_scored(_receiving_team : Team):
 
 
 func start_show_phase():
-	scale = 3 * Vector2.ONE
+	goal_scored_label.scale = 3 * Vector2.ONE
 	white_flash_panel.modulate = Color(1, 1, 1, 1)
 	
 	var tween : Tween = get_tree().create_tween()
 	#tween.set_trans(Tween.TRANS_SPRING)
-	tween.tween_property(self, "scale", Vector2.ONE, show_time)
+	tween.tween_property(goal_scored_label, "scale", Vector2.ONE, show_time)
 	tween.parallel().tween_property(white_flash_panel, "modulate", Color(1, 1, 1, 0), show_time * 2)
 	show()
 	
@@ -54,7 +55,7 @@ func start_middle_phase():
 func start_hide_phase():
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property(white_flash_panel, "modulate", Color(1, 1, 1, 1), hide_time)
-	tween.parallel().tween_property(self, "scale", Vector2(scale.x + 1, 0), hide_time)
+	tween.parallel().tween_property(goal_scored_label, "scale", Vector2(scale.x + 1, 0), hide_time)
 	
 	await get_tree().create_timer(hide_time).timeout
 	hide()
@@ -63,5 +64,5 @@ func start_hide_phase():
 func start_shake():
 	var tween : Tween = get_tree().create_tween()
 	for i in shake_count:
-		tween.tween_property(self, "position", init_position + Vector2(randf_range(-shake_amplitude, shake_amplitude), randf_range(-shake_amplitude, shake_amplitude)), shake_time)
-	tween.tween_property(self, "position", init_position, shake_time)
+		tween.tween_property(goal_scored_label, "position", init_position + Vector2(randf_range(-shake_amplitude, shake_amplitude), randf_range(-shake_amplitude, shake_amplitude)), shake_time)
+	tween.tween_property(goal_scored_label, "position", init_position, shake_time)

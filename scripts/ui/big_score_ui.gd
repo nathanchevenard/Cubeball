@@ -14,15 +14,19 @@ func _init() -> void:
 
 
 func start_show_phase(label : Label):
+	#var screen_width : int = DisplayServer.screen_get_size().x
+	#var angle : float = label_to_positions[label][2]
+	#label_to_positions[label][0] = screen_width * Vector2.from_angle(angle) - label.size / 2
+	
 	var tween : Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(label, "global_position", label_to_positions[label][1], 0.3)
+	tween.tween_property(label, "position", label_to_positions[label][1], 0.3)
 
 
 func start_hide_phase(label : Label):
 	var tween : Tween = get_tree().create_tween()
-	tween.tween_property(label, "global_position", label_to_positions[label][0], 0.3)
+	tween.tween_property(label, "position", label_to_positions[label][0], 0.3)
 
 
 func _on_all_teams_initialized():
@@ -32,20 +36,22 @@ func _on_all_teams_initialized():
 	for i in team_number:
 		var team : Team = GameStateManager.instance.game_mode.team_list[i].team
 		
-		var angle : float = PI + i * 2 * PI / team_number
-		var initial_position : Vector2 = global_position + screen_width * Vector2.from_angle(angle)
-		var display_position : Vector2 = global_position + display_distance * Vector2.from_angle(angle)
-		
 		var label : Label = Label.new()
 		label.pivot_offset_ratio = Vector2(0.5, 0.5)
 		add_child(label)
-		label.global_position = initial_position
 		label.modulate = team.color
 		label.theme = text_theme
+		label.custom_minimum_size.x = 300
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.add_theme_font_size_override("font_size", 160)
 		
+		var angle : float = PI + i * 2 * PI / team_number
+		var initial_position : Vector2 = screen_width * Vector2.from_angle(angle) - label.size / 2
+		var display_position : Vector2 = display_distance * Vector2.from_angle(angle) - label.size / 2
+		
+		label.position = initial_position
 		team_to_label[team] = label
-		label_to_positions[label] = [initial_position, display_position]
+		label_to_positions[label] = [initial_position, display_position, angle]
 
 
 func _on_goal_scored(_receiving_team : Team):

@@ -96,32 +96,46 @@ obstacle_scene = ExtResource("2_3ulyp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=813368]
 
-[node name="Score" type="MarginContainer" parent="CanvasLayer" unique_id=629919028]
+[node name="Score" type="Control" parent="CanvasLayer" unique_id=1798966378]
+layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -65.0
-offset_right = 8.0
-offset_bottom = -10.0
+offset_top = -37.0
+offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Score" unique_id=629919028]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -27.5
+offset_right = 68.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Score" unique_id=1574549550]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Score/MarginContainer" unique_id=1574549550]
 layout_mode = 2
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_right = -8
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Score/MarginContainer" unique_id=1559711743]
+[node name="Panel" type="Panel" parent="CanvasLayer/Score/MarginContainer/MarginContainer" unique_id=1559711743]
 layout_mode = 2
 theme = ExtResource("15_pkib5")
 
-[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Score" unique_id=1826399325 node_paths=PackedStringArray("score_parent")]
+[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Score/MarginContainer" unique_id=1826399325 node_paths=PackedStringArray("score_parent")]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
@@ -156,7 +170,7 @@ theme = ExtResource("16_o6frn")
 text = "xx.xx"
 horizontal_alignment = 1
 
-[node name="GoalScored" type="Control" parent="CanvasLayer" unique_id=1591044781 node_paths=PackedStringArray("white_flash_panel")]
+[node name="GoalScored" type="Control" parent="CanvasLayer" unique_id=1591044781 node_paths=PackedStringArray("goal_scored_label", "white_flash_panel")]
 custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 3
 anchors_preset = 8
@@ -175,6 +189,7 @@ script = ExtResource("16_x7kll")
 middle_time = 1.1
 shake_amplitude = 10.0
 shake_time = 0.03
+goal_scored_label = NodePath("GoalLabel")
 white_flash_panel = NodePath("GoalLabel/WhiteFlashPanel")
 
 [node name="GoalLabel" type="RichTextLabel" parent="CanvasLayer/GoalScored" unique_id=267427408]
@@ -192,6 +207,7 @@ offset_right = 500.0
 offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_outline_size = 40
 theme_override_constants/outline_size = 20

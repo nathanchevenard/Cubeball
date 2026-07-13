@@ -6,7 +6,6 @@ class_name ScoreUI
 
 var team_to_label_dictionary : Dictionary[Team, Label]
 var is_first_team : bool = true
-var init_position : Vector2
 
 
 func _init() -> void:
@@ -48,11 +47,10 @@ func _on_score_updated(_team : Team, _new_score : int):
 
 
 func _on_goal_scored(_receiving_team : Team):
-	init_position = global_position
 	var tween : Tween = get_tree().create_tween()
-	tween.tween_property(score_parent, "global_position", global_position + Vector2(0, 150), 0.2)
+	tween.tween_property(score_parent, "position", score_parent.position + Vector2(0, 150), 0.2)
 
 
 func _on_goal_animation_finished():
 	var tween : Tween = get_tree().create_tween()
-	tween.tween_property(score_parent, "global_position", init_position, 0.2)
+	tween.tween_property(score_parent, "position", score_parent.position - Vector2(0, 150), 0.2)
