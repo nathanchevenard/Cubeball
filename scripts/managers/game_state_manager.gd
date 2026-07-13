@@ -18,6 +18,7 @@ func _init() -> void:
 	SignalsManager.goal.ball_enter_goal.connect(_on_ball_enter_goal)
 	SignalsManager.goal.goal_animation_finish.connect(_on_goal_animation_finished)
 	SignalsManager.team.team_initialized.connect(_on_team_initialized)
+	SignalsManager.game.start_next_point.connect(_on_start_next_point)
 	SignalsManager.game.game_reset.connect(_on_game_reset)
 
 
@@ -52,6 +53,11 @@ func _on_team_initialized(team : Team):
 	score[team] = 0
 
 
+func _on_start_next_point():
+	is_post_goal = false
+	timer = 0
+
+
 func _on_game_reset():
 	is_post_goal = false
 	timer = 0
@@ -75,4 +81,9 @@ func _on_ball_enter_goal(receiving_team : Team):
 
 
 func _on_goal_animation_finished():
-	SignalsManager.game.emit_game_reset()
+	for team : Team in score.keys():
+		if score[team] >= game_mode.max_goal:
+			SignalsManager.game.emit_game_reset()
+			return
+	
+	SignalsManager.game.emit_start_next_point()

@@ -18,6 +18,7 @@ var game_mode : GameMode
 func _init() -> void:
 	SignalsManager.game.game_mode_set.connect(_on_game_mode_set)
 	SignalsManager.game.game_reset.connect(_on_game_reset)
+	SignalsManager.game.start_next_point.connect(_on_game_reset)
 	SignalsManager.level.level_spawn_node_at_random_pos.connect(_on_spawn_node_at_random_pos)
 
 

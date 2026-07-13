@@ -249,4 +249,6 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("21_nxfq7")
+show_time = 0.3
+increase_score_time = 0.2
 text_theme = ExtResource("16_o6frn")

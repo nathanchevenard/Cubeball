@@ -2,6 +2,9 @@ extends Control
 class_name BigScoreUI
 
 @export var display_distance : float = 300
+@export var show_time : float = 0.6
+@export var middle_time : float = 0.6
+@export var increase_score_time : float = 0.4
 @export var text_theme : Theme
 
 var team_to_label : Dictionary[Team, Label]
@@ -23,6 +26,17 @@ func start_show_phase(label : Label):
 func start_hide_phase(label : Label):
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property(label, "position", label_to_positions[label][0], 0.3)
+
+
+func increase_score(receiving_team : Team):
+	var label : Label = team_to_label[receiving_team]
+	var tween : Tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_SPRING)
+	await tween.tween_property(label, "scale", 1.5 * Vector2.ONE, 0.15).finished
+	label.text = str(receiving_team.score)
+	await get_tree().create_timer(increase_score_time).timeout
+	tween = get_tree().create_tween()
+	tween.tween_property(label, "scale", Vector2.ONE, 0.1)
 
 
 func _on_all_teams_initialized():
@@ -50,13 +64,21 @@ func _on_all_teams_initialized():
 		label_to_positions[label] = [initial_position, display_position]
 
 
-func _on_goal_scored(_receiving_team : Team):
+func _on_goal_scored(receiving_team : Team):
 	for team : Team in team_to_label.keys():
 		var label : Label = team_to_label[team]
-		label.text = str(team.score)
+		var score : int = team.score
+		label.text = str(score)
+		label.scale = Vector2.ONE
 		start_show_phase(label)
 	
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(show_time).timeout
+	
+	for team : Team in team_to_label.keys():
+		if team != receiving_team:
+			increase_score(team)
+	
+	await get_tree().create_timer(middle_time).timeout
 	
 	for team : Team in team_to_label.keys():
 		var label : Label = team_to_label[team]

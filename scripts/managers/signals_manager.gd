@@ -67,3 +67,7 @@ class GameSignals:
 	signal game_reset
 	func emit_game_reset():
 		game_reset.emit()
+	
+	signal start_next_point
+	func emit_start_next_point():
+		start_next_point.emit()
