@@ -14,10 +14,6 @@ func _init() -> void:
 
 
 func start_show_phase(label : Label):
-	#var screen_width : int = DisplayServer.screen_get_size().x
-	#var angle : float = label_to_positions[label][2]
-	#label_to_positions[label][0] = screen_width * Vector2.from_angle(angle) - label.size / 2
-	
 	var tween : Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
@@ -51,7 +47,7 @@ func _on_all_teams_initialized():
 		
 		label.position = initial_position
 		team_to_label[team] = label
-		label_to_positions[label] = [initial_position, display_position, angle]
+		label_to_positions[label] = [initial_position, display_position]
 
 
 func _on_goal_scored(_receiving_team : Team):

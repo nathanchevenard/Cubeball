@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://nhgyucf6pq3b"]
 
+[ext_resource type="Material" uid="uid://dc7bdw6704gji" path="res://assets/materials/ground_material_0.tres" id="1_teueu"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_nu5rl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_teueu"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52fb6"]
-albedo_color = Color(0.19434929, 0.19434926, 0.19434926, 1)
 
 [node name="Ground" type="Node3D" unique_id=881915485]
 
@@ -19,4 +18,4 @@ shape = SubResource("BoxShape3D_nu5rl")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=54305394]
 mesh = SubResource("BoxMesh_teueu")
-surface_material_override/0 = SubResource("StandardMaterial3D_52fb6")
+surface_material_override/0 = ExtResource("1_teueu")

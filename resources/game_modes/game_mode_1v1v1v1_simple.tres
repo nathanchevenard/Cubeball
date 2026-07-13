@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="GameMode" format=3 uid="uid://c4svfbgbfem01"]
+
+[ext_resource type="Script" uid="uid://culgsafxumoi6" path="res://scripts/game_mode.gd" id="1_s4y01"]
+[ext_resource type="Script" uid="uid://n7sn8ufocqac" path="res://scripts/game_mode_team.gd" id="2_36my6"]
+[ext_resource type="Resource" uid="uid://cvj3lg7ofyfcf" path="res://resources/teams/red_team.tres" id="3_tphqq"]
+[ext_resource type="Resource" uid="uid://di86mbxg10ljc" path="res://resources/teams/blue_team.tres" id="4_k8hlb"]
+[ext_resource type="Resource" uid="uid://dq5pxay68j5t4" path="res://resources/teams/green_team.tres" id="5_4e6el"]
+[ext_resource type="Resource" uid="uid://3lg5bkr8xkcw" path="res://resources/teams/yellow_team.tres" id="6_36my6"]
+
+[sub_resource type="Resource" id="Resource_6wuse"]
+script = ExtResource("2_36my6")
+team = ExtResource("3_tphqq")
+players_number = 1
+metadata/_custom_type_script = "uid://n7sn8ufocqac"
+
+[sub_resource type="Resource" id="Resource_4t5hi"]
+script = ExtResource("2_36my6")
+team = ExtResource("4_k8hlb")
+players_number = 1
+metadata/_custom_type_script = "uid://n7sn8ufocqac"
+
+[sub_resource type="Resource" id="Resource_57wiy"]
+script = ExtResource("2_36my6")
+team = ExtResource("5_4e6el")
+players_number = 1
+metadata/_custom_type_script = "uid://n7sn8ufocqac"
+
+[sub_resource type="Resource" id="Resource_tphqq"]
+script = ExtResource("2_36my6")
+team = ExtResource("6_36my6")
+players_number = 1
+metadata/_custom_type_script = "uid://n7sn8ufocqac"
+
+[resource]
+script = ExtResource("1_s4y01")
+team_list = Array[ExtResource("2_36my6")]([SubResource("Resource_6wuse"), SubResource("Resource_4t5hi"), SubResource("Resource_57wiy"), SubResource("Resource_tphqq")])
+max_duration_seconds = 30.0
+level_size = Vector3(10, 4, 15)
+goal_size = Vector3(3, 4, 5)
+obstacle_number_min = 0
+obstacle_number_max = 0
+metadata/_custom_type_script = "uid://culgsafxumoi6"
