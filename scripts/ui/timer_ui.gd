@@ -10,7 +10,7 @@ func _init() -> void:
 
 
 func _on_goal_scored(_receiving_team : Team):
-	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+	if DebugManager.instance.goal_animation == false:
 		return
 	
 	init_position = global_position
@@ -19,7 +19,7 @@ func _on_goal_scored(_receiving_team : Team):
 
 
 func _on_goal_animation_finished():
-	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+	if DebugManager.instance.goal_animation == false:
 		return
 	
 	var tween : Tween = get_tree().create_tween()

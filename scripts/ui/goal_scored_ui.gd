@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func _on_goal_scored(_receiving_team : Team):
-	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+	if DebugManager.instance.goal_animation == false:
 		SignalsManager.goal.emit_goal_animation_finish()
 		return
 	

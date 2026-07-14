@@ -1,5 +1,5 @@
 extends Node
-class_name AgentSynchronizer
+class_name PythonSynchronizer
 
 # --fixed-fps 2000 --disable-render-loop
 
@@ -9,7 +9,7 @@ enum ControlModes { HUMAN, TRAINING, ONNX_INFERENCE }
 @export_range(0, 10, 0.1, "or_greater") var speed_up := 1.0
 @export var onnx_model_path := ""
 
-static var instance : AgentSynchronizer
+static var instance : PythonSynchronizer
 
 # Onnx model stored for each requested path
 var onnx_models: Dictionary
@@ -504,7 +504,7 @@ func handle_message() -> bool:
 
 	if message["type"] == "reset":
 		_debug_log("starting new match with config: %s" % [message["config"]])
-		_start_new_match(message["config"])
+		_start_new_episode(message["config"])
 		_get_agents()
 		_debug_log(
 			"found %d nodes in AGENT group, %d classified as training agents: %s"
@@ -551,10 +551,8 @@ func _reset_agents_if_done(agents = all_agents):
 # duration, goal target, players per team) and rebuilds the arena and roster for it —
 # used for every episode, including the first (see _ready(): training mode never builds
 # anything until this runs for the first time).
-func _start_new_match(config : Dictionary) -> void:
-	var new_game_mode : GameMode = GameModeManager.instance.apply_overrides(
-		GameModeManager.instance.game_mode, config
-	)
+func _start_new_episode(config : Dictionary) -> void:
+	var new_game_mode : GameMode = GameModeManager.instance.create_game_mode(config)
 	SignalsManager.game.emit_game_mode_set(new_game_mode)
 	SignalsManager.game.emit_game_reset()
 

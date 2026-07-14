@@ -25,7 +25,7 @@ func _init() -> void:
 
 
 func _on_game_mode_set(new_game_mode : GameMode) -> void:
-	rebuild(new_game_mode)
+	build_level(new_game_mode)
 
 
 # Tears down any previously built arena (ground/walls/goals/balls/obstacles) and rebuilds
@@ -33,8 +33,8 @@ func _on_game_mode_set(new_game_mode : GameMode) -> void:
 # Python pushes a new episode config with a (possibly different) field/goal size or ball
 # count, since goal geometry (CSG reparented into the containing wall, see spawn_goal)
 # cannot safely be resized in place.
-func rebuild(new_game_mode : GameMode) -> void:
-	_teardown()
+func build_level(new_game_mode : GameMode) -> void:
+	destroy_level()
 
 	game_mode = new_game_mode
 	var size_x : float = game_mode.level_size.x
@@ -42,8 +42,7 @@ func rebuild(new_game_mode : GameMode) -> void:
 	var size_z : float = game_mode.level_size.z
 	var goal_scale : Vector3 = game_mode.goal_size
 	var ball_number : int = game_mode.ball_number
-	var obstacle_number_min : int = game_mode.obstacle_number_min
-	var obstacle_number_max : int = game_mode.obstacle_number_max
+	var obstacle_number : int = game_mode.obstacle_number
 
 	# Spawn Ground
 	ground = ground_scene.instantiate()
@@ -70,14 +69,16 @@ func rebuild(new_game_mode : GameMode) -> void:
 		ball_list.append(ball)
 
 	# Spawn Obstacles
-	var obstacle_random_number : int = randi_range(obstacle_number_min, obstacle_number_max)
-	for i in obstacle_random_number:
+	for i in obstacle_number:
 		spawn_obstacle()
 
 	SignalsManager.level.emit_level_initialized(self)
 
 
-func _teardown() -> void:
+func destroy_level() -> void:
+	for cuboid in EntityManager.instance.cuboid_list:
+		cuboid.destroy()
+	
 	if ground != null:
 		ground.queue_free()
 		ground = null

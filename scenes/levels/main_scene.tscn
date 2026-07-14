@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/debug_manager.gd" id="6_6u8e5"]
 [ext_resource type="Script" uid="uid://b7fnsvb8f18gw" path="res://scripts/managers/game_state_manager.gd" id="6_84bhp"]
 [ext_resource type="Script" uid="uid://cnwlwnghcjbcu" path="res://scripts/managers/game_mode_manager.gd" id="7_84bhp"]
-[ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/agent_synchronizer.gd" id="7_jtcbb"]
+[ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/python_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="8_df41j"]
 [ext_resource type="Theme" uid="uid://bx71pn8ahuqk2" path="res://assets/themes/panel_theme.tres" id="15_pkib5"]
@@ -64,7 +64,7 @@ script = ExtResource("6_84bhp")
 timer_label = NodePath("../../CanvasLayer/Timer/Timer")
 metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
-[node name="AgentSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
+[node name="PythonSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
 onnx_model_path = "res://assets/onnx/shared_policy_v1.onnx"
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"

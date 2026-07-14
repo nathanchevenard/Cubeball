@@ -17,7 +17,7 @@ func _on_level_initialized(level : Level):
 		_initialize_teams(level)
 
 	_assign_goals_to_teams(level)
-	_spawn_roster(level)
+	_spawn_team_cuboids(level)
 
 	SignalsManager.team.emit_all_teams_initialized()
 
@@ -48,35 +48,20 @@ func _assign_goals_to_teams(level : Level) -> void:
 # GameModeManager.apply_overrides) — that fresh copy's cuboid_list is always empty, only
 # the original team_list entries are populated. Each cuboid's agent_id ("team{i}_{slot}")
 # is how Python identifies it in the training wire protocol (see agent_synchronizer.gd).
-func _spawn_roster(level : Level) -> void:
+func _spawn_team_cuboids(level : Level) -> void:
 	var is_first_cuboid : bool = true
 
 	for team_index in range(mini(team_list.size(), level.game_mode.team_list.size())):
 		var team : Team = team_list[team_index]
 		var players_number : int = level.game_mode.team_list[team_index].players_number
 
-		for cuboid in team.cuboid_list:
-			cuboid.destroy()
-		team.cuboid_list.clear()
-
 		for slot_index in players_number:
 			var cuboid : Cuboid = cuboid_scene.instantiate() as Cuboid
 			cuboid.level = level
 			add_child(cuboid)
 			cuboid.set_team(team)
-			cuboid.cuboid_ai_controller.agent_id = "team%d_%d" % [team_index, slot_index]
+			cuboid.cuboid_ai_controller.agent_id = "team%d_cuboid%d" % [team_index, slot_index]
 			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)
-
-			# DebugManager.instance is only ever set in the editor (see DebugManager._init,
-			# which leaves it null in exported builds) — the editor check has to run
-			# first so this short-circuits before touching it outside the editor.
-			if OS.has_feature("editor") == true && is_first_cuboid == true\
-			&& DebugManager.instance.first_cuboid_human_input == true:
-				is_first_cuboid = false
-				cuboid.input_mode = Cuboid.InputMode.HUMAN
-
-				if DebugManager.instance.camera_on_cuboid == true:
-					cuboid.camera.current = true
 
 
 func _on_game_reset():

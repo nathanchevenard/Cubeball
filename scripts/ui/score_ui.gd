@@ -47,14 +47,14 @@ func _on_score_updated(_team : Team, _new_score : int):
 
 
 func _on_goal_scored(_receiving_team : Team):
-	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+	if DebugManager.instance.goal_animation == false:
 		return
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property(score_parent, "position", score_parent.position + Vector2(0, 150), 0.2)
 
 
 func _on_goal_animation_finished():
-	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+	if DebugManager.instance.goal_animation == false:
 		return
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property(score_parent, "position", score_parent.position - Vector2(0, 150), 0.2)
