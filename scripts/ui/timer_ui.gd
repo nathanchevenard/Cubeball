@@ -10,11 +10,17 @@ func _init() -> void:
 
 
 func _on_goal_scored(_receiving_team : Team):
+	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+		return
+	
 	init_position = global_position
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", global_position + Vector2(0, -150), 0.2)
 
 
 func _on_goal_animation_finished():
+	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+		return
+	
 	var tween : Tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", init_position, 0.2)

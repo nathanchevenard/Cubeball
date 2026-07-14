@@ -26,9 +26,13 @@ var message_center
 var should_connect = true
 
 var all_agents: Array
-var agents_training: Array
-## Policy name of each agent, for use with multi-policy multi-agent RL cases
-var agents_training_policy_names: Array[String] = ["shared_policy"]
+## Training agents keyed by their stable agent_id (see AIController3D.agent_id). The
+## roster is fully rebuilt every episode (see TeamsManager._spawn_roster), so this is
+## re-collected on every "reset" instead of once at startup (see _get_agents).
+var agents_training: Dictionary
+## Policy name of each training agent, keyed the same way as agents_training — for use
+## with multi-policy multi-agent RL cases.
+var agents_training_policy_names: Dictionary
 var agents_inference: Array
 var agents_heuristic: Array
 
@@ -47,67 +51,75 @@ var initialized = false
 var just_reset = false
 var onnx_model = null
 var n_action_steps = 0
+## Verbose training-flow diagnostics (handshake, per-episode config/roster info, ...)
+## are only printed when this is on — set via the Python side's "debug_logs" config
+## (see Cubeball/CubeballConnection), read here as the --debug_logs launch argument.
+## Warnings and connection-lifecycle messages are always printed regardless.
+var debug_logs_enabled : bool = false
 
-var _action_space_training: Array[Dictionary] = []
 var _action_space_inference: Array[Dictionary] = []
-var _obs_space_training: Array[Dictionary] = []
 
 
 func _init() -> void:
 	instance = self
+
+	if OS.has_feature("editor") == true && control_mode == ControlModes.TRAINING:
+		control_mode = ControlModes.ONNX_INFERENCE
+
 	SignalsManager.team.all_teams_initialized.connect(_on_all_teams_initialized)
 
 
+func _ready() -> void:
+	args = _get_args()
+	debug_logs_enabled = args.get("debug_logs", "false") == "true"
+	_set_seed()
+	_set_action_repeat()
+	Engine.physics_ticks_per_second = _get_speedup() * 60
+	Engine.time_scale = _get_speedup() * 1.0
+	_debug_log(
+		"physics ticks %s %s %s %s"
+		% [Engine.physics_ticks_per_second, Engine.time_scale, _get_speedup(), speed_up]
+	)
+
+	if control_mode != ControlModes.TRAINING:
+		return
+
+	# Training mode connects to Python immediately, before any level or roster exists —
+	# Godot only learns what to build from Python's first "reset" message (handled
+	# uniformly with every later episode, see handle_message/_get_agents). Non-training
+	# modes are unaffected: their level is already built by GameModeManager by the time
+	# _on_all_teams_initialized fires below, exactly as before.
+	connected = connect_to_server()
+	if connected:
+		_handshake()
+	else:
+		push_warning(
+			"Couldn't connect to Python server, using human controls instead. ",
+			"Did you start the training server using e.g. `gdrl` from the console?"
+		)
+
+
 func _on_all_teams_initialized():
+	# Training mode's roster is (re)discovered per-episode from handle_message's
+	# "reset" branch instead — this signal fires for every arena rebuild in training
+	# mode too (including the throwaway initial one from GameModeManager._ready()), but
+	# there's nothing for it to do there.
+	if control_mode == ControlModes.TRAINING:
+		return
+
 	get_tree().set_pause(true)
 	_initialize()
 	get_tree().set_pause(false)
 
 
 func _initialize():
-	if OS.has_feature("editor") == true && control_mode == ControlModes.TRAINING:
-		control_mode = ControlModes.ONNX_INFERENCE
-	
 	_get_agents()
-	args = _get_args()
-	Engine.physics_ticks_per_second = _get_speedup() * 60  # Replace with function body.
-	Engine.time_scale = _get_speedup() * 1.0
-	prints(
-		"physics ticks",
-		Engine.physics_ticks_per_second,
-		Engine.time_scale,
-		_get_speedup(),
-		speed_up
-	)
-
 	_set_heuristic("human", all_agents)
 
-	_initialize_training_agents()
 	_initialize_inference_agents()
 	_initialize_demo_recording()
 
-	_set_seed()
-	_set_action_repeat()
 	initialized = true
-
-
-func _initialize_training_agents():
-	if agents_training.size() > 0:
-		_obs_space_training.resize(agents_training.size())
-		_action_space_training.resize(agents_training.size())
-		for agent_idx in range(0, agents_training.size()):
-			_obs_space_training[agent_idx] = agents_training[agent_idx].get_obs_space()
-			_action_space_training[agent_idx] = agents_training[agent_idx].get_action_space()
-		connected = connect_to_server()
-		if connected:
-			_set_heuristic("model", agents_training)
-			_handshake()
-			_send_env_info()
-		else:
-			push_warning(
-				"Couldn't connect to Python server, using human controls instead. ",
-				"Did you start the training server using e.g. `gdrl` from the console?"
-			)
 
 
 func _initialize_inference_agents():
@@ -156,7 +168,7 @@ func _initialize_inference_agents():
 			agent.onnx_model = agent_onnx_model
 			if not agent_onnx_model.action_means_only_set:
 				agent_onnx_model.set_action_means_only(action_space)
-				
+
 		_set_heuristic("model", agents_inference)
 
 
@@ -201,9 +213,14 @@ func _training_process():
 
 		if just_reset:
 			just_reset = false
-			var obs = _get_obs_from_agents(agents_training)
 
-			var reply = {"type": "reset", "obs": obs}
+			var reply = {
+				"type": "reset",
+				"obs": _get_training_obs(),
+				"observation_space": _get_shared_obs_space(),
+				"action_space": _get_shared_action_space(),
+				"agent_policy_names": agents_training_policy_names,
+			}
 			_send_dict_as_json_message(reply)
 			# this should go straight to getting the action and setting it checked the agent, no need to perform one phyics tick
 			get_tree().set_pause(false)
@@ -211,11 +228,9 @@ func _training_process():
 
 		if need_to_send_obs:
 			need_to_send_obs = false
-			var reward = _get_reward_from_agents()
-			var done = _get_done_from_agents()
-			#_reset_agents_if_done() # this ensures the new observation is from the next env instance : NEEDS REFACTOR
-
-			var obs = _get_obs_from_agents(agents_training)
+			var reward = _get_training_rewards()
+			var done = _get_training_dones()
+			var obs = _get_training_obs()
 
 			var reply = {"type": "step", "obs": obs, "reward": reward, "done": done}
 			_send_dict_as_json_message(reply)
@@ -291,8 +306,8 @@ func _heuristic_process():
 func _extract_action_dict(action_array: Array, action_space: Dictionary, action_means_only: bool):
 	var index = 0
 	var result = {}
-	for key in action_space.keys():	
-		var size = action_space[key]["size"]	
+	for key in action_space.keys():
+		var size = action_space[key]["size"]
 		var action_type = action_space[key]["action_type"]
 		if action_type == "discrete":
 			var largest_logit: float # Value of the largest logit for this action in the actions array
@@ -301,7 +316,7 @@ func _extract_action_dict(action_array: Array, action_space: Dictionary, action_
 				var logit_value = action_array[index + logit_idx]
 				if logit_value > largest_logit:
 					largest_logit = logit_value
-					largest_logit_idx = logit_idx 
+					largest_logit_idx = logit_idx
 			result[key] = largest_logit_idx # Index of the largest logit is the discrete action value
 			index += size
 		elif action_type == "continuous":
@@ -314,7 +329,7 @@ func _extract_action_dict(action_array: Array, action_space: Dictionary, action_
 
 		else:
 			assert(false, 'Only "discrete" and "continuous" action types supported. Found: %s action type set.' % action_type)
-		
+
 
 	return result
 
@@ -333,13 +348,24 @@ func _set_agent_mode(agent: Node):
 				agent.control_mode = agent.ControlModes.ONNX_INFERENCE
 
 
+# Re-entrant: called once at startup for non-training modes, and once per episode for
+# training mode (see handle_message), so every collection is cleared before
+# repopulating — the original godot_rl_agents version only ever appended, which is only
+# safe when called exactly once.
 func _get_agents():
 	all_agents = get_tree().get_nodes_in_group("AGENT")
+	agents_training = {}
+	agents_training_policy_names = {}
+	agents_inference = []
+	agents_heuristic = []
+	agent_demo_record = null
+
 	for agent in all_agents:
 		_set_agent_mode(agent)
 
 		if agent.control_mode == agent.ControlModes.TRAINING:
-			agents_training.append(agent)
+			agents_training[agent.agent_id] = agent
+			agents_training_policy_names[agent.agent_id] = agent.policy_name
 		elif agent.control_mode == agent.ControlModes.ONNX_INFERENCE:
 			agents_inference.append(agent)
 		elif agent.control_mode == agent.ControlModes.HUMAN:
@@ -350,11 +376,6 @@ func _get_agents():
 				"Currently only a single AIController can be used for recording expert demos."
 			)
 			agent_demo_record = agent
-	
-	var training_agent_count = agents_training.size()
-	agents_training_policy_names.resize(training_agent_count)
-	for i in range(0, training_agent_count):
-		agents_training_policy_names[i] = agents_training[i].policy_name
 
 
 func _set_heuristic(heuristic, agents: Array):
@@ -363,7 +384,7 @@ func _set_heuristic(heuristic, agents: Array):
 
 
 func _handshake():
-	print("performing handshake")
+	_debug_log("performing handshake")
 
 	var json_dict = _get_dict_json_message()
 	assert(json_dict["type"] == "handshake")
@@ -374,13 +395,18 @@ func _handshake():
 	if minor_version != MINOR_VERSION:
 		print("WARNING: minor verison mismatch ", minor_version, " ", MINOR_VERSION)
 
-	print("handshake complete")
+	_debug_log("handshake complete")
 
 
 func _get_dict_json_message():
 	# returns a dictionary from of the most recent message
 	# this is not waiting
-	while stream.get_available_bytes() == 0:
+
+	# get_available_bytes() returns -1 (not 0) once the peer is gone — "<= 0" (not
+	# "== 0") is required so a broken connection still enters this loop and gets
+	# caught by the stream.get_status() check below. Missing this meant Godot never
+	# noticed Python had disconnected and just error-looped forever without quitting.
+	while stream.get_available_bytes() <= 0:
 		stream.poll()
 		if stream.get_status() != 2:
 			print("server disconnected status, closing")
@@ -399,24 +425,10 @@ func _send_dict_as_json_message(dict):
 	stream.put_string(JSON.stringify(dict, "", false))
 
 
-func _send_env_info():
-	var json_dict = _get_dict_json_message()
-	assert(json_dict["type"] == "env_info")
-
-	var message = {
-		"type": "env_info",
-		"observation_space": _obs_space_training,
-		"action_space": _action_space_training,
-		"n_agents": len(agents_training),
-		"agent_policy_names": agents_training_policy_names
-	}
-	_send_dict_as_json_message(message)
-
-
 func connect_to_server():
-	print("Waiting for one second to allow server to start")
+	_debug_log("Waiting for one second to allow server to start")
 	OS.delay_msec(1000)
-	print("trying to connect to server")
+	_debug_log("trying to connect to server")
 	stream = StreamPeerTCP.new()
 
 	# "localhost" was not working on windows VM, had to use the IP
@@ -432,10 +444,8 @@ func connect_to_server():
 
 
 func _get_args():
-	print("getting command line arguments")
 	var arguments = {}
 	for argument in OS.get_cmdline_args():
-		print(argument)
 		if argument.find("=") > -1:
 			var key_value = argument.split("=")
 			arguments[key_value[0].lstrip("--")] = key_value[1]
@@ -448,7 +458,7 @@ func _get_args():
 
 
 func _get_speedup():
-	print(args)
+	_debug_log(args)
 	return args.get("speedup", str(speed_up)).to_float()
 
 
@@ -469,9 +479,23 @@ func disconnect_from_server():
 	stream.disconnect_from_host()
 
 
+static func is_python_training() -> bool:
+	return instance != null && instance.connected && instance.control_mode == ControlModes.TRAINING
+
+
+func _debug_log(message) -> void:
+	if debug_logs_enabled:
+		print(message)
+
+
 func handle_message() -> bool:
 	# get json message: reset, step, close
 	var message = _get_dict_json_message()
+	if message == null:
+		# connection was already lost (see _get_dict_json_message), quit() was
+		# already requested there, nothing left to handle
+		return false
+
 	if message["type"] == "close":
 		print("received close message, closing game")
 		get_tree().quit()
@@ -479,32 +503,28 @@ func handle_message() -> bool:
 		return true
 
 	if message["type"] == "reset":
-		print("resetting all agents")
-		_reset_agents()
+		_debug_log("starting new match with config: %s" % [message["config"]])
+		_start_new_match(message["config"])
+		_get_agents()
+		_debug_log(
+			"found %d nodes in AGENT group, %d classified as training agents: %s"
+			% [all_agents.size(), agents_training.size(), agents_training.keys()]
+		)
+		_set_heuristic("model", agents_training.values())
 		just_reset = true
 		get_tree().set_pause(false)
-		#print("resetting forcing draw")
-#        RenderingServer.force_draw()
-#        var obs = _get_obs_from_agents()
-#        print("obs ", obs)
-#        var reply = {
-#            "type": "reset",
-#            "obs": obs
-#        }
-#        _send_dict_as_json_message(reply)
 		return true
 
 	if message["type"] == "call":
 		var method = message["method"]
 		var returns = _call_method_on_agents(method)
 		var reply = {"type": "call", "returns": returns}
-		print("calling method from Python")
+		_debug_log("calling method from Python")
 		_send_dict_as_json_message(reply)
 		return handle_message()
 
 	if message["type"] == "action":
-		var action = message["action"]
-		_set_agent_actions(action, agents_training)
+		_set_training_agent_actions(message["action"])
 		need_to_send_obs = true
 		get_tree().set_pause(false)
 		return true
@@ -527,10 +547,61 @@ func _reset_agents_if_done(agents = all_agents):
 			agent.set_done_false()
 
 
-func _reset_agents(agents = all_agents):
-	for agent in agents:
-		agent.needs_reset = true
-		#agent.reset()
+# Applies a new episode config pushed by Python (field size, ball/obstacle counts,
+# duration, goal target, players per team) and rebuilds the arena and roster for it —
+# used for every episode, including the first (see _ready(): training mode never builds
+# anything until this runs for the first time).
+func _start_new_match(config : Dictionary) -> void:
+	var new_game_mode : GameMode = GameModeManager.instance.apply_overrides(
+		GameModeManager.instance.game_mode, config
+	)
+	SignalsManager.game.emit_game_mode_set(new_game_mode)
+	SignalsManager.game.emit_game_reset()
+
+
+func _get_shared_obs_space() -> Dictionary:
+	if agents_training.is_empty():
+		return {}
+	return agents_training.values()[0].get_obs_space()
+
+
+func _get_shared_action_space() -> Dictionary:
+	if agents_training.is_empty():
+		return {}
+	return agents_training.values()[0].get_action_space()
+
+
+func _get_training_obs() -> Dictionary:
+	var obs : Dictionary = {}
+	for agent_id in agents_training:
+		obs[agent_id] = agents_training[agent_id].get_obs()
+	return obs
+
+
+func _get_training_rewards() -> Dictionary:
+	var rewards : Dictionary = {}
+	for agent_id in agents_training:
+		var agent = agents_training[agent_id]
+		rewards[agent_id] = agent.get_reward()
+		agent.zero_reward()
+	return rewards
+
+
+func _get_training_dones() -> Dictionary:
+	var dones : Dictionary = {}
+	for agent_id in agents_training:
+		var agent = agents_training[agent_id]
+		var done = agent.get_done()
+		if done:
+			agent.set_done_false()
+		dones[agent_id] = done
+	return dones
+
+
+func _set_training_agent_actions(actions : Dictionary) -> void:
+	for agent_id in actions:
+		if agents_training.has(agent_id):
+			agents_training[agent_id].set_action(actions[agent_id])
 
 
 func _get_obs_from_agents(agents: Array = all_agents):
@@ -538,24 +609,6 @@ func _get_obs_from_agents(agents: Array = all_agents):
 	for agent in agents:
 		obs.append(agent.get_obs())
 	return obs
-
-
-func _get_reward_from_agents(agents: Array = agents_training):
-	var rewards = []
-	for agent in agents:
-		rewards.append(agent.get_reward())
-		agent.zero_reward()
-	return rewards
-
-
-func _get_done_from_agents(agents: Array = agents_training):
-	var dones = []
-	for agent in agents:
-		var done = agent.get_done()
-		if done:
-			agent.set_done_false()
-		dones.append(done)
-	return dones
 
 
 func _set_agent_actions(actions, agents: Array = all_agents):

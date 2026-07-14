@@ -65,6 +65,9 @@ func _on_all_teams_initialized():
 
 
 func _on_goal_scored(receiving_team : Team):
+	if AgentSynchronizer.instance.control_mode == AgentSynchronizer.ControlModes.TRAINING:
+		return
+	
 	for team : Team in team_to_label.keys():
 		var label : Label = team_to_label[team]
 		var score : int = team.score

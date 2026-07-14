@@ -29,6 +29,9 @@ var done := false
 var reward := 0.0
 var n_steps := 0
 var needs_reset := false
+## Stable identity used to key this agent in the training wire protocol (set by
+## whoever spawns the agent, e.g. TeamsManager). Only meaningful in training mode.
+var agent_id := ""
 
 var _player: Node3D
 

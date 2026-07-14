@@ -31,8 +31,19 @@ signal color_changed(color : Color)
 
 func _ready() -> void:
 	super()
-	
+
 	cuboid_ai_controller.init(self)
+
+
+# queue_free() (called by PhysicsEntity.destroy) only actually removes the node at the
+# end of the frame — but TeamsManager destroys the previous episode's cuboids and spawns
+# the new roster within the same synchronous call chain, so AgentSynchronizer's
+# `get_tree().get_nodes_in_group("AGENT")` would otherwise still see the about-to-be-freed
+# ones moments later, colliding with the new roster's agent_id and leaving stale node
+# references in agents_training. Removing from the group immediately avoids that.
+func destroy() -> void:
+	cuboid_ai_controller.remove_from_group("AGENT")
+	super.destroy()
 
 
 func _physics_process(delta: float) -> void:
