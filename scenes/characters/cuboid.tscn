@@ -33,7 +33,7 @@ albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 size = Vector3(0.95, 0.047132812, 0.95)
 
 [node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("camera", "cuboid_ai_controller")]
-collision_mask = 31
+collision_mask = 95
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_tsay5")
@@ -121,6 +121,252 @@ cuboid = NodePath("../..")
 [node name="ObstacleRaycast" parent="Raycasts" unique_id=1003394821 node_paths=PackedStringArray("cuboid") instance=ExtResource("6_f4xdk")]
 visible = false
 cuboid = NodePath("../..")
+collision_mask = 44
+
+[node name="node_0_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=367384659]
+target_position = Vector3(-9.654821, -97.49279, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_0_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1676654574]
+target_position = Vector3(-27.052208, -78.18315, -56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_0_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=875799910]
+target_position = Vector3(-39.091576, -43.388374, -81.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_0_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1241742278]
+target_position = Vector3(-43.388374, 0, -90.096886)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_0_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1117543968]
+target_position = Vector3(-39.091576, 43.388374, -81.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_0_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=656690350]
+target_position = Vector3(-27.052208, 78.18315, -56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_0_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1581142119]
+target_position = Vector3(-9.654821, 97.49279, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1198478908]
+target_position = Vector3(-21.694187, -97.49279, -4.9515567)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=933024955]
+target_position = Vector3(-60.785763, -78.18315, -13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=226466352]
+target_position = Vector3(-87.83797, -43.388374, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1266601178]
+target_position = Vector3(-97.49279, 0, -22.252094)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=805809249]
+target_position = Vector3(-87.83797, 43.388374, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=302840398]
+target_position = Vector3(-60.785763, 78.18315, -13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_1_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1233096586]
+target_position = Vector3(-21.694187, 97.49279, -4.9515567)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=941566706]
+target_position = Vector3(-17.397387, -97.49279, 13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1678817027]
+target_position = Vector3(-48.746395, -78.18315, 38.873955)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1696926599]
+target_position = Vector3(-70.44058, -43.388374, 56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1727426090]
+target_position = Vector3(-78.18315, 0, 62.34898)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1876362108]
+target_position = Vector3(-70.44058, 43.388374, 56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=383427954]
+target_position = Vector3(-48.746395, 78.18315, 38.873955)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_2_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=192350310]
+target_position = Vector3(-17.397387, 97.49279, 13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=767446842]
+target_position = Vector3(0, -97.49279, 22.252094)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1838090194]
+target_position = Vector3(0, -78.18315, 62.34898)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=211941439]
+target_position = Vector3(0, -43.388374, 90.096886)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=10001369]
+target_position = Vector3(0, 0, 100)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1996139160]
+target_position = Vector3(0, 43.388374, 90.096886)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1242145394]
+target_position = Vector3(0, 78.18315, 62.34898)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_3_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1446513696]
+target_position = Vector3(0, 97.49279, 22.252094)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=111085956]
+target_position = Vector3(17.397387, -97.49279, 13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1052399962]
+target_position = Vector3(48.746395, -78.18315, 38.873955)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=242379021]
+target_position = Vector3(70.44058, -43.388374, 56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=187947646]
+target_position = Vector3(78.18315, 0, 62.34898)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=176658923]
+target_position = Vector3(70.44058, 43.388374, 56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1717318171]
+target_position = Vector3(48.746395, 78.18315, 38.873955)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_4_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=686814342]
+target_position = Vector3(17.397387, 97.49279, 13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=402813255]
+target_position = Vector3(21.694187, -97.49279, -4.9515567)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1699890247]
+target_position = Vector3(60.785763, -78.18315, -13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=561168346]
+target_position = Vector3(87.83797, -43.388374, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1545618643]
+target_position = Vector3(97.49279, 0, -22.252094)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=153689294]
+target_position = Vector3(87.83797, 43.388374, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1742440865]
+target_position = Vector3(60.785763, 78.18315, -13.873953)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_5_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1712083397]
+target_position = Vector3(21.694187, 97.49279, -4.9515567)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 0_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1295698736]
+target_position = Vector3(9.654821, -97.49279, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 1_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1122936219]
+target_position = Vector3(27.052208, -78.18315, -56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 2_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=2046461815]
+target_position = Vector3(39.091576, -43.388374, -81.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 3_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1689805623]
+target_position = Vector3(43.388374, 0, -90.096886)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 4_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=202864395]
+target_position = Vector3(39.091576, 43.388374, -81.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 5_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=1107977828]
+target_position = Vector3(27.052208, 78.18315, -56.17449)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
+
+[node name="node_6_0 6_0" type="RayCast3D" parent="Raycasts/ObstacleRaycast" unique_id=623301194]
+target_position = Vector3(9.654821, 97.49279, -20.048443)
+collision_mask = 44
+debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
 
 [node name="GoalRaycast" parent="Raycasts" unique_id=526238269 node_paths=PackedStringArray("cuboid") instance=ExtResource("7_23rco")]
 visible = false

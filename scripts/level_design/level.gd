@@ -2,8 +2,16 @@ extends Node3D
 class_name Level
 
 
-@export var ground_scene : PackedScene
-@export var wall_scene : PackedScene
+@export var room_wall_height : float = 10
+@export var room_scale : float = 3
+@export var border_wall_width : float = 0.1
+@export var penatly_area_width : float = 1.5
+
+@export var ground_field_scene : PackedScene
+@export var wall_field_scene : PackedScene
+@export var wall_border_field_scene : PackedScene
+@export var ground_room_scene : PackedScene
+@export var wall_room_scene : PackedScene
 @export var goal_scene : PackedScene
 @export var ball_scene : PackedScene
 @export var obstacle_scene : PackedScene
@@ -13,6 +21,8 @@ var ball_list : Array[Ball]
 var obstacle_list : Array[Obstacle]
 var wall_list : Array[Wall]
 var ground : Node3D
+var field_border_list : Array[Node3D]
+var ground_room : Node3D
 
 var game_mode : GameMode
 
@@ -45,15 +55,15 @@ func build_level(new_game_mode : GameMode) -> void:
 	var obstacle_number : int = game_mode.obstacle_number
 
 	# Spawn Ground
-	ground = ground_scene.instantiate()
+	ground = ground_field_scene.instantiate()
 	add_child(ground)
 	ground.scale = Vector3(size_x, 1, size_z)
 
 	# Spawn Walls
-	var wall1 : Wall = spawn_wall(Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), Vector3(1, size_y, size_x))
-	var wall2 : Wall = spawn_wall(Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), Vector3(1, size_y, size_x))
-	spawn_wall(Vector3(size_x / 2, 0, 0), Vector3(0, 0, 0), Vector3(1, size_y, size_z))
-	spawn_wall(Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), Vector3(1, size_y, size_z))
+	var wall1 : Wall = spawn_wall(wall_field_scene, Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), Vector3(1, size_y, size_x))
+	var wall2 : Wall = spawn_wall(wall_field_scene, Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), Vector3(1, size_y, size_x))
+	spawn_wall(wall_field_scene, Vector3(size_x / 2, 0, 0), Vector3(0, 0, 0), Vector3(1, size_y, size_z))
+	spawn_wall(wall_field_scene, Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), Vector3(1, size_y, size_z))
 
 	# Spawn Goals
 	goal_list.append(spawn_goal(Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), goal_scale, wall2))
@@ -71,6 +81,9 @@ func build_level(new_game_mode : GameMode) -> void:
 	# Spawn Obstacles
 	for i in obstacle_number:
 		spawn_obstacle()
+
+	spawn_field_border_walls()
+	spawn_room()
 
 	SignalsManager.level.emit_level_initialized(self)
 
@@ -99,9 +112,17 @@ func destroy_level() -> void:
 		obstacle.destroy()
 	obstacle_list.clear()
 
+	if ground_room != null:
+		ground_room.queue_free()
+		ground_room = null
 
-func spawn_wall(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale : Vector3) -> Wall:
-	var wall : Wall = wall_scene.instantiate() as Wall
+	for field_border in field_border_list:
+		field_border.queue_free()
+	field_border_list.clear()
+
+
+func spawn_wall(scene : PackedScene, spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale : Vector3) -> Wall:
+	var wall : Wall = scene.instantiate() as Wall
 	add_child(wall)
 	wall.global_position = spawn_position
 	wall.global_rotation = spawn_rotation
@@ -144,6 +165,76 @@ func spawn_obstacle():
 	add_child(obstacle)
 	_on_spawn_node_at_random_pos(obstacle)
 	obstacle_list.append(obstacle)
+
+
+func spawn_field_border_walls():
+	var size_x : float = game_mode.level_size.x
+	var size_y : float = game_mode.level_size.y
+	var size_z : float = game_mode.level_size.z
+	
+	# Border field walls
+	spawn_wall(wall_border_field_scene, Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(size_x / 2, 0, 0), Vector3(0, 0, 0), Vector3(border_wall_width, border_wall_width, size_z + 2 * border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), Vector3(border_wall_width, border_wall_width, size_z + 2 * border_wall_width))
+	
+	# Middle field wall
+	spawn_wall(wall_border_field_scene, Vector3(0, 0, 0), Vector3(0, -PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
+	
+	# Middle dot
+	var middle_dot : CSGCylinder3D = CSGCylinder3D.new()
+	middle_dot.height = border_wall_width
+	middle_dot.radius = 0.4
+	middle_dot.sides = 32
+	add_child(middle_dot)
+	field_border_list.append(middle_dot) 
+	
+	# Middle ring
+	spawn_border_middle_ring()
+	
+	# Penalty zones
+	# Left goal zone
+	spawn_wall(wall_border_field_scene, Vector3(-game_mode.goal_size.z / 2 - border_wall_width / 2, 0, goal_list[0].global_position.z + penatly_area_width), Vector3.ZERO, Vector3(game_mode.goal_size.z + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(-game_mode.goal_size.z / 2, 0, goal_list[0].global_position.z + penatly_area_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(game_mode.goal_size.z / 2, 0, goal_list[0].global_position.z + penatly_area_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	# Right goal zone
+	spawn_wall(wall_border_field_scene, Vector3(-game_mode.goal_size.z / 2 - border_wall_width / 2, 0, goal_list[1].global_position.z - penatly_area_width), Vector3.ZERO, Vector3(game_mode.goal_size.z + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(-game_mode.goal_size.z / 2, 0, goal_list[1].global_position.z + border_wall_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(wall_border_field_scene, Vector3(game_mode.goal_size.z / 2, 0, goal_list[1].global_position.z + border_wall_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+
+
+func spawn_border_middle_ring():
+	var middle_ring_outer : CSGCylinder3D = CSGCylinder3D.new()
+	middle_ring_outer.height = border_wall_width
+	middle_ring_outer.radius = 1.8
+	middle_ring_outer.sides = 32
+	add_child(middle_ring_outer)
+	field_border_list.append(middle_ring_outer)
+	var middle_ring_inner : CSGCylinder3D = CSGCylinder3D.new()
+	middle_ring_inner.operation = CSGShape3D.OPERATION_SUBTRACTION
+	middle_ring_inner.height = border_wall_width
+	middle_ring_inner.radius = 1.7
+	middle_ring_inner.sides = 32
+	middle_ring_outer.add_child(middle_ring_inner)
+	field_border_list.append(middle_ring_inner)
+
+
+func spawn_room():
+	var size_x : float = game_mode.level_size.x
+	var size_y : float = game_mode.level_size.y
+	var size_z : float = game_mode.level_size.z
+	
+	# Room ground
+	ground_room = ground_room_scene.instantiate()
+	add_child(ground_room)
+	ground_room.scale = Vector3(size_x * room_scale, 1, size_z * room_scale)
+	ground_room.global_position.y -= 0.01
+	
+	# Room walls
+	spawn_wall(wall_room_scene, room_scale * Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), room_scale * Vector3(1, room_wall_height, size_x))
+	spawn_wall(wall_room_scene, room_scale * Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), room_scale * Vector3(1, room_wall_height, size_x))
+	spawn_wall(wall_room_scene, room_scale * Vector3(size_x / 2, 0, 0), Vector3(0, 0, 0), room_scale * Vector3(1, room_wall_height, size_z))
+	spawn_wall(wall_room_scene, room_scale * Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), room_scale * Vector3(1, room_wall_height, size_z))
 
 
 func _on_game_reset():

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://d22qk8y35cwku"]
+
+[ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="1_glway"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glway"]
+albedo_color = Color(0, 0.49882656, 0.037528414, 1)
+
+[node name="GroundField" unique_id=881915485 instance=ExtResource("1_glway")]
+
+[node name="MeshInstance3D" parent="StaticBody3D" parent_id_path=PackedInt32Array(1362913773) index="1" unique_id=54305394]
+surface_material_override/0 = SubResource("StandardMaterial3D_glway")

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://m16jiou64g45"]
+
+[ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="1_15mxg"]
+
+[node name="WallBorderField" unique_id=132552248 instance=ExtResource("1_15mxg")]
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=62819371]
+disabled = true

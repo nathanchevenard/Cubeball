@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_3ulyp"]
 
 [node name="Wall" type="StaticBody3D" unique_id=132552248 node_paths=PackedStringArray("collision_shape", "csg_combiner", "csg_box")]
-collision_layer = 4
+collision_layer = 64
 collision_mask = 31
 script = ExtResource("1_p8s58")
 collision_shape = NodePath("CollisionShape3D")

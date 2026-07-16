@@ -34,9 +34,6 @@ metadata/_custom_type_script = "uid://n7sn8ufocqac"
 [resource]
 script = ExtResource("1_s4y01")
 team_list = Array[ExtResource("2_36my6")]([SubResource("Resource_6wuse"), SubResource("Resource_4t5hi"), SubResource("Resource_57wiy"), SubResource("Resource_tphqq")])
-max_duration_seconds = 30.0
 level_size = Vector3(10, 4, 15)
 goal_size = Vector3(3, 4, 5)
-obstacle_number_min = 0
-obstacle_number_max = 0
 metadata/_custom_type_script = "uid://culgsafxumoi6"
