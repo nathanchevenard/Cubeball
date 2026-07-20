@@ -15,6 +15,7 @@ class_name Level
 @export var goal_scene : PackedScene
 @export var ball_scene : PackedScene
 @export var obstacle_scene : PackedScene
+@export var do_walls_block_cuboids : bool = false
 
 var goal_list : Array[Goal]
 var ball_list : Array[Ball]
@@ -129,6 +130,9 @@ func spawn_wall(scene : PackedScene, spawn_position : Vector3, spawn_rotation : 
 	wall.scale = spawn_scale
 	wall_list.append(wall)
 
+	if do_walls_block_cuboids == true:
+		wall.set_layer_wall()
+
 	return wall
 
 
@@ -138,12 +142,12 @@ func spawn_goal(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale 
 	goal.global_position = spawn_position
 	goal.global_rotation = spawn_rotation
 	goal.initialize(spawn_scale)
-
+	
 	goal.csg_box.reparent(parent_wall.csg_combiner)
-	parent_wall.collision_shape.shape = parent_wall.csg_combiner.bake_collision_shape()
 	for csg_box in goal.wall_csg_box_list:
 		csg_box.reparent(parent_wall.csg_combiner)
-		parent_wall.csg_combiner.move_child(csg_box, 1)
+		parent_wall.csg_combiner.move_child(csg_box, 0)
+	parent_wall.collision_shape.shape = parent_wall.csg_box.bake_collision_shape()
 
 	return goal
 

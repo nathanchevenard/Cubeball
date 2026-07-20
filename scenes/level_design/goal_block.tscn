@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://de4treqjoblnx"]
+
+[ext_resource type="Script" uid="uid://ck0c0gwjxbem4" path="res://scripts/level_design/goal.gd" id="1_34d8l"]
+[ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="2_sgfkh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgfkh"]
+resource_local_to_scene = true
+albedo_color = Color(0.9889, 0.44360888, 0.6721573, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q46b8"]
+
+[node name="Goal" type="Area3D" unique_id=2072586225 node_paths=PackedStringArray("csg_box")]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_34d8l")
+wall_scene = ExtResource("2_sgfkh")
+wall_override_material = SubResource("StandardMaterial3D_sgfkh")
+csg_box = NodePath("CollisionShape3D/CSGBox3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2055226746]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0)
+shape = SubResource("BoxShape3D_q46b8")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CollisionShape3D" unique_id=1367846146]
+operation = 2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -4,11 +4,11 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rx45l"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0)
+albedo_color = Color(1, 0, 1, 0)
 
-[node name="WallBallBlocker" unique_id=132552248 instance=ExtResource("1_rx45l")]
+[node name="WallInvisible" unique_id=132552248 instance=ExtResource("1_rx45l")]
 collision_layer = 32
 collision_mask = 10
 
-[node name="CSGBox3D" parent="CollisionShape3D/CSGCombiner3D" parent_id_path=PackedInt32Array(252410834) index="0" unique_id=959598348]
+[node name="CSGBox3D" parent="CollisionShape3D" parent_id_path=PackedInt32Array(62819371) index="0" unique_id=959598348]
 material = SubResource("StandardMaterial3D_rx45l")

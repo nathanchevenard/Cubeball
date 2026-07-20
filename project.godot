@@ -93,6 +93,7 @@ dash={
 3d_physics/layer_5="Goal"
 3d_physics/layer_6="WallBallBlocker"
 3d_physics/layer_7="WallDecor"
+3d_physics/layer_8="Net"
 
 [physics]
 

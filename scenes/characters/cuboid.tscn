@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b87006bnrmpvu" path="res://scripts/characters/cuboid_tool.gd" id="2_6oqb7"]
 [ext_resource type="Script" uid="uid://b0rv2qryq5hpq" path="res://scripts/characters/cuboid_ai_controller.gd" id="3_ei4nd"]
 [ext_resource type="PackedScene" uid="uid://dxpaq05awu7da" path="res://scenes/characters/raycasts/cuboid_raycast.tscn" id="4_08f1a"]
-[ext_resource type="PackedScene" uid="uid://ca6rcn3stpebc" path="res://assets/cuboid.glb" id="4_goiyh"]
+[ext_resource type="PackedScene" uid="uid://ca6rcn3stpebc" path="res://assets/models_3d/cuboid.glb" id="4_goiyh"]
 [ext_resource type="PackedScene" uid="uid://v6bvp4d7hfmg" path="res://scenes/characters/raycasts/ball_raycast.tscn" id="5_qwoea"]
 [ext_resource type="PackedScene" uid="uid://exm6ysiu6j2m" path="res://scenes/characters/raycasts/obstacle_raycast.tscn" id="6_f4xdk"]
 [ext_resource type="PackedScene" uid="uid://pjrprsaxvaqp" path="res://scenes/characters/raycasts/ball_front_raycast.tscn" id="6_xtfnx"]
@@ -15,7 +15,7 @@ friction = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4hqto"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goiyh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1hxw"]
 resource_local_to_scene = true
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_k8rju"]
@@ -68,8 +68,8 @@ shape = SubResource("BoxShape3D_4hqto")
 [node name="cuboid" parent="CollisionShape3D" unique_id=1295551753 instance=ExtResource("4_goiyh")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="Cube" parent="CollisionShape3D/cuboid" index="0" unique_id=631380769]
-surface_material_override/0 = SubResource("StandardMaterial3D_goiyh")
+[node name="Cube" parent="CollisionShape3D/cuboid" index="0" unique_id=1434436148]
+surface_material_override/0 = SubResource("StandardMaterial3D_c1hxw")
 
 [node name="Eye" type="MeshInstance3D" parent="CollisionShape3D/cuboid" unique_id=539927535]
 transform = Transform3D(-1.7484554e-08, -0.017118478, 0, 0.39999998, -7.4827244e-10, 0, 0, 0, 0.4, 0.9959005, 0.5062386, 0.5171171)

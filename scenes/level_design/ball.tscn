@@ -15,7 +15,7 @@ albedo_color = Color(1, 0.59607846, 0, 1)
 
 [node name="Ball" type="RigidBody3D" unique_id=725462091]
 collision_layer = 2
-collision_mask = 127
+collision_mask = 255
 mass = 0.2
 physics_material_override = SubResource("PhysicsMaterial_15hso")
 gravity_scale = 1.8

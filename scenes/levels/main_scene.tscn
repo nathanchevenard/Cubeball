@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
 [ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="4_q46b8"]
-[ext_resource type="PackedScene" uid="uid://de4treqjoblnx" path="res://scenes/level_design/goal.tscn" id="5_43vid"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_1v1_simple.tres" id="5_x7kll"]
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/debug_manager.gd" id="6_6u8e5"]
@@ -16,7 +15,7 @@
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="8_df41j"]
 [ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_field.tscn" id="10_nxfq7"]
-[ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_ball_blocker.tscn" id="11_nxfq7"]
+[ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible.tscn" id="11_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/wall_border_field.tscn" id="12_v0rl3"]
 [ext_resource type="Theme" uid="uid://bx71pn8ahuqk2" path="res://assets/themes/panel_theme.tres" id="15_pkib5"]
 [ext_resource type="Theme" uid="uid://dg0lp3kp8o11c" path="res://assets/themes/base_text_theme.tres" id="16_o6frn"]
@@ -24,6 +23,7 @@
 [ext_resource type="FontFile" uid="uid://cr6e435wycm2l" path="res://assets/fonts/impact.ttf" id="17_3jqmn"]
 [ext_resource type="Script" uid="uid://dn6wclu4cke80" path="res://scripts/ui/timer_ui.gd" id="18_efd43"]
 [ext_resource type="Script" uid="uid://ceykxvxv2olxb" path="res://scripts/ui/big_score_ui.gd" id="21_nxfq7"]
+[ext_resource type="PackedScene" uid="uid://bvv67jikywv4r" path="res://scenes/level_design/goal.tscn" id="25_irvof"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -94,7 +94,7 @@ wall_field_scene = ExtResource("11_nxfq7")
 wall_border_field_scene = ExtResource("12_v0rl3")
 ground_room_scene = ExtResource("8_df41j")
 wall_room_scene = ExtResource("4_q46b8")
-goal_scene = ExtResource("5_43vid")
+goal_scene = ExtResource("25_irvof")
 ball_scene = ExtResource("3_3ulyp")
 obstacle_scene = ExtResource("2_3ulyp")
 

@@ -38,7 +38,8 @@ func _assign_goals_to_teams(level : Level) -> void:
 		var team : Team = team_list[i]
 		var goal : Goal = level.goal_list[i]
 		goal.team = team
-		goal.wall_override_material.albedo_color = team.color
+		if goal.wall_override_material != null:
+			goal.wall_override_material.albedo_color = team.color
 
 
 # Destroys the previous episode's cuboids (a no-op the first time, team.cuboid_list is
