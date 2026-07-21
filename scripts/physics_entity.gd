@@ -21,7 +21,7 @@ func _ready() -> void:
 
 func destroy():
 	EntityManager.instance.entity_list.erase(self)
-	queue_free()
+	call_deferred("queue_free")
 
 
 func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:

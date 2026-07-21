@@ -94,6 +94,8 @@ dash={
 3d_physics/layer_6="WallBallBlocker"
 3d_physics/layer_7="WallDecor"
 3d_physics/layer_8="Net"
+3d_physics/layer_9="WallCuboidBlocker"
+3d_physics/layer_10="BallFieldArea"
 
 [physics]
 

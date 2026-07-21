@@ -5,18 +5,19 @@
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
-[ext_resource type="PackedScene" uid="uid://biso7rex6gyfq" path="res://scenes/level_design/wall.tscn" id="4_q46b8"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
-[ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_1v1_simple.tres" id="5_x7kll"]
+[ext_resource type="Resource" uid="uid://ccodgvagvchq4" path="res://resources/game_modes/game_mode_solo_simple.tres" id="5_v0rl3"]
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/debug_manager.gd" id="6_6u8e5"]
 [ext_resource type="Script" uid="uid://b7fnsvb8f18gw" path="res://scripts/managers/game_state_manager.gd" id="6_84bhp"]
 [ext_resource type="Script" uid="uid://cnwlwnghcjbcu" path="res://scripts/managers/game_mode_manager.gd" id="7_84bhp"]
 [ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/python_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
-[ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground.tscn" id="8_df41j"]
-[ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_field.tscn" id="10_nxfq7"]
-[ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible.tscn" id="11_nxfq7"]
-[ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/wall_border_field.tscn" id="12_v0rl3"]
+[ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground_cuboid_field.tscn" id="8_df41j"]
+[ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_ball_field.tscn" id="10_nxfq7"]
+[ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
+[ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
+[ext_resource type="PackedScene" uid="uid://dmxh8pa8cf55c" path="res://scenes/level_design/ball_field_area.tscn" id="13_irvof"]
+[ext_resource type="PackedScene" uid="uid://d3qggm6hymh2u" path="res://scenes/level_design/wall_invisible_cuboid.tscn" id="14_v0rl3"]
 [ext_resource type="Theme" uid="uid://bx71pn8ahuqk2" path="res://assets/themes/panel_theme.tres" id="15_pkib5"]
 [ext_resource type="Theme" uid="uid://dg0lp3kp8o11c" path="res://assets/themes/base_text_theme.tres" id="16_o6frn"]
 [ext_resource type="Script" uid="uid://cme1l0m1g1q1x" path="res://scripts/ui/goal_scored_ui.gd" id="16_x7kll"]
@@ -59,7 +60,7 @@ metadata/_custom_type_script = "uid://b806wpb14q2fm"
 
 [node name="GameModeManager" type="Node" parent="Managers" unique_id=272543316]
 script = ExtResource("7_84bhp")
-game_mode = ExtResource("5_x7kll")
+game_mode = ExtResource("5_v0rl3")
 metadata/_custom_type_script = "uid://cnwlwnghcjbcu"
 
 [node name="GameStateManager" type="Node" parent="Managers" unique_id=376915082 node_paths=PackedStringArray("timer_label")]
@@ -74,6 +75,7 @@ metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
 script = ExtResource("6_6u8e5")
+camera_on_cuboid = true
 first_cuboid_human_input = true
 metadata/_custom_type_script = "uid://tinwq43u68p7"
 
@@ -88,12 +90,14 @@ environment = SubResource("Environment_xmwv8")
 
 [node name="Level" type="Node3D" parent="." unique_id=162575387]
 script = ExtResource("5_p61ap")
+cuboid_field_margin = Vector3(8, 0, 10)
 penatly_area_width = 2.0
-ground_field_scene = ExtResource("10_nxfq7")
-wall_field_scene = ExtResource("11_nxfq7")
-wall_border_field_scene = ExtResource("12_v0rl3")
-ground_room_scene = ExtResource("8_df41j")
-wall_room_scene = ExtResource("4_q46b8")
+ground_ball_field_scene = ExtResource("10_nxfq7")
+wall_ball_field_scene = ExtResource("11_nxfq7")
+line_border_ball_field_scene = ExtResource("12_v0rl3")
+ball_field_area_scene = ExtResource("13_irvof")
+ground_cuboid_field_scene = ExtResource("8_df41j")
+wall_cuboid_field_scene = ExtResource("14_v0rl3")
 goal_scene = ExtResource("25_irvof")
 ball_scene = ExtResource("3_3ulyp")
 obstacle_scene = ExtResource("2_3ulyp")

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ck0c0gwjxbem4" path="res://scripts/level_design/goal.gd" id="1_34d8l"]
 [ext_resource type="Texture2D" uid="uid://cuk2217v37wbw" path="res://assets/textures/net_texture.png" id="2_sgfkh"]
 [ext_resource type="ArrayMesh" uid="uid://dsy4j48fmm2y6" path="res://assets/models_3d/net_square.obj" id="3_rgtwc"]
+[ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="4_rgtwc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m8vrv"]
 resource_name = "White"
@@ -106,7 +107,7 @@ transform = Transform3D(-0.255, 0, -3.8503927e-08, 0, 0.255, 0, 3.8503927e-08, 0
 mesh = ExtResource("3_rgtwc")
 surface_material_override/0 = SubResource("StandardMaterial3D_sgfkh")
 collision_layer = 128
-collision_mask = 3
+collision_mask = 2
 linear_stiffness = 0.35
 pinned_points = [42, 43, 40, 38, 36, 29, 28, 27, 26, 22, 23, 24, 25, 30, 31, 32, 33, 35, 37, 39, 41, 55, 54, 53, 52, 51, 50, 49, 48, 47, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 11, 13, 14, 15, 16, 17, 18, 19, 20, 58, 57, 44, 60, 61, 62, 63, 64, 65, 21]
 attachments/0/point_index = 42
@@ -299,4 +300,33 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.5,
 size = Vector3(1.1, 1, 1)
 material = SubResource("StandardMaterial3D_p0soj")
 
+[node name="WallInvisible" parent="." unique_id=132552248 instance=ExtResource("4_rgtwc")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, -0.5948367)
+visible = false
+collision_layer = 4
+collision_mask = 11
+
+[node name="WallInvisible2" parent="." unique_id=1309702500 instance=ExtResource("4_rgtwc")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0.595)
+visible = false
+collision_layer = 4
+collision_mask = 11
+
+[node name="WallInvisible3" parent="." unique_id=772026782 instance=ExtResource("4_rgtwc")]
+process_mode = 4
+transform = Transform3D(0.2, 0, 0, 0, 1, 0, 0, 0, 1.2, 1, 0, 0)
+visible = false
+collision_layer = 4
+collision_mask = 11
+
+[node name="WallInvisible4" parent="." unique_id=154410646 instance=ExtResource("4_rgtwc")]
+process_mode = 4
+transform = Transform3D(1.2, 0, 0, 0, 0.2, 0, 0, 0, 1.2, 0, 1, 0)
+visible = false
+collision_layer = 4
+collision_mask = 11
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

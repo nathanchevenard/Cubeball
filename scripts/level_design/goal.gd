@@ -111,10 +111,15 @@ func spawn_wall(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale 
 	return wall
 
 
-func ball_enter_goal():
-	SignalsManager.goal.emit_ball_enter_goal(team)
+func ball_enter_goal(ball : Ball):
+	ball.current_colliding_goal = self
 
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Ball:
-		ball_enter_goal()
+		ball_enter_goal(body)
+
+
+func _on_body_exited(body: Node3D) -> void:
+	if body is Ball:
+		body.current_colliding_goal = null

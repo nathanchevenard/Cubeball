@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://d22qk8y35cwku"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_teueu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glway"]
+albedo_color = Color(0, 0.49882656, 0.037528414, 1)
+
+[node name="GroundField" type="Node3D" unique_id=881915485]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=611926755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_teueu")
+surface_material_override/0 = SubResource("StandardMaterial3D_glway")

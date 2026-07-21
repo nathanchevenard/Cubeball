@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dmxh8pa8cf55c"]
+
+[ext_resource type="Script" uid="uid://dl3j48sans6g3" path="res://scripts/level_design/ball_field_area.gd" id="1_1nt6p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2cw84"]
+
+[node name="BallFieldArea" type="Node3D" unique_id=1081187340]
+script = ExtResource("1_1nt6p")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1107434136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 512
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=431685109]
+shape = SubResource("BoxShape3D_2cw84")
+
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

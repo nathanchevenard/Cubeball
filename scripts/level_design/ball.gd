@@ -5,6 +5,8 @@ class_name Ball
 @export var friction : float = 10
 @export var maximum_speed : float = 50
 
+var current_colliding_goal : Goal
+
 
 func _physics_process(delta: float) -> void:
 	var new_speed = linear_velocity.length() / (1 + linear_velocity.length() * air_resistance * delta)
