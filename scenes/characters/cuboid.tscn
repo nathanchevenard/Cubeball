@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://de0ttsg3yqrmo" path="res://scripts/characters/cuboid.gd" id="1_k8rju"]
 [ext_resource type="Script" uid="uid://b87006bnrmpvu" path="res://scripts/characters/cuboid_tool.gd" id="2_6oqb7"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_c1hxw"]
 [ext_resource type="Script" uid="uid://b0rv2qryq5hpq" path="res://scripts/characters/cuboid_ai_controller.gd" id="3_ei4nd"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_x3ba8"]
 [ext_resource type="PackedScene" uid="uid://dxpaq05awu7da" path="res://scenes/characters/raycasts/cuboid_raycast.tscn" id="4_08f1a"]
 [ext_resource type="PackedScene" uid="uid://ca6rcn3stpebc" path="res://assets/models_3d/cuboid.glb" id="4_goiyh"]
 [ext_resource type="PackedScene" uid="uid://v6bvp4d7hfmg" path="res://scenes/characters/raycasts/ball_raycast.tscn" id="5_qwoea"]
@@ -32,7 +34,10 @@ albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_tsay5"]
 size = Vector3(0.95, 0.047132812, 0.95)
 
-[node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("cuboid_ai_controller")]
+[sub_resource type="Resource" id="Resource_c1hxw"]
+script = ExtResource("3_x3ba8")
+
+[node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("cuboid_ai_controller", "behind_phantom_camera")]
 collision_mask = 351
 axis_lock_angular_x = true
 axis_lock_angular_z = true
@@ -44,6 +49,7 @@ script = ExtResource("1_k8rju")
 dash_force = 32.0
 dash_duration = 0.1
 cuboid_ai_controller = NodePath("CuboidAIController")
+behind_phantom_camera = NodePath("BehindPlayerPhantomCamera3D")
 mouse_sensitivity = 0.1
 max_pitch = -10.0
 
@@ -369,6 +375,15 @@ debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
 visible = false
 cuboid = NodePath("../..")
 has_ray_additional_data = true
+
+[node name="BehindPlayerPhantomCamera3D" type="Node3D" parent="." unique_id=1717233971 node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(-1, -1.5180802e-08, 8.609461e-08, 0, 0.98480755, 0.17364815, -8.742278e-08, 0.17364815, -0.98480755, 0, 2, -3)
+script = ExtResource("2_c1hxw")
+follow_target = NodePath("..")
+tween_resource = SubResource("Resource_c1hxw")
+follow_offset = Vector3(0, 2.5, -3)
+follow_damping = true
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [connection signal="body_entered" from="JumpDetectionArea3D" to="." method="_on_jump_detection_area_3d_body_entered"]
 [connection signal="body_exited" from="JumpDetectionArea3D" to="." method="_on_jump_detection_area_3d_body_exited"]

@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
 [ext_resource type="PackedScene" uid="uid://dmxh8pa8cf55c" path="res://scenes/level_design/ball_field_area.tscn" id="13_irvof"]
+[ext_resource type="Script" uid="uid://bpb4blb0mfcbt" path="res://scripts/managers/pause_manager.gd" id="14_3h10a"]
 [ext_resource type="PackedScene" uid="uid://d3qggm6hymh2u" path="res://scenes/level_design/wall_invisible_cuboid.tscn" id="14_v0rl3"]
 [ext_resource type="Theme" uid="uid://bx71pn8ahuqk2" path="res://assets/themes/panel_theme.tres" id="15_pkib5"]
 [ext_resource type="Theme" uid="uid://dg0lp3kp8o11c" path="res://assets/themes/base_text_theme.tres" id="16_o6frn"]
@@ -99,29 +100,27 @@ camera_on_cuboid = true
 first_cuboid_human_input = true
 metadata/_custom_type_script = "uid://tinwq43u68p7"
 
-[node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("phantom_camera_player", "phantom_camera_look_at_ball")]
+[node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("free_phantom_camera", "focus_phantom_camera")]
 script = ExtResource("10_ct0jg")
-phantom_camera_player = NodePath("PlayerPhantomCamera3D")
-phantom_camera_look_at_ball = NodePath("PlayerLookAtBallPhantomCamera3D")
-look_at_ball_offset = Vector3(3, 3, 3)
+free_phantom_camera = NodePath("FreePhantomCamera")
+focus_phantom_camera = NodePath("FocusPhantomCamera")
+focus_offset = Vector3(3, 2, 3)
 metadata/_custom_type_script = "uid://diham7d1gieeo"
 
-[node name="PlayerPhantomCamera3D" type="Node3D" parent="Managers/CameraManager" unique_id=951100455]
-unique_name_in_owner = true
+[node name="FreePhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=951100455]
 transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
 script = ExtResource("1_2fuee")
 follow_mode = 6
 tween_resource = SubResource("Resource_3h10a")
 tween_on_load = false
 camera_3d_resource = SubResource("Resource_agd1n")
-follow_offset = Vector3(0, 0.5, 0)
+follow_offset = Vector3(0, 1.5, 0)
 follow_damping = true
-follow_distance = 3.5
+follow_distance = 3.0
 vertical_rotation_offset = 0.523599
-spring_length = 3.5
+spring_length = 3.0
 
-[node name="PlayerLookAtBallPhantomCamera3D" type="Node3D" parent="Managers/CameraManager" unique_id=1897387093]
-unique_name_in_owner = true
+[node name="FocusPhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=1897387093]
 transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
 script = ExtResource("1_2fuee")
 look_at_mode = 2
@@ -134,7 +133,11 @@ follow_distance = 3.5
 vertical_rotation_offset = 0.523599
 spring_length = 3.5
 look_at_damping = true
-look_at_damping_value = 0.1
+look_at_damping_value = 0.3
+
+[node name="PauseManager" type="Node" parent="Managers" unique_id=1934117463]
+script = ExtResource("14_3h10a")
+metadata/_custom_type_script = "uid://bpb4blb0mfcbt"
 
 [node name="Environment" type="Node3D" parent="." unique_id=569441626]
 

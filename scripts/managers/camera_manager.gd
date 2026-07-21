@@ -1,10 +1,10 @@
 extends Node
 class_name CameraManager
 
-@export var phantom_camera_player : PhantomCamera3D
-@export var phantom_camera_look_at_ball : PhantomCamera3D
+@export var free_phantom_camera : PhantomCamera3D
+@export var focus_phantom_camera : PhantomCamera3D
 
-@export var look_at_ball_offset : Vector3
+@export var focus_offset : Vector3
 
 static var instance : CameraManager
 
@@ -17,14 +17,14 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	enable_camera(phantom_camera_player)
+	enable_camera(free_phantom_camera)
 
 
 func _process(delta: float) -> void:
-	if current_camera == phantom_camera_look_at_ball:
+	if current_camera == focus_phantom_camera:
 		var direction : Vector3 = (current_follow_target.global_position - current_camera.look_at_target.global_position).normalized()
 		direction.y = 1
-		current_camera.global_position = current_follow_target.global_position + direction * look_at_ball_offset
+		current_camera.global_position = current_follow_target.global_position + direction * focus_offset
 
 
 func enable_camera(camera : PhantomCamera3D, follow_target : Node3D = null):
