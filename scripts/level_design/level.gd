@@ -180,14 +180,16 @@ func spawn_ball_field_border_walls():
 	var size_y : float = game_mode.level_size.y
 	var size_z : float = game_mode.level_size.z
 	
+	var wall_spawn_height : float = -border_wall_width / 2
+	
 	# Border ball_field walls
-	spawn_wall(line_border_ball_field_scene, Vector3(0, 0, size_z / 2), Vector3(0, -PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(0, 0, -size_z / 2), Vector3(0, PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(size_x / 2, 0, 0), Vector3(0, 0, 0), Vector3(border_wall_width, border_wall_width, size_z + 2 * border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(-size_x / 2, 0, 0), Vector3(0, PI, 0), Vector3(border_wall_width, border_wall_width, size_z + 2 * border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(0, wall_spawn_height, size_z / 2), Vector3(0, -PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(0, wall_spawn_height, -size_z / 2), Vector3(0, PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(size_x / 2, wall_spawn_height, 0), Vector3(0, 0, 0), Vector3(border_wall_width, border_wall_width, size_z + 2 * border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(-size_x / 2, wall_spawn_height, 0), Vector3(0, PI, 0), Vector3(border_wall_width, border_wall_width, size_z + 2 * border_wall_width))
 	
 	# Middle ball_field wall
-	spawn_wall(line_border_ball_field_scene, Vector3(0, 0, 0), Vector3(0, -PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(0, wall_spawn_height, 0), Vector3(0, -PI / 2, 0), Vector3(border_wall_width, border_wall_width, size_x + 2 * border_wall_width))
 	
 	# Middle dot
 	var middle_dot : CSGCylinder3D = CSGCylinder3D.new()
@@ -202,13 +204,13 @@ func spawn_ball_field_border_walls():
 	
 	# Penalty zones
 	# Left goal zone
-	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2 - border_wall_width / 2, 0, goal_list[0].global_position.z + penatly_area_width), Vector3.ZERO, Vector3(game_mode.goal_size.z + border_wall_width, border_wall_width, border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2, 0, goal_list[0].global_position.z + penatly_area_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(game_mode.goal_size.z / 2, 0, goal_list[0].global_position.z + penatly_area_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2 - border_wall_width / 2, wall_spawn_height, goal_list[0].global_position.z + penatly_area_width), Vector3.ZERO, Vector3(game_mode.goal_size.z + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2, wall_spawn_height, goal_list[0].global_position.z + penatly_area_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(game_mode.goal_size.z / 2, wall_spawn_height, goal_list[0].global_position.z + penatly_area_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
 	# Right goal zone
-	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2 - border_wall_width / 2, 0, goal_list[1].global_position.z - penatly_area_width), Vector3.ZERO, Vector3(game_mode.goal_size.z + border_wall_width, border_wall_width, border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2, 0, goal_list[1].global_position.z + border_wall_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
-	spawn_wall(line_border_ball_field_scene, Vector3(game_mode.goal_size.z / 2, 0, goal_list[1].global_position.z + border_wall_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2 - border_wall_width / 2, wall_spawn_height, goal_list[1].global_position.z - penatly_area_width), Vector3.ZERO, Vector3(game_mode.goal_size.z + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(-game_mode.goal_size.z / 2, wall_spawn_height, goal_list[1].global_position.z + border_wall_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
+	spawn_wall(line_border_ball_field_scene, Vector3(game_mode.goal_size.z / 2, wall_spawn_height, goal_list[1].global_position.z + border_wall_width), Vector3(0, PI / 2, 0), Vector3(penatly_area_width + border_wall_width, border_wall_width, border_wall_width))
 
 
 func spawn_border_middle_ring():

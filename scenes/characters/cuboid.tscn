@@ -32,7 +32,7 @@ albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_tsay5"]
 size = Vector3(0.95, 0.047132812, 0.95)
 
-[node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("camera", "cuboid_ai_controller")]
+[node name="Cuboid" type="RigidBody3D" unique_id=1014611617 node_paths=PackedStringArray("cuboid_ai_controller")]
 collision_mask = 351
 axis_lock_angular_x = true
 axis_lock_angular_z = true
@@ -43,12 +43,9 @@ max_contacts_reported = 10
 script = ExtResource("1_k8rju")
 dash_force = 32.0
 dash_duration = 0.1
-camera = NodePath("Camera3D")
 cuboid_ai_controller = NodePath("CuboidAIController")
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=368455836]
-transform = Transform3D(-1, 2.2921306e-08, -8.436442e-08, 0, 0.9650165, 0.26218918, 8.742278e-08, 0.26218918, -0.9650165, 0, 2.337, -2.187)
-visible = false
+mouse_sensitivity = 0.1
+max_pitch = -10.0
 
 [node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh")]
 script = ExtResource("2_6oqb7")

@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://bhmx2ef7li351"]
 
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="1_2fuee"]
 [ext_resource type="Script" uid="uid://b7y1410p0iyh2" path="res://scripts/managers/teams_manager.gd" id="1_fiowe"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_v351g"]
 [ext_resource type="PackedScene" uid="uid://cadw1tm2smlnp" path="res://scenes/characters/cuboid.tscn" id="1_ybdc1"]
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_v351g"]
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
+[ext_resource type="Script" uid="uid://b8hhnqsugykly" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="3_ct0jg"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Resource" uid="uid://ccodgvagvchq4" path="res://resources/game_modes/game_mode_solo_simple.tres" id="5_v0rl3"]
@@ -13,6 +17,7 @@
 [ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/python_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground_cuboid_field.tscn" id="8_df41j"]
+[ext_resource type="Script" uid="uid://diham7d1gieeo" path="res://scripts/managers/camera_manager.gd" id="10_ct0jg"]
 [ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_ball_field.tscn" id="10_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
@@ -25,6 +30,15 @@
 [ext_resource type="Script" uid="uid://dn6wclu4cke80" path="res://scripts/ui/timer_ui.gd" id="18_efd43"]
 [ext_resource type="Script" uid="uid://ceykxvxv2olxb" path="res://scripts/ui/big_score_ui.gd" id="21_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://bvv67jikywv4r" path="res://scenes/level_design/goal.tscn" id="25_irvof"]
+
+[sub_resource type="Resource" id="Resource_3h10a"]
+script = ExtResource("2_v351g")
+duration = 0.3
+transition = 2
+ease = 1
+
+[sub_resource type="Resource" id="Resource_agd1n"]
+script = ExtResource("3_ct0jg")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -44,8 +58,14 @@ bg_color = Color(1, 1, 1, 1)
 [node name="MainScene" type="Node3D" unique_id=1884238872]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=820187566]
-transform = Transform3D(-4.371139e-08, 0.9472103, -0.32061294, 0, 0.32061294, 0.9472103, 1, 4.140388e-08, -1.4014437e-08, -8.21, 16.933, 0)
-fov = 85.0
+transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+top_level = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D" unique_id=1439859432]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("1_v351g")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="Managers" type="Node" parent="." unique_id=1476131778]
 
@@ -78,6 +98,43 @@ script = ExtResource("6_6u8e5")
 camera_on_cuboid = true
 first_cuboid_human_input = true
 metadata/_custom_type_script = "uid://tinwq43u68p7"
+
+[node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("phantom_camera_player", "phantom_camera_look_at_ball")]
+script = ExtResource("10_ct0jg")
+phantom_camera_player = NodePath("PlayerPhantomCamera3D")
+phantom_camera_look_at_ball = NodePath("PlayerLookAtBallPhantomCamera3D")
+look_at_ball_offset = Vector3(3, 3, 3)
+metadata/_custom_type_script = "uid://diham7d1gieeo"
+
+[node name="PlayerPhantomCamera3D" type="Node3D" parent="Managers/CameraManager" unique_id=951100455]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+script = ExtResource("1_2fuee")
+follow_mode = 6
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")
+follow_offset = Vector3(0, 0.5, 0)
+follow_damping = true
+follow_distance = 3.5
+vertical_rotation_offset = 0.523599
+spring_length = 3.5
+
+[node name="PlayerLookAtBallPhantomCamera3D" type="Node3D" parent="Managers/CameraManager" unique_id=1897387093]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+script = ExtResource("1_2fuee")
+look_at_mode = 2
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")
+follow_offset = Vector3(0, 2, 3)
+follow_damping = true
+follow_distance = 3.5
+vertical_rotation_offset = 0.523599
+spring_length = 3.5
+look_at_damping = true
+look_at_damping_value = 0.1
 
 [node name="Environment" type="Node3D" parent="." unique_id=569441626]
 

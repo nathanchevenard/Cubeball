@@ -29,4 +29,8 @@ func _on_all_teams_initialized():
 			cuboid.input_mode = Cuboid.InputMode.HUMAN
 			
 			if camera_on_cuboid == true:
-				cuboid.camera.current = true
+				cuboid.phantom_camera = CameraManager.instance.phantom_camera_player
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+				CameraManager.instance.phantom_camera_player.follow_target = cuboid
+				CameraManager.instance.phantom_camera_look_at_ball.follow_target = cuboid
+				CameraManager.instance.phantom_camera_look_at_ball.look_at_target = EntityManager.instance.ball_list[0]

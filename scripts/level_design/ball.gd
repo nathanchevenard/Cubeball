@@ -8,6 +8,15 @@ class_name Ball
 var current_colliding_goal : Goal
 
 
+func _init() -> void:
+	EntityManager.instance.ball_list.append(self)
+
+
+func destroy():
+	EntityManager.instance.ball_list.erase(self)
+	super.destroy()
+
+
 func _physics_process(delta: float) -> void:
 	var new_speed = linear_velocity.length() / (1 + linear_velocity.length() * air_resistance * delta)
 	linear_velocity = linear_velocity.normalized() * new_speed

@@ -16,15 +16,22 @@ enum InputMode {
 @export var dash_cooldown : float = 2
 @export var dash_duration : float = 1
 
-@export var camera : Camera3D
 @export var cuboid_ai_controller : CuboidAIController
 
-var team : Team
+@export_group("Player Camera")
+@export var mouse_sensitivity: float = 0.05
+@export var min_pitch: float = -89.9
+@export var max_pitch: float = 50
+@export var min_yaw: float = 0
+@export var max_yaw: float = 360
 
+
+var team : Team
 var jump_colliding_bodies : Array[Node3D]
 var dash_timer : float = 0
 var is_dashing : bool = false
 
+var phantom_camera : PhantomCamera3D
 
 signal color_changed(color : Color)
 
@@ -54,6 +61,19 @@ func destroy() -> void:
 
 func _physics_process(delta: float) -> void:
 	handle_inputs(get_inputs(), delta)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if input_mode == InputMode.HUMAN && DebugManager.instance.camera_on_cuboid == true:
+		if phantom_camera.follow_mode == PhantomCamera3D.FollowMode.THIRD_PERSON:
+			set_camera_third_person_rotation(event)
+		else:
+			set_camera_follow_rotation()
+	
+	if Input.is_action_just_pressed("trigger_camera_look_at_ball"):
+		CameraManager.instance.enable_camera(CameraManager.instance.phantom_camera_look_at_ball, self)
+	elif Input.is_action_just_released("trigger_camera_look_at_ball"):
+		CameraManager.instance.enable_camera(CameraManager.instance.phantom_camera_player)
 
 
 func get_inputs() -> Dictionary[String, bool]:
@@ -153,3 +173,31 @@ func get_observation_informations(caller : Cuboid) -> Dictionary:
 
 func get_dash_cooldown() -> float:
 	return clampf(dash_timer / dash_cooldown, 0, 1)
+
+
+func set_camera_third_person_rotation(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		var camera_rotation_degrees: Vector3
+
+		# Assigns the current 3D rotation of the SpringArm3D node - so it starts off where it is in the editor
+		camera_rotation_degrees = phantom_camera.get_third_person_rotation_degrees()
+
+		# Change the X rotation
+		camera_rotation_degrees.x -= event.relative.y * mouse_sensitivity
+
+		# Clamp the rotation in the X axis so it go over or under the target
+		camera_rotation_degrees.x = clampf(camera_rotation_degrees.x, min_pitch, max_pitch)
+
+		# Change the Y rotation value
+		camera_rotation_degrees.y -= event.relative.x * mouse_sensitivity
+
+		# Sets the rotation to fully loop around its target, but witout going below or exceeding 0 and 360 degrees respectively
+		camera_rotation_degrees.y = wrapf(camera_rotation_degrees.y, min_yaw, max_yaw)
+
+		# Change the SpringArm3D node's rotation and rotate around its target
+		phantom_camera.set_third_person_rotation_degrees(camera_rotation_degrees)
+
+
+func set_camera_follow_rotation():
+	pass
+	#phantom_camera.
