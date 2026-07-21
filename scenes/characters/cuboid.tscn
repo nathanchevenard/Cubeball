@@ -17,7 +17,7 @@ friction = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4hqto"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goiyh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1hxw"]
 resource_local_to_scene = true
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_k8rju"]
@@ -76,7 +76,7 @@ shape = SubResource("BoxShape3D_4hqto")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Cube" parent="CollisionShape3D/cuboid" index="0" unique_id=1434436148]
-surface_material_override/0 = SubResource("StandardMaterial3D_goiyh")
+surface_material_override/0 = SubResource("StandardMaterial3D_c1hxw")
 
 [node name="Eye" type="MeshInstance3D" parent="CollisionShape3D/cuboid" unique_id=539927535]
 transform = Transform3D(-1.7484554e-08, -0.017118478, 0, 0.39999998, -7.4827244e-10, 0, 0, 0, 0.4, 0.9959005, 0.5062386, 0.5171171)
@@ -115,7 +115,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="CuboidRaycast" parent="Raycasts" unique_id=493931242 node_paths=PackedStringArray("cuboid") instance=ExtResource("4_08f1a")]
 visible = false
 cuboid = NodePath("../..")
-has_ray_additional_data = true
 
 [node name="BallRaycast" parent="Raycasts" unique_id=96493536 node_paths=PackedStringArray("cuboid") instance=ExtResource("5_qwoea")]
 visible = false
@@ -378,12 +377,10 @@ debug_shape_custom_color = Color(0.46617305, 0.4582786, 0.43688813, 1)
 [node name="GoalRaycast" parent="Raycasts" unique_id=526238269 node_paths=PackedStringArray("cuboid") instance=ExtResource("7_23rco")]
 visible = false
 cuboid = NodePath("../..")
-has_ray_additional_data = true
 
-[node name="BehindPlayerPhantomCamera3D" type="Node3D" parent="." unique_id=1717233971 node_paths=PackedStringArray("follow_target")]
+[node name="BehindPlayerPhantomCamera3D" type="Node3D" parent="." unique_id=1717233971]
 transform = Transform3D(-1, -1.5180802e-08, 8.609461e-08, 0, 0.98480755, 0.17364815, -8.742278e-08, 0.17364815, -0.98480755, 0, 2, -3)
 script = ExtResource("2_c1hxw")
-follow_target = NodePath("..")
 tween_resource = SubResource("Resource_3h10a")
 follow_offset = Vector3(0, 2.5, -3)
 follow_damping = true

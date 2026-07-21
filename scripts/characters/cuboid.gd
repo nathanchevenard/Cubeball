@@ -79,23 +79,21 @@ func _unhandled_input(event: InputEvent) -> void:
 func get_inputs() -> Dictionary[String, Variant]:
 	match input_mode:
 		InputMode.HUMAN:
-			if Input.is_action_pressed("rotate_left"):
-				inputs["rotate_speed_coefficient"] = rotation_speed_keyboard_coefficient
-			if Input.is_action_pressed("rotate_right"):
-				inputs["rotate_speed_coefficient"] = -rotation_speed_keyboard_coefficient
 			if Input.is_action_pressed("move_forward"):
 				inputs["move_speed_coefficient"] = 1.0
 			if Input.is_action_pressed("move_back"):
 				inputs["move_speed_coefficient"] = -1.0
+			if Input.is_action_pressed("rotate_left"):
+				inputs["rotate_speed_coefficient"] = rotation_speed_keyboard_coefficient
+			if Input.is_action_pressed("rotate_right"):
+				inputs["rotate_speed_coefficient"] = -rotation_speed_keyboard_coefficient
 			inputs["jump"] = Input.is_action_pressed("jump")
 			inputs["dash"] = Input.is_action_pressed("dash")
 		InputMode.AI:
-			inputs["move_forward"] = cuboid_ai_controller.move_forward_action
-			inputs["move_back"] = cuboid_ai_controller.move_back_action
-			inputs["rotate_left"] = cuboid_ai_controller.rotate_left_action
-			inputs["rotate_right"] = cuboid_ai_controller.rotate_right_action
-			inputs["jump"] = cuboid_ai_controller.jump_action
-			inputs["dash"] = cuboid_ai_controller.dash_action
+			inputs["move_speed_coefficient"] = cuboid_ai_controller.action_dictionary["move_speed_coefficient"]
+			inputs["rotate_speed_coefficient"] = cuboid_ai_controller.action_dictionary["rotate_speed_coefficient"]
+			inputs["jump"] = cuboid_ai_controller.action_dictionary["jump"]
+			inputs["dash"] = cuboid_ai_controller.action_dictionary["dash"]
 	
 	return inputs
 

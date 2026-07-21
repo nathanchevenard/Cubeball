@@ -5,13 +5,7 @@ class_name CuboidAIController
 @export var print_observation : bool = false
 
 var cuboid : Cuboid
-
-var dash_action : bool = false
-var jump_action : bool = false
-var move_back_action : bool = false
-var move_forward_action : bool = false
-var rotate_left_action : bool = false
-var rotate_right_action : bool = false
+var action_dictionary : Dictionary
 
 
 func _init() -> void:
@@ -30,18 +24,18 @@ func init(player: Node3D):
 
 func _process(delta: float) -> void:
 	if print_observation == true:
-		print(get_observation()["observation"].size())
-		print(get_observation())
+		print(get_observation_space())
+		#print(get_observation())
 
 
 func get_observation() -> Dictionary:
-	var observation : Array
+	var observation : Dictionary
+
+	observation["timer"] = GameStateManager.instance.get_timer()
+	observation["dash_cooldown"] = cuboid.get_dash_cooldown()
 
 	for raycast in raycast_list:
-		observation.append_array(raycast.get_observation())
-
-	observation.append(GameStateManager.instance.get_timer())
-	observation.append(cuboid.get_dash_cooldown())
+		observation[raycast.name] = raycast.get_observation()
 
 	#var dictionary : Dictionary
 	#dictionary["self"] = cuboid.get_observation_informations(cuboid)
@@ -55,17 +49,26 @@ func get_observation() -> Dictionary:
 	#
 	#dictionary["game_state"] = GameStateManager.instance.get_observation_informations(cuboid)
 
-	return { "observation" : observation }
+	return observation
 
 
 func get_observation_space() -> Dictionary:
-	var size : int = 2  # timer + dash cooldown, appended after the raycasts in get_observation()
-	for raycast in raycast_list:
-		size += raycast.get_observation_size()
-
-	return {
-		"observation": {"size": [size], "space": "box"},
+	var observation_space : Dictionary
+	observation_space["timer"] = {
+		"size" : 1,
+		"space" : "box",
 	}
+	observation_space["dash_cooldown"] = {
+		"size" : 1,
+		"space" : "box",
+	}
+	for raycast in raycast_list:
+		observation_space[raycast.name] = {
+			"size" : raycast.get_observation_size(),
+			"space" : "box",
+		}
+	
+	return observation_space
 
 
 func get_reward() -> float:
@@ -82,21 +85,13 @@ func get_action_space() -> Dictionary:
 			"size" : 2,
 			"action_type" : "discrete"
 		},
-		"move_back_action" : {
-			"size" : 2,
-			"action_type" : "discrete"
+		"move_speed_coefficient" : {
+			"size" : 1,
+			"action_type" : "box"
 		},
-		"move_forward_action" : {
-			"size" : 2,
-			"action_type" : "discrete"
-		},
-		"rotate_left_action" : {
-			"size" : 2,
-			"action_type" : "discrete"
-		},
-		"rotate_right_action" : {
-			"size" : 2,
-			"action_type" : "discrete"
+		"rotate_speed_coefficient" : {
+			"size" : 1,
+			"action_type" : "box"
 		},
 	}
 	
@@ -110,13 +105,7 @@ func get_action_space() -> Dictionary:
 func set_action(action) -> void:
 	#print("action : " + str(action))
 	#print("action : " + str(action["dash_action"] == 1))
-	
-	dash_action = action["dash_action"] == 1
-	jump_action = action["jump_action"] == 1
-	move_back_action = action["move_back_action"] == 1
-	move_forward_action = action["move_forward_action"] == 1
-	rotate_left_action = action["rotate_left_action"] == 1
-	rotate_right_action = action["rotate_right_action"] == 1
+	action_dictionary = action
 
 
 func _on_goal_scored(receiving_team : Team):
@@ -124,6 +113,7 @@ func _on_goal_scored(receiving_team : Team):
 		reward -= 1
 	else:
 		reward += 1
+
 
 func _on_game_finish():
 	done = true
