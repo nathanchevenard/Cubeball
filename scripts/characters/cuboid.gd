@@ -26,16 +26,13 @@ var team : Team
 var jump_colliding_bodies : Array[Node3D]
 var dash_timer : float = 0
 var is_dashing : bool = false
-var rotation_speed_coefficient : float
 
 var free_phantom_camera : PhantomCamera3D
 
-var inputs : Dictionary[String, bool]
+var inputs : Dictionary[String, Variant]
 static var possible_move_list : Array[String] = [
-	"move_forward",
-	"move_back",
-	"rotate_left",
-	"rotate_right",
+	"move_speed_coefficient",
+	"rotate_speed_coefficient",
 	"jump",
 	"dash",
 ]
@@ -48,6 +45,7 @@ func _ready() -> void:
 	
 	EntityManager.instance.cuboid_list.append(self)
 	cuboid_ai_controller.init(self)
+	reset_inputs()
 
 
 # queue_free() (called by PhysicsEntity.destroy) only actually removes the node at the
@@ -74,19 +72,23 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if input_mode == InputMode.HUMAN && event is InputEventMouseMotion\
 	&& CameraManager.instance.camera_mode == CameraManager.CameraMode.BEHIND:
-		if event.relative.x > 2:
-			inputs["rotate_right"] = true
-			rotation_speed_coefficient = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
-		elif event.relative.x < -2:
-			inputs["rotate_left"] = true
-			rotation_speed_coefficient = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
+		if abs(event.relative.x) > 2:
+			inputs["rotate_speed_coefficient"] = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
 
 
-func get_inputs() -> Dictionary[String, bool]:
+func get_inputs() -> Dictionary[String, Variant]:
 	match input_mode:
 		InputMode.HUMAN:
-			for possible_move : String in possible_move_list:
-				set_human_input(possible_move)
+			if Input.is_action_pressed("rotate_left"):
+				inputs["rotate_speed_coefficient"] = rotation_speed_keyboard_coefficient
+			if Input.is_action_pressed("rotate_right"):
+				inputs["rotate_speed_coefficient"] = -rotation_speed_keyboard_coefficient
+			if Input.is_action_pressed("move_forward"):
+				inputs["move_speed_coefficient"] = 1.0
+			if Input.is_action_pressed("move_back"):
+				inputs["move_speed_coefficient"] = -1.0
+			inputs["jump"] = Input.is_action_pressed("jump")
+			inputs["dash"] = Input.is_action_pressed("dash")
 		InputMode.AI:
 			inputs["move_forward"] = cuboid_ai_controller.move_forward_action
 			inputs["move_back"] = cuboid_ai_controller.move_back_action
@@ -98,36 +100,12 @@ func get_inputs() -> Dictionary[String, bool]:
 	return inputs
 
 
-func set_human_input(input : String):
-	var value : bool = Input.is_action_pressed(input)
-	if value == true:
-		inputs[input] = value
-	
-	if input == "rotate_right" && value == true:
-		rotation_speed_coefficient = -1 * rotation_speed_keyboard_coefficient
-	elif input == "rotate_left" && value == true:
-		rotation_speed_coefficient = 1 * rotation_speed_keyboard_coefficient
-
-
 func handle_inputs(delta : float):
 	if is_dashing == false:
-		if inputs.has("move_forward") && inputs["move_forward"] == true:
-			linear_velocity.x = speed * transform.basis.z.x
-			linear_velocity.z = speed * transform.basis.z.z
-		elif inputs.has("move_back") && inputs["move_back"] == true:
-			linear_velocity.x = -speed * transform.basis.z.x
-			linear_velocity.z = -speed * transform.basis.z.z
-		else:
-			linear_velocity.x = 0
-			linear_velocity.z = 0
+		linear_velocity.x = inputs["move_speed_coefficient"] * speed * transform.basis.z.x
+		linear_velocity.z = inputs["move_speed_coefficient"] * speed * transform.basis.z.z
 		
-		if inputs.has("rotate_left") && inputs["rotate_left"] == true:
-			angular_velocity.y = rotation_speed * rotation_speed_coefficient
-		elif inputs.has("rotate_right") && inputs["rotate_right"] == true:
-			angular_velocity.y = rotation_speed * rotation_speed_coefficient
-		else:
-			angular_velocity.y = 0
-		print(angular_velocity.y)
+		angular_velocity.y = inputs["rotate_speed_coefficient"] * rotation_speed
 	
 	if inputs.has("jump") && inputs["jump"] == true && is_on_ground():
 		linear_velocity.y = jump_force
@@ -145,8 +123,14 @@ func handle_inputs(delta : float):
 		linear_velocity.x = dash_force * transform.basis.z.x
 		linear_velocity.z = dash_force * transform.basis.z.z
 	
-	for key in inputs.keys():
-		inputs[key] = false
+	reset_inputs()
+
+
+func reset_inputs():
+	inputs["rotate_speed_coefficient"] = 0.0
+	inputs["move_speed_coefficient"] = 0.0
+	inputs["jump"] = false
+	inputs["dash"] = false
 
 
 func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:

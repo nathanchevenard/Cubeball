@@ -34,10 +34,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if camera_mode == CameraMode.FOCUS:
-		var direction : Vector3 = (player_cuboid.global_position - current_camera.look_at_target.global_position).normalized()
-		direction.y = 1
-		current_camera.global_position = player_cuboid.global_position + direction * focus_offset
+	var direction : Vector3 = (player_cuboid.global_position - focus_phantom_camera.look_at_target.global_position).normalized()
+	direction.y = 1
+	focus_phantom_camera.global_position = player_cuboid.global_position + direction * focus_offset
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -49,13 +48,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("trigger_camera_mode_focus"):
 		set_camera_mode(CameraMode.FOCUS)
 	elif Input.is_action_just_released("trigger_camera_mode_focus"):
-		var camera_rotation = focus_phantom_camera.rotation
-		free_phantom_camera.set_third_person_rotation(camera_rotation)
-		set_camera_mode(CameraMode.BEHIND)
+		if Input.is_action_pressed("trigger_camera_mode_free"):
+			set_camera_mode(CameraMode.FREE)
+		else:
+			set_camera_mode(CameraMode.BEHIND)
 	if Input.is_action_just_pressed("trigger_camera_mode_free") && player_cuboid != null:
+		if camera_mode == CameraMode.BEHIND:
+			var camera_rotation = player_cuboid.behind_phantom_camera.global_rotation
+			free_phantom_camera.set_third_person_rotation(camera_rotation)
+		elif camera_mode == CameraMode.FOCUS:
+			var camera_rotation = focus_phantom_camera.rotation
+			free_phantom_camera.set_third_person_rotation(camera_rotation)
 		set_camera_mode(CameraMode.FREE)
 	elif Input.is_action_just_released("trigger_camera_mode_free"):
-		set_camera_mode(CameraMode.BEHIND)
+		if Input.is_action_pressed("trigger_camera_mode_focus"):
+			set_camera_mode(CameraMode.FOCUS)
+		else:
+			set_camera_mode(CameraMode.BEHIND)
 
 
 func set_camera_mode(new_camera_mode : CameraMode):
