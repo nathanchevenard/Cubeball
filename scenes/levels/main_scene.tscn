@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://b8hhnqsugykly" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="3_ct0jg"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
-[ext_resource type="Resource" uid="uid://ccodgvagvchq4" path="res://resources/game_modes/game_mode_solo_simple.tres" id="5_v0rl3"]
+[ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_1v1_simple.tres" id="6_3h10a"]
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/debug_manager.gd" id="6_6u8e5"]
 [ext_resource type="Script" uid="uid://b7fnsvb8f18gw" path="res://scripts/managers/game_state_manager.gd" id="6_84bhp"]
 [ext_resource type="Script" uid="uid://cnwlwnghcjbcu" path="res://scripts/managers/game_mode_manager.gd" id="7_84bhp"]
@@ -81,7 +81,7 @@ metadata/_custom_type_script = "uid://b806wpb14q2fm"
 
 [node name="GameModeManager" type="Node" parent="Managers" unique_id=272543316]
 script = ExtResource("7_84bhp")
-game_mode = ExtResource("5_v0rl3")
+game_mode = ExtResource("6_3h10a")
 metadata/_custom_type_script = "uid://cnwlwnghcjbcu"
 
 [node name="GameStateManager" type="Node" parent="Managers" unique_id=376915082 node_paths=PackedStringArray("timer_label")]
