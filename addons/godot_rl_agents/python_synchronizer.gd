@@ -42,10 +42,10 @@ var agent_demo_record: Node
 var expert_demo_save_path: String
 ## Stores recorded trajectories
 var demo_trajectories: Array
-## A trajectory includes obs: Array, acts: Array, terminal (set in Python env instead)
+## A trajectory includes observation: Array, acts: Array, terminal (set in Python env instead)
 var current_demo_trajectory: Array
 
-var need_to_send_obs = false
+var need_to_send_observation = false
 var args = null
 var initialized = false
 var just_reset = false
@@ -192,7 +192,7 @@ func _initialize_demo_recording():
 
 func _physics_process(_delta):
 	# two modes, human control, agent control
-	# pause tree, send obs, get actions, set actions, unpause tree
+	# pause tree, send observation, get actions, set actions, unpause tree
 
 	_demo_record_process()
 
@@ -216,20 +216,20 @@ func _training_process():
 
 			var reply = {
 				"type": "reset",
-				"obs": _get_training_obs(),
+				"observation": _get_training_observations(),
 			}
 			_send_dict_as_json_message(reply)
 			# this should go straight to getting the action and setting it checked the agent, no need to perform one phyics tick
 			get_tree().set_pause(false)
 			return
 
-		if need_to_send_obs:
-			need_to_send_obs = false
+		if need_to_send_observation:
+			need_to_send_observation = false
 			var reward = _get_training_rewards()
 			var done = _get_training_dones()
-			var obs = _get_training_obs()
+			var observation = _get_training_observations()
 
-			var reply = {"type": "step", "obs": obs, "reward": reward, "done": done}
+			var reply = {"type": "step", "observation": observation, "reward": reward, "done": done}
 			_send_dict_as_json_message(reply)
 
 		var handled = handle_message()
@@ -237,13 +237,13 @@ func _training_process():
 
 func _inference_process():
 	if agents_inference.size() > 0:
-		var obs: Array = _get_obs_from_agents(agents_inference)
+		var observations: Array = _get_observations_from_agents(agents_inference)
 		var actions = []
 
 		for agent_id in range(0, agents_inference.size()):
 			var model: ONNXModel = agents_inference[agent_id].onnx_model
 			var action = model.run_inference(
-				obs[agent_id]["obs"], 1.0
+				observations[agent_id]["observation"], 1.0
 			)
 			var action_dict = _extract_action_dict(
 				action["output"], _action_space_inference[agent_id], model.action_means_only
@@ -267,16 +267,16 @@ func _demo_record_process():
 	if n_action_steps % agent_demo_record.action_repeat != 0:
 		return
 
-	var obs_dict: Dictionary = agent_demo_record.get_obs()
+	var observation_dict: Dictionary = agent_demo_record.get_observation()
 
-	# Get the current obs from the agent
+	# Get the current observation from the agent
 	assert(
-		obs_dict.has("obs"),
-		"Demo recorder needs an 'obs' key in get_obs() returned dictionary to record obs from."
+		observation_dict.has("observation"),
+		"Demo recorder needs an 'observation' key in get_observation() returned dictionary to record observation from."
 	)
-	current_demo_trajectory[0].append(obs_dict.obs)
+	current_demo_trajectory[0].append(observation_dict.observation)
 
-	# Get the action applied for the current obs from the agent
+	# Get the action applied for the current observation from the agent
 	agent_demo_record.set_action()
 	var acts = agent_demo_record.get_action()
 
@@ -518,7 +518,7 @@ func handle_message() -> bool:
 		_get_agents()
 		var spaces_reply = {
 			"type": "spaces",
-			"observation_space": _get_training_obs_spaces(),
+			"observation_space": _get_training_observation_spaces(),
 			"action_space": _get_training_action_spaces(),
 			"agent_policy_names": agents_training_policy_names,
 		}
@@ -535,7 +535,7 @@ func handle_message() -> bool:
 
 	if message["type"] == "action":
 		_set_training_agent_actions(message["action"])
-		need_to_send_obs = true
+		need_to_send_observation = true
 		get_tree().set_pause(false)
 		return true
 
@@ -567,11 +567,11 @@ func _start_new_episode(config : Dictionary) -> void:
 	SignalsManager.game.emit_game_reset()
 
 
-func _get_training_obs_spaces() -> Dictionary:
-	var obs_spaces : Dictionary = {}
+func _get_training_observation_spaces() -> Dictionary:
+	var observation_spaces : Dictionary = {}
 	for agent_id in agents_training:
-		obs_spaces[agent_id] = agents_training[agent_id].get_obs_space()
-	return obs_spaces
+		observation_spaces[agent_id] = agents_training[agent_id].get_observation_space()
+	return observation_spaces
 
 
 func _get_training_action_spaces() -> Dictionary:
@@ -581,11 +581,11 @@ func _get_training_action_spaces() -> Dictionary:
 	return action_spaces
 
 
-func _get_training_obs() -> Dictionary:
-	var obs : Dictionary = {}
+func _get_training_observations() -> Dictionary:
+	var observations : Dictionary = {}
 	for agent_id in agents_training:
-		obs[agent_id] = agents_training[agent_id].get_obs()
-	return obs
+		observations[agent_id] = agents_training[agent_id].get_observation()
+	return observations
 
 
 func _get_training_rewards() -> Dictionary:
@@ -614,11 +614,11 @@ func _set_training_agent_actions(actions : Dictionary) -> void:
 			agents_training[agent_id].set_action(actions[agent_id])
 
 
-func _get_obs_from_agents(agents: Array = all_agents):
-	var obs = []
+func _get_observations_from_agents(agents: Array = all_agents):
+	var observations = []
 	for agent in agents:
-		obs.append(agent.get_obs())
-	return obs
+		observations.append(agent.get_observation())
+	return observations
 
 
 func _set_agent_actions(actions, agents: Array = all_agents):

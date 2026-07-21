@@ -56,3 +56,11 @@ func calculate_raycasts() -> Array:
 
 func get_ray_additional_data(_ray : RayCast3D) -> float:
 	return 0.0
+
+
+# Element count of get_observation()'s result, known from the ray grid config alone —
+# lets CuboidAIController.get_observation_space() compute a shape without needing an
+# actual observation (and the live raycasts it requires) to exist yet.
+func get_observation_size() -> int:
+	var values_per_ray : int = 2 if has_ray_additional_data else 1
+	return int(n_rays_width * n_rays_height) * values_per_ray

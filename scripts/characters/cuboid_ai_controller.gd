@@ -2,7 +2,7 @@ extends AIController3D
 class_name CuboidAIController
 
 @export var raycast_list : Array[CubeballRaycast]
-@export var print_obs : bool = false
+@export var print_observation : bool = false
 
 var cuboid : Cuboid
 
@@ -29,19 +29,19 @@ func init(player: Node3D):
 
 
 func _process(delta: float) -> void:
-	if print_obs == true:
-		print(get_obs()["obs"].size())
-		print(get_obs())
+	if print_observation == true:
+		print(get_observation()["observation"].size())
+		print(get_observation())
 
 
-func get_obs() -> Dictionary:
-	var obs : Array
+func get_observation() -> Dictionary:
+	var observation : Array
 
 	for raycast in raycast_list:
-		obs.append_array(raycast.get_observation())
+		observation.append_array(raycast.get_observation())
 
-	obs.append(GameStateManager.instance.get_timer())
-	obs.append(cuboid.get_dash_cooldown())
+	observation.append(GameStateManager.instance.get_timer())
+	observation.append(cuboid.get_dash_cooldown())
 
 	#var dictionary : Dictionary
 	#dictionary["self"] = cuboid.get_observation_informations(cuboid)
@@ -55,7 +55,17 @@ func get_obs() -> Dictionary:
 	#
 	#dictionary["game_state"] = GameStateManager.instance.get_observation_informations(cuboid)
 
-	return { "obs" : obs }
+	return { "observation" : observation }
+
+
+func get_observation_space() -> Dictionary:
+	var size : int = 2  # timer + dash cooldown, appended after the raycasts in get_observation()
+	for raycast in raycast_list:
+		size += raycast.get_observation_size()
+
+	return {
+		"observation": {"size": [size], "space": "box"},
+	}
 
 
 func get_reward() -> float:

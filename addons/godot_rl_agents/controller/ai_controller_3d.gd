@@ -45,9 +45,9 @@ func init(player: Node3D):
 
 
 #-- Methods that need implementing using the "extend script" option in Godot --#
-func get_obs() -> Dictionary:
-	assert(false, "the get_obs method is not implemented when extending from ai_controller")
-	return {"obs": []}
+func get_observation() -> Dictionary:
+	assert(false, "the get_observation method is not implemented when extending from ai_controller")
+	return {"observation": []}
 
 
 func get_reward() -> float:
@@ -88,11 +88,11 @@ func _physics_process(delta):
 		needs_reset = true
 
 
-func get_obs_space():
-	# may need overriding if the obs space is complex
-	var obs = get_obs()
+func get_observation_space():
+	# may need overriding if the observation space is complex
+	var observation = get_observation()
 	return {
-		"obs": {"size": [len(obs["obs"])], "space": "box"},
+		"observation": {"size": [len(observation["observation"])], "space": "box"},
 	}
 
 
