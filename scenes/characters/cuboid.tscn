@@ -46,12 +46,12 @@ gravity_scale = 4.0
 continuous_cd = true
 max_contacts_reported = 10
 script = ExtResource("1_k8rju")
+rotation_speed = 6.0
 dash_force = 32.0
 dash_duration = 0.1
 cuboid_ai_controller = NodePath("CuboidAIController")
 behind_phantom_camera = NodePath("BehindPlayerPhantomCamera3D")
-mouse_sensitivity = 0.1
-max_pitch = -10.0
+mouse_sensitivity = 0.02
 
 [node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh")]
 script = ExtResource("2_6oqb7")

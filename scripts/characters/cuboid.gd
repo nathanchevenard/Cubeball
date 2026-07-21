@@ -10,6 +10,7 @@ enum InputMode {
 
 @export var speed : float = 8
 @export var rotation_speed : float = 3
+@export var rotation_speed_keyboard_coefficient : float = 0.8
 @export var jump_force : float = 12
 
 @export var dash_force : float = 10
@@ -18,20 +19,26 @@ enum InputMode {
 
 @export var cuboid_ai_controller : CuboidAIController
 
-@export_group("Player Camera")
 @export var behind_phantom_camera : PhantomCamera3D
-@export var mouse_sensitivity: float = 0.05
-@export var min_pitch: float = -89.9
-@export var max_pitch: float = 50
-@export var min_yaw: float = 0
-@export var max_yaw: float = 360
+@export var mouse_sensitivity: float = 1.0/40.0
 
 var team : Team
 var jump_colliding_bodies : Array[Node3D]
 var dash_timer : float = 0
 var is_dashing : bool = false
+var rotation_speed_coefficient : float
 
 var free_phantom_camera : PhantomCamera3D
+
+var inputs : Dictionary[String, bool]
+static var possible_move_list : Array[String] = [
+	"move_forward",
+	"move_back",
+	"rotate_left",
+	"rotate_right",
+	"jump",
+	"dash",
+]
 
 signal color_changed(color : Color)
 
@@ -60,37 +67,26 @@ func destroy() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	handle_inputs(get_inputs(), delta)
+	inputs = get_inputs()
+	handle_inputs(delta)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if input_mode == InputMode.HUMAN && DebugManager.instance.camera_on_cuboid == true:
-		if free_phantom_camera.follow_mode == PhantomCamera3D.FollowMode.THIRD_PERSON:
-			set_camera_third_person_rotation(event)
-	
-	if Input.is_action_just_pressed("trigger_camera_look_at_ball"):
-		CameraManager.instance.enable_camera(CameraManager.instance.focus_phantom_camera, self)
-	elif Input.is_action_just_released("trigger_camera_look_at_ball"):
-		var camera_rotation = CameraManager.instance.focus_phantom_camera.rotation
-		CameraManager.instance.free_phantom_camera.set_third_person_rotation(camera_rotation)
-		CameraManager.instance.enable_camera(CameraManager.instance.free_phantom_camera)
-	if Input.is_action_just_pressed("trigger_camera_behind_player"):
-		CameraManager.instance.enable_camera(behind_phantom_camera)
-	elif Input.is_action_just_released("trigger_camera_behind_player"):
-		CameraManager.instance.enable_camera(CameraManager.instance.free_phantom_camera)
+	if input_mode == InputMode.HUMAN && event is InputEventMouseMotion\
+	&& CameraManager.instance.camera_mode == CameraManager.CameraMode.BEHIND:
+		if event.relative.x > 2:
+			inputs["rotate_right"] = true
+			rotation_speed_coefficient = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
+		elif event.relative.x < -2:
+			inputs["rotate_left"] = true
+			rotation_speed_coefficient = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
 
 
 func get_inputs() -> Dictionary[String, bool]:
-	var inputs : Dictionary[String, bool]
-	
 	match input_mode:
 		InputMode.HUMAN:
-			inputs["move_forward"] = Input.is_action_pressed("move_forward")
-			inputs["move_back"] = Input.is_action_pressed("move_back")
-			inputs["rotate_left"] = Input.is_action_pressed("rotate_left")
-			inputs["rotate_right"] = Input.is_action_pressed("rotate_right")
-			inputs["jump"] = Input.is_action_pressed("jump")
-			inputs["dash"] = Input.is_action_pressed("dash")
+			for possible_move : String in possible_move_list:
+				set_human_input(possible_move)
 		InputMode.AI:
 			inputs["move_forward"] = cuboid_ai_controller.move_forward_action
 			inputs["move_back"] = cuboid_ai_controller.move_back_action
@@ -102,7 +98,18 @@ func get_inputs() -> Dictionary[String, bool]:
 	return inputs
 
 
-func handle_inputs(inputs : Dictionary[String, bool], delta : float):
+func set_human_input(input : String):
+	var value : bool = Input.is_action_pressed(input)
+	if value == true:
+		inputs[input] = value
+	
+	if input == "rotate_right" && value == true:
+		rotation_speed_coefficient = -1 * rotation_speed_keyboard_coefficient
+	elif input == "rotate_left" && value == true:
+		rotation_speed_coefficient = 1 * rotation_speed_keyboard_coefficient
+
+
+func handle_inputs(delta : float):
 	if is_dashing == false:
 		if inputs.has("move_forward") && inputs["move_forward"] == true:
 			linear_velocity.x = speed * transform.basis.z.x
@@ -115,12 +122,12 @@ func handle_inputs(inputs : Dictionary[String, bool], delta : float):
 			linear_velocity.z = 0
 		
 		if inputs.has("rotate_left") && inputs["rotate_left"] == true:
-			angular_velocity.y = rotation_speed
+			angular_velocity.y = rotation_speed * rotation_speed_coefficient
 		elif inputs.has("rotate_right") && inputs["rotate_right"] == true:
-			angular_velocity.y = -rotation_speed
+			angular_velocity.y = rotation_speed * rotation_speed_coefficient
 		else:
 			angular_velocity.y = 0
-
+		print(angular_velocity.y)
 	
 	if inputs.has("jump") && inputs["jump"] == true && is_on_ground():
 		linear_velocity.y = jump_force
@@ -137,6 +144,9 @@ func handle_inputs(inputs : Dictionary[String, bool], delta : float):
 		lock_rotation = true
 		linear_velocity.x = dash_force * transform.basis.z.x
 		linear_velocity.z = dash_force * transform.basis.z.z
+	
+	for key in inputs.keys():
+		inputs[key] = false
 
 
 func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
@@ -177,26 +187,3 @@ func get_observation_informations(caller : Cuboid) -> Dictionary:
 
 func get_dash_cooldown() -> float:
 	return clampf(dash_timer / dash_cooldown, 0, 1)
-
-
-func set_camera_third_person_rotation(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		var camera_rotation_degrees: Vector3
-
-		# Assigns the current 3D rotation of the SpringArm3D node - so it starts off where it is in the editor
-		camera_rotation_degrees = free_phantom_camera.get_third_person_rotation_degrees()
-
-		# Change the X rotation
-		camera_rotation_degrees.x -= event.relative.y * mouse_sensitivity
-
-		# Clamp the rotation in the X axis so it go over or under the target
-		camera_rotation_degrees.x = clampf(camera_rotation_degrees.x, min_pitch, max_pitch)
-
-		# Change the Y rotation value
-		camera_rotation_degrees.y -= event.relative.x * mouse_sensitivity
-
-		# Sets the rotation to fully loop around its target, but witout going below or exceeding 0 and 360 degrees respectively
-		camera_rotation_degrees.y = wrapf(camera_rotation_degrees.y, min_yaw, max_yaw)
-
-		# Change the SpringArm3D node's rotation and rotate around its target
-		free_phantom_camera.set_third_person_rotation_degrees(camera_rotation_degrees)
