@@ -217,9 +217,6 @@ func _training_process():
 			var reply = {
 				"type": "reset",
 				"obs": _get_training_obs(),
-				"observation_space": _get_shared_obs_space(),
-				"action_space": _get_shared_action_space(),
-				"agent_policy_names": agents_training_policy_names,
 			}
 			_send_dict_as_json_message(reply)
 			# this should go straight to getting the action and setting it checked the agent, no need to perform one phyics tick
@@ -515,6 +512,19 @@ func handle_message() -> bool:
 		get_tree().set_pause(false)
 		return true
 
+	if message["type"] == "get_spaces":
+		_debug_log("discovering spaces with config: %s" % [message["config"]])
+		_start_new_episode(message["config"])
+		_get_agents()
+		var spaces_reply = {
+			"type": "spaces",
+			"observation_space": _get_training_obs_spaces(),
+			"action_space": _get_training_action_spaces(),
+			"agent_policy_names": agents_training_policy_names,
+		}
+		_send_dict_as_json_message(spaces_reply)
+		return handle_message()
+
 	if message["type"] == "call":
 		var method = message["method"]
 		var returns = _call_method_on_agents(method)
@@ -557,16 +567,18 @@ func _start_new_episode(config : Dictionary) -> void:
 	SignalsManager.game.emit_game_reset()
 
 
-func _get_shared_obs_space() -> Dictionary:
-	if agents_training.is_empty():
-		return {}
-	return agents_training.values()[0].get_obs_space()
+func _get_training_obs_spaces() -> Dictionary:
+	var obs_spaces : Dictionary = {}
+	for agent_id in agents_training:
+		obs_spaces[agent_id] = agents_training[agent_id].get_obs_space()
+	return obs_spaces
 
 
-func _get_shared_action_space() -> Dictionary:
-	if agents_training.is_empty():
-		return {}
-	return agents_training.values()[0].get_action_space()
+func _get_training_action_spaces() -> Dictionary:
+	var action_spaces : Dictionary = {}
+	for agent_id in agents_training:
+		action_spaces[agent_id] = agents_training[agent_id].get_action_space()
+	return action_spaces
 
 
 func _get_training_obs() -> Dictionary:

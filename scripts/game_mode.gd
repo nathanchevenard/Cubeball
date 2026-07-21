@@ -25,16 +25,18 @@ func _init(data : Dictionary = {}) -> void:
 		goal_size = Utilities.list_to_vector3(data["goal_size"])
 	
 	if data.has("team_list"):
-		var new_team_list : Array[Dictionary] = data["team_list"]
+		# JSON always parses to an untyped Array (even for an array of objects), so this
+		# can't be typed Array[Dictionary] directly — GDScript rejects that assignment.
+		var new_team_list : Array = data["team_list"]
 		for team_data in new_team_list:
 			var game_mode_team : GameModeTeam = GameModeTeam.new()
 			var new_team : Team = Team.new()
 			if team_data.has("name"):
 				new_team.name = team_data["name"]
 			if team_data.has("color"):
-				new_team.color = team_data["color"]
+				new_team.color = Utilities.list_to_color(team_data["color"])
 			game_mode_team.team = new_team
 			if team_data.has("players_number"):
-				game_mode_team.players_number = team_data["players_number"]
-			
+				game_mode_team.players_number = int(team_data["players_number"])
+
 			team_list.append(game_mode_team)
