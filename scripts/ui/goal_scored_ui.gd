@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func _on_goal_scored(_receiving_team : Team):
-	if DebugManager.instance.goal_animation == false:
+	if DebugManager.instance == null || DebugManager.instance.goal_animation == false:
 		SignalsManager.goal.emit_goal_animation_finish()
 		return
 	

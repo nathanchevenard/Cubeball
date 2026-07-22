@@ -5,11 +5,13 @@ enum CameraMode {
 	BEHIND,
 	FOCUS,
 	FREE,
+	OVERVIEW,
 }
 
 @export var free_phantom_camera : PhantomCamera3D
 @export var focus_phantom_camera : PhantomCamera3D
 @export var focus_offset : Vector3
+@export var overview_phantom_camera : PhantomCamera3D
 
 @export_group("Free Camera")
 @export var mouse_sensitivity: float = 0.05
@@ -30,10 +32,13 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	set_camera_mode(CameraMode.BEHIND)
+	set_camera_mode(CameraMode.OVERVIEW)
 
 
 func _process(delta: float) -> void:
+	if player_cuboid == null:
+		return
+
 	var direction : Vector3 = (player_cuboid.global_position - focus_phantom_camera.look_at_target.global_position).normalized()
 	direction.y = 1
 	focus_phantom_camera.global_position = player_cuboid.global_position + direction * focus_offset
@@ -41,7 +46,7 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if player_cuboid != null && player_cuboid.input_mode == Cuboid.InputMode.HUMAN\
-	&& DebugManager.instance.camera_on_cuboid == true:
+	&& DebugManager.instance != null && DebugManager.instance.camera_on_cuboid == true:
 		if free_phantom_camera.follow_mode == PhantomCamera3D.FollowMode.THIRD_PERSON:
 			set_free_camera_rotation(event)
 	
@@ -77,6 +82,8 @@ func set_camera_mode(new_camera_mode : CameraMode):
 			enable_camera(focus_phantom_camera)
 		CameraMode.FREE:
 			enable_camera(free_phantom_camera)
+		CameraMode.OVERVIEW:
+			enable_camera(overview_phantom_camera)
 
 
 func enable_camera(camera : PhantomCamera3D):

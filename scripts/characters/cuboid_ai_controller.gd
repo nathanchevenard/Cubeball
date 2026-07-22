@@ -56,16 +56,16 @@ func get_observation_space() -> Dictionary:
 	var observation_space : Dictionary
 	observation_space["timer"] = {
 		"size" : 1,
-		"space" : "box",
+		"space" : "continuous",
 	}
 	observation_space["dash_cooldown"] = {
 		"size" : 1,
-		"space" : "box",
+		"space" : "continuous",
 	}
 	for raycast in raycast_list:
 		observation_space[raycast.name] = {
 			"size" : raycast.get_observation_size(),
-			"space" : "box",
+			"space" : "continuous",
 		}
 	
 	return observation_space
@@ -87,11 +87,11 @@ func get_action_space() -> Dictionary:
 		},
 		"move_speed_coefficient" : {
 			"size" : 1,
-			"action_type" : "box"
+			"action_type" : "continuous"
 		},
 		"rotate_speed_coefficient" : {
 			"size" : 1,
-			"action_type" : "box"
+			"action_type" : "continuous"
 		},
 	}
 	

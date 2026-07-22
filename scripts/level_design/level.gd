@@ -94,7 +94,10 @@ func build_level(new_game_mode : GameMode) -> void:
 
 
 func destroy_level() -> void:
-	for cuboid in EntityManager.instance.cuboid_list:
+	# cuboid.destroy() erases itself from EntityManager.instance.cuboid_list, so iterating
+	# that array directly would skip every other element as it shrinks mid-loop — iterate a
+	# copy instead.
+	for cuboid in EntityManager.instance.cuboid_list.duplicate():
 		cuboid.destroy()
 	
 	if ground != null:

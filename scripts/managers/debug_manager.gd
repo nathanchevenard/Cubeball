@@ -35,3 +35,4 @@ func _on_all_teams_initialized():
 				CameraManager.instance.focus_phantom_camera.follow_target = cuboid
 				CameraManager.instance.focus_phantom_camera.look_at_target = EntityManager.instance.ball_list[0]
 				CameraManager.instance.player_cuboid = cuboid
+				CameraManager.instance.set_camera_mode(CameraManager.CameraMode.BEHIND)

@@ -65,7 +65,7 @@ func _on_all_teams_initialized():
 
 
 func _on_goal_scored(receiving_team : Team):
-	if DebugManager.instance.goal_animation == false:
+	if DebugManager.instance == null || DebugManager.instance.goal_animation == false:
 		return
 	
 	for team : Team in team_to_label.keys():

@@ -90,10 +90,13 @@ func get_inputs() -> Dictionary[String, Variant]:
 			inputs["jump"] = Input.is_action_pressed("jump")
 			inputs["dash"] = Input.is_action_pressed("dash")
 		InputMode.AI:
-			inputs["move_speed_coefficient"] = cuboid_ai_controller.action_dictionary["move_speed_coefficient"]
-			inputs["rotate_speed_coefficient"] = cuboid_ai_controller.action_dictionary["rotate_speed_coefficient"]
-			inputs["jump"] = cuboid_ai_controller.action_dictionary["jump"]
-			inputs["dash"] = cuboid_ai_controller.action_dictionary["dash"]
+			if cuboid_ai_controller.action_dictionary.is_empty():
+				return inputs
+
+			inputs["move_speed_coefficient"] = cuboid_ai_controller.action_dictionary["move_speed_coefficient"][0]
+			inputs["rotate_speed_coefficient"] = cuboid_ai_controller.action_dictionary["rotate_speed_coefficient"][0]
+			inputs["jump"] = cuboid_ai_controller.action_dictionary["jump_action"] == 1
+			inputs["dash"] = cuboid_ai_controller.action_dictionary["dash_action"] == 1
 	
 	return inputs
 
