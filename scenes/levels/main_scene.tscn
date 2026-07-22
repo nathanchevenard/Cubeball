@@ -91,11 +91,14 @@ metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
 [node name="PythonSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
+control_mode = 0
 onnx_model_path = "res://assets/onnx/shared_policy_v1.onnx"
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
 script = ExtResource("6_6u8e5")
+camera_on_cuboid = true
+first_cuboid_human_input = true
 metadata/_custom_type_script = "uid://tinwq43u68p7"
 
 [node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("free_phantom_camera", "focus_phantom_camera", "overview_phantom_camera")]
@@ -158,7 +161,6 @@ environment = SubResource("Environment_xmwv8")
 
 [node name="Level" type="Node3D" parent="." unique_id=162575387]
 script = ExtResource("5_p61ap")
-cuboid_field_margin = Vector3(8, 0, 10)
 penatly_area_width = 2.0
 ground_ball_field_scene = ExtResource("10_nxfq7")
 wall_ball_field_scene = ExtResource("11_nxfq7")

@@ -22,4 +22,5 @@ script = ExtResource("1_wkqog")
 team_list = Array[ExtResource("2_wkqog")]([SubResource("Resource_6wuse"), SubResource("Resource_4t5hi")])
 level_size = Vector3(10, 4, 15)
 goal_size = Vector3(3, 4, 5)
+cuboid_field_margin = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://culgsafxumoi6"

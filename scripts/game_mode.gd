@@ -6,6 +6,7 @@ class_name GameMode
 @export var max_goal : int = 1
 @export var level_size : Vector3 = Vector3.ONE
 @export var goal_size : Vector3 = Vector3.ONE
+@export var cuboid_field_margin : Vector3 = Vector3(3, 0, 3)
 @export var ball_number : int = 1
 @export var obstacle_number : int = 0
 
@@ -23,7 +24,9 @@ func _init(data : Dictionary = {}) -> void:
 		level_size = Utilities.list_to_vector3(data["level_size"])
 	if data.has("goal_size"):
 		goal_size = Utilities.list_to_vector3(data["goal_size"])
-	
+	if data.has("cuboid_field_margin"):
+		cuboid_field_margin = Utilities.list_to_vector3(data["cuboid_field_margin"])
+
 	if data.has("team_list"):
 		# JSON always parses to an untyped Array (even for an array of objects), so this
 		# can't be typed Array[Dictionary] directly — GDScript rejects that assignment.

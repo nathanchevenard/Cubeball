@@ -3,7 +3,6 @@ class_name Level
 
 
 @export var cuboid_field_wall_height : float = 10
-@export var cuboid_field_margin : Vector3 = Vector3(3, 0, 3)
 @export var border_wall_width : float = 0.1
 @export var penatly_area_width : float = 1.5
 
@@ -236,13 +235,14 @@ func spawn_cuboid_field():
 	var size_x : float = game_mode.level_size.x
 	var size_y : float = game_mode.level_size.y
 	var size_z : float = game_mode.level_size.z
-	
+	var cuboid_field_margin : Vector3 = game_mode.cuboid_field_margin
+
 	# Room ground
 	ground_cuboid_field = ground_cuboid_field_scene.instantiate()
 	add_child(ground_cuboid_field)
 	ground_cuboid_field.scale = Vector3(size_x + cuboid_field_margin.x, 1, size_z + cuboid_field_margin.z)
 	ground_cuboid_field.global_position.y -= 0.01
-	
+
 	# Room walls
 	spawn_wall(wall_cuboid_field_scene, Vector3(0, 0, (size_z + cuboid_field_margin.z) / 2), Vector3(0, -PI / 2, 0), Vector3(1, cuboid_field_wall_height, size_x + cuboid_field_margin.x))
 	spawn_wall(wall_cuboid_field_scene, Vector3(0, 0, -(size_z + cuboid_field_margin.z) / 2), Vector3(0, PI / 2, 0), Vector3(1, cuboid_field_wall_height, size_x + cuboid_field_margin.x))
