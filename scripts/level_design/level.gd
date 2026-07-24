@@ -46,6 +46,7 @@ func _on_game_mode_set(new_game_mode : GameMode) -> void:
 # cannot safely be resized in place.
 func build_level(new_game_mode : GameMode) -> void:
 	destroy_level()
+	await get_tree().physics_frame
 
 	game_mode = new_game_mode
 	var size_x : float = game_mode.level_size.x
@@ -108,7 +109,7 @@ func destroy_level() -> void:
 	wall_list.clear()
 
 	for goal in goal_list:
-		goal.call_deferred("queue_free")
+		goal.destroy()
 	goal_list.clear()
 
 	for ball in ball_list:

@@ -32,6 +32,11 @@ func initialize(spawn_scale):
 		csg_box.material = wall_override_material
 
 
+func destroy():
+	process_mode = Node.PROCESS_MODE_DISABLED
+	call_deferred("queue_free")
+
+
 func scale_net(spawn_scale : Vector3, spawn_position : Vector3, spawn_rotation : Vector3, pivot_local : Vector3 = Vector3.ZERO):
 	# Si pivot_local est laissé à ZERO, on calcule le centre de masse
 	if pivot_local == Vector3.ZERO:
