@@ -27,8 +27,6 @@ var jump_colliding_bodies : Array[Node3D]
 var dash_timer : float = 0
 var is_dashing : bool = false
 
-var free_phantom_camera : PhantomCamera3D
-
 var inputs : Dictionary[String, Variant]
 static var possible_move_list : Array[String] = [
 	"move_speed_coefficient",
@@ -144,6 +142,11 @@ func is_on_ground(checked_collisions : Array[PhysicsEntity] = []) -> bool:
 			return true
 
 	return false
+
+
+func set_control_mode_human():
+	input_mode = Cuboid.InputMode.HUMAN
+	SignalsManager.control.emit_cuboid_control_mode_human_set(self)
 
 
 func set_team(new_team : Team):

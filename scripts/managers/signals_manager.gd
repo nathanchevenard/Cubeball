@@ -5,6 +5,7 @@ var score : ScoreSignals = ScoreSignals.new()
 var team : TeamSignals = TeamSignals.new()
 var level : LevelSignals = LevelSignals.new()
 var game : GameSignals = GameSignals.new()
+var control : ControlSignals = ControlSignals.new()
 
 
 class GoalSignals:
@@ -71,3 +72,9 @@ class GameSignals:
 	signal start_next_point
 	func emit_start_next_point():
 		start_next_point.emit()
+
+
+class ControlSignals:
+	signal cuboid_control_mode_human_set(cuboid : Cuboid)
+	func emit_cuboid_control_mode_human_set(cuboid : Cuboid):
+		cuboid_control_mode_human_set.emit(cuboid)

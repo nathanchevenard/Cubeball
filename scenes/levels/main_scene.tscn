@@ -91,44 +91,25 @@ metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
 [node name="PythonSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
+control_mode = 0
 onnx_model_path = "res://assets/onnx/shared_policy_v1.onnx"
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="DebugManager" type="Node" parent="Managers" unique_id=1804407204]
 script = ExtResource("6_6u8e5")
-camera_on_cuboid = true
 first_cuboid_human_input = true
+goal_animation = null
 metadata/_custom_type_script = "uid://tinwq43u68p7"
 
-[node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("free_phantom_camera", "focus_phantom_camera", "overview_phantom_camera")]
+[node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("focus_phantom_camera", "third_person_phantom_camera", "free_phantom_camera")]
 script = ExtResource("10_ct0jg")
-free_phantom_camera = NodePath("FreePhantomCamera")
 focus_phantom_camera = NodePath("FocusPhantomCamera")
 focus_offset = Vector3(3, 2, 3)
-overview_phantom_camera = NodePath("OverviewPhantomCamera")
+third_person_phantom_camera = NodePath("ThirdPersonPhantomCamera")
 mouse_sensitivity = 0.1
 max_pitch = -10.0
+free_phantom_camera = NodePath("FreePhantomCamera")
 metadata/_custom_type_script = "uid://diham7d1gieeo"
-
-[node name="OverviewPhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=1374108970]
-transform = Transform3D(1, 0, 0, 0, 0.5705964, 0.82098067, 0, -0.82098067, 0.5705964, 0, 25, 15)
-script = ExtResource("1_2fuee")
-tween_resource = SubResource("Resource_3h10a")
-tween_on_load = false
-camera_3d_resource = SubResource("Resource_agd1n")
-
-[node name="FreePhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=951100455]
-transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
-script = ExtResource("1_2fuee")
-follow_mode = 6
-tween_resource = SubResource("Resource_3h10a")
-tween_on_load = false
-camera_3d_resource = SubResource("Resource_agd1n")
-follow_offset = Vector3(0, 1.5, 0)
-follow_damping = true
-follow_distance = 3.0
-vertical_rotation_offset = 0.523599
-spring_length = 3.0
 
 [node name="FocusPhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=1897387093]
 transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
@@ -144,6 +125,26 @@ vertical_rotation_offset = 0.523599
 spring_length = 3.5
 look_at_damping = true
 look_at_damping_value = 0.3
+
+[node name="ThirdPersonPhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=951100455]
+transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+script = ExtResource("1_2fuee")
+follow_mode = 6
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")
+follow_offset = Vector3(0, 1.5, 0)
+follow_damping = true
+follow_distance = 3.0
+vertical_rotation_offset = 0.523599
+spring_length = 3.0
+
+[node name="FreePhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=1374108970]
+transform = Transform3D(1, 0, 0, 0, 0.5705964, 0.82098067, 0, -0.82098067, 0.5705964, 0, 25, 15)
+script = ExtResource("1_2fuee")
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")
 
 [node name="PauseManager" type="Node" parent="Managers" unique_id=1934117463]
 script = ExtResource("14_3h10a")
