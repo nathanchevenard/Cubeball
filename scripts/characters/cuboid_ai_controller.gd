@@ -9,7 +9,6 @@ var action_dictionary : Dictionary
 
 
 func _init() -> void:
-	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
 	SignalsManager.game.game_finish.connect(_on_game_finish)
 
 
@@ -70,11 +69,6 @@ func get_observation_space() -> Dictionary:
 	
 	return observation_space
 
-
-func get_reward() -> float:
-	return reward
-
-
 func get_action_space() -> Dictionary:
 	var result : Dictionary = {
 		"dash_action" : {
@@ -106,13 +100,6 @@ func set_action(action) -> void:
 	#print("action : " + str(action))
 	#print("action : " + str(action["dash_action"] == 1))
 	action_dictionary = action
-
-
-func _on_goal_scored(receiving_team : Team):
-	if receiving_team == cuboid.team:
-		reward -= 1
-	else:
-		reward += 1
 
 
 func _on_game_finish():

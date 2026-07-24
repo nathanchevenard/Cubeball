@@ -170,5 +170,14 @@ func get_observation_informations(caller : Cuboid) -> Dictionary:
 	return dictionary
 
 
+func get_state_dictionary() -> Dictionary:
+	var dictionary : Dictionary = super.get_state_dictionary()
+
+	dictionary["agent_id"] = cuboid_ai_controller.agent_id
+	dictionary["team_name"] = team.name
+
+	return dictionary
+
+
 func get_dash_cooldown() -> float:
 	return clampf(dash_timer / dash_cooldown, 0, 1)

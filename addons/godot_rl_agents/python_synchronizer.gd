@@ -17,13 +17,14 @@ var onnx_models: Dictionary
 @onready var start_time = Time.get_ticks_msec()
 
 const MAJOR_VERSION := "0"
-const MINOR_VERSION := "7"
+const MINOR_VERSION := "8"
 const DEFAULT_PORT := "11008"
 const DEFAULT_SEED := "1"
 var stream: StreamPeerTCP = null
 var connected = false
 var message_center
 var should_connect = true
+var pending_goal_events: Array = []
 
 var all_agents: Array
 ## Training agents keyed by their stable agent_id (see AIController3D.agent_id). The
@@ -60,6 +61,8 @@ var debug_logs_enabled : bool = false
 var _action_space_inference: Array[Dictionary] = []
 
 
+var current_level: Level
+
 func _init() -> void:
 	instance = self
 
@@ -67,6 +70,8 @@ func _init() -> void:
 		control_mode = ControlModes.ONNX_INFERENCE
 
 	SignalsManager.team.all_teams_initialized.connect(_on_all_teams_initialized)
+	SignalsManager.level.level_initialized.connect(_on_level_initialized)
+	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
 
 
 func _ready() -> void:
@@ -97,6 +102,14 @@ func _ready() -> void:
 			"Couldn't connect to Python server, using human controls instead. ",
 			"Did you start the training server using e.g. `gdrl` from the console?"
 		)
+
+
+func _on_level_initialized(level: Level):
+	current_level = level
+
+
+func _on_goal_scored(receiving_team: Team):
+	pending_goal_events.append({"receiving_team_name": receiving_team.name})
 
 
 func _on_all_teams_initialized():
@@ -217,6 +230,7 @@ func _training_process():
 			var reply = {
 				"type": "reset",
 				"observation": _get_training_observations(),
+				"info": _get_training_info(),
 			}
 			_send_dict_as_json_message(reply)
 			# this should go straight to getting the action and setting it checked the agent, no need to perform one phyics tick
@@ -225,11 +239,11 @@ func _training_process():
 
 		if need_to_send_observation:
 			need_to_send_observation = false
-			var reward = _get_training_rewards()
 			var done = _get_training_dones()
 			var observation = _get_training_observations()
+			var info = _get_training_info()
 
-			var reply = {"type": "step", "observation": observation, "reward": reward, "done": done}
+			var reply = {"type": "step", "observation": observation, "done": done, "info": info}
 			_send_dict_as_json_message(reply)
 
 		var handled = handle_message()
@@ -588,13 +602,28 @@ func _get_training_observations() -> Dictionary:
 	return observations
 
 
-func _get_training_rewards() -> Dictionary:
-	var rewards : Dictionary = {}
-	for agent_id in agents_training:
-		var agent = agents_training[agent_id]
-		rewards[agent_id] = agent.get_reward()
-		agent.zero_reward()
-	return rewards
+func _get_training_info() -> Dictionary:
+	var entities : Array = []
+	for entity in EntityManager.instance.entity_list:
+		entities.append(entity.get_state_dictionary())
+
+	var goals : Dictionary = {}
+	for goal in current_level.goal_list:
+		var goal_position : Vector3 = goal.global_position
+		goals[goal.team.name] = [goal_position.x, goal_position.y, goal_position.z]
+
+	var goal_events : Array = pending_goal_events
+	pending_goal_events = []
+
+	var level_size : Vector3 = current_level.game_mode.level_size
+	var max_steps : int = ceili(current_level.game_mode.max_duration_seconds * Engine.physics_ticks_per_second / action_repeat)
+	return {
+		"entities": entities,
+		"goals": goals,
+		"goal_events": goal_events,
+		"level_size": [level_size.x, level_size.y, level_size.z],
+		"max_steps": max_steps,
+	}
 
 
 func _get_training_dones() -> Dictionary:

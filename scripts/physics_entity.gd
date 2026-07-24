@@ -46,6 +46,15 @@ func reset():
 	angular_velocity = Vector3.ZERO
 
 
+func get_state_dictionary() -> Dictionary:
+	var dictionary : Dictionary
+	dictionary["entity_type"] = EntityType.keys()[entity_type]
+	dictionary["position"] = [global_position.x, global_position.y, global_position.z]
+	dictionary["linear_velocity"] = [linear_velocity.x, linear_velocity.y, linear_velocity.z]
+
+	return dictionary
+
+
 func get_observation_informations(caller : Cuboid) -> Dictionary:
 	var dictionary : Dictionary
 	dictionary["type"] = entity_to_onehot(entity_type)
