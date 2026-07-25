@@ -6,7 +6,8 @@ class_name Goal
 @export var wall_override_material : StandardMaterial3D
 @export var wall_width : float = 1
 @export var csg_box : CSGBox3D
-@export var soft_body : SoftBody3D
+@export var goal_net : SoftBody3D
+@export var goal_net_scene : PackedScene
 @export var net_mesh : Mesh
 
 var wall_csg_box_list : Array[CSGBox3D]
@@ -14,19 +15,11 @@ var wall_csg_box_list : Array[CSGBox3D]
 
 func initialize(spawn_scale):
 	scale = spawn_scale
-	scale_net(spawn_scale, global_position, global_rotation)
 	
-	# Floor Wall
-	#var floor_wall : Wall = spawn_wall(Vector3(0, 0, 0), Vector3(PI, 0, 0), Vector3(spawn_scale.x, wall_width, spawn_scale.z) / scale)
-	#floor_wall.add_to_group("ground")
-	# Ceiling Wall
-	#spawn_wall(Vector3(0, spawn_scale.y, 0) / scale, Vector3(0, 0, 0), Vector3(spawn_scale.x, wall_width, spawn_scale.z) / scale)
-	# Back Wall
-	#spawn_wall(Vector3(spawn_scale.x, 0, 0) / scale, Vector3(0, 0, 0), Vector3(wall_width, spawn_scale.y, spawn_scale.z) / scale)
-	# Left Wall
-	#spawn_wall(Vector3(0, 0, -spawn_scale.z / 2 - wall_width / 2) / scale, Vector3(0, 0, 0), Vector3(spawn_scale.x, spawn_scale.y, wall_width) / scale)
-	# Right Wall
-	#spawn_wall(Vector3(0, 0, spawn_scale.z / 2 + wall_width / 2) / scale, Vector3(0, 0, 0), Vector3(spawn_scale.x, spawn_scale.y, wall_width) / scale)
+	if SettingsManager.instance.disable_goal_nets == false:
+		goal_net = goal_net_scene.instantiate() as SoftBody3D
+		add_child(goal_net)
+		scale_net(spawn_scale, global_position, global_rotation)
 	
 	if wall_override_material != null:
 		csg_box.material = wall_override_material
@@ -97,8 +90,8 @@ func scale_net(spawn_scale : Vector3, spawn_position : Vector3, spawn_rotation :
 	if net_mesh.get_surface_count() > 0:
 		scaled_mesh.surface_set_material(0, net_mesh.surface_get_material(0))
 	
-	soft_body.mesh = scaled_mesh
-	soft_body.transform = Transform3D()  # identité car position/orientation déjà dans le mesh
+	goal_net.mesh = scaled_mesh
+	goal_net.transform = Transform3D()  # identité car position/orientation déjà dans le mesh
 
 
 func spawn_wall(spawn_position : Vector3, spawn_rotation : Vector3, spawn_scale : Vector3) -> Wall:

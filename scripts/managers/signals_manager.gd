@@ -6,6 +6,7 @@ var team : TeamSignals = TeamSignals.new()
 var level : LevelSignals = LevelSignals.new()
 var game : GameSignals = GameSignals.new()
 var control : ControlSignals = ControlSignals.new()
+var settings : SettingsSignals = SettingsSignals.new()
 
 
 class GoalSignals:
@@ -78,3 +79,24 @@ class ControlSignals:
 	signal cuboid_control_mode_human_set(cuboid : Cuboid)
 	func emit_cuboid_control_mode_human_set(cuboid : Cuboid):
 		cuboid_control_mode_human_set.emit(cuboid)
+
+
+class SettingsSignals:
+	signal goal_nets_disable
+	func emit_goal_nets_disable():
+		goal_nets_disable.emit()
+	
+	
+	signal cameras_disable
+	func emit_cameras_disable():
+		cameras_disable.emit()
+	
+	
+	signal goal_animation_disable
+	func emit_goal_animation_disable():
+		goal_animation_disable.emit()
+	
+	
+	signal ui_disable
+	func emit_ui_disable():
+		ui_disable.emit()

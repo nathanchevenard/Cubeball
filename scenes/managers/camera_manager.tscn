@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cop7crathrf4g"]
 
 [ext_resource type="Script" uid="uid://diham7d1gieeo" path="res://scripts/managers/camera_manager.gd" id="1_fy4u2"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_r45j0"]
 [ext_resource type="Script" uid="uid://dkjsaoryuhm1o" path="res://scripts/camera_states/behind_camera_state.gd" id="2_tmwka"]
 [ext_resource type="Script" uid="uid://csxp7jc3ea7qd" path="res://scripts/camera_states/focus_camera_state.gd" id="3_r45j0"]
 [ext_resource type="Script" uid="uid://ckwcvmpcahowf" path="res://scripts/camera_states/third_person_camera_state.gd" id="4_7p175"]
@@ -18,10 +19,21 @@ ease = 1
 [sub_resource type="Resource" id="Resource_agd1n"]
 script = ExtResource("8_vr6kk")
 
-[node name="CameraManager" type="Node" unique_id=249393988 node_paths=PackedStringArray("initial_camera_state")]
+[node name="CameraManager" type="Node" unique_id=249393988 node_paths=PackedStringArray("camera", "initial_camera_state")]
 script = ExtResource("1_fy4u2")
+camera = NodePath("Camera3D")
 initial_camera_state = NodePath("CameraStates/FreeCameraState")
 metadata/_custom_type_script = "uid://diham7d1gieeo"
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1486884972]
+transform = Transform3D(1, 0, 0, 0, 0.5705964, 0.82098067, 0, -0.82098067, 0.5705964, 0, 25, 15)
+top_level = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D" unique_id=1624182221]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("2_r45j0")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="CameraStates" type="Node" parent="." unique_id=758004667]
 

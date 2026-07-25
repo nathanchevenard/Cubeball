@@ -12,8 +12,13 @@ var label_to_positions : Dictionary[Label, Array]
 
 
 func _init() -> void:
+	SignalsManager.settings.goal_animation_disable.connect(_on_goal_animation_disabled)
 	SignalsManager.team.all_teams_initialized.connect(_on_all_teams_initialized)
 	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
+
+
+func _on_goal_animation_disabled():
+	call_deferred("queue_free")
 
 
 func start_show_phase(label : Label):
@@ -65,7 +70,7 @@ func _on_all_teams_initialized():
 
 
 func _on_goal_scored(receiving_team : Team):
-	if DebugManager.instance == null || DebugManager.instance.goal_animation == false:
+	if SettingsManager.instance.disable_goal_animation == true:
 		return
 	
 	for team : Team in team_to_label.keys():

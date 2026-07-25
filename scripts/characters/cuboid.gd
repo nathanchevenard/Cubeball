@@ -44,6 +44,9 @@ func _ready() -> void:
 	EntityManager.instance.cuboid_list.append(self)
 	cuboid_ai_controller.init(self)
 	reset_inputs()
+	
+	if SettingsManager.instance.disable_cameras == true:
+		behind_phantom_camera.call_deferred("queue_free")
 
 
 # queue_free() (called by PhysicsEntity.destroy) only actually removes the node at the
@@ -68,10 +71,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if input_mode == InputMode.HUMAN && event is InputEventMouseMotion\
-	&& CameraManager.instance.current_camera_state is BehindCameraState:
-		if abs(event.relative.x) > 2:
-			inputs["rotate_speed_coefficient"] = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
+	if input_mode == InputMode.HUMAN\
+	&& event is InputEventMouseMotion\
+	&& CameraManager.instance != null\
+	&& CameraManager.instance.current_camera_state is BehindCameraState\
+	&& abs(event.relative.x) > 2:
+		inputs["rotate_speed_coefficient"] = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
 
 
 func get_inputs() -> Dictionary[String, Variant]:

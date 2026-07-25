@@ -24,7 +24,9 @@ func _init() -> void:
 
 func _process(delta: float) -> void:
 	timer += delta
-	timer_label.text = "%0.1f" % (game_mode.max_duration_seconds - timer)
+	
+	if timer_label != null:
+		timer_label.text = "%0.1f" % (game_mode.max_duration_seconds - timer)
 	
 	if timer >= game_mode.max_duration_seconds:
 		SignalsManager.game.emit_game_finish()
@@ -83,13 +85,20 @@ func _on_ball_enter_goal(receiving_team : Team):
 			score[team] += 1
 			if score[team] >= game_mode.max_goal:
 				SignalsManager.game.emit_game_finish()
+	
+	if SettingsManager.instance.disable_goal_animation == true:
+		check_game_reset()
 
 
-func _on_goal_animation_finished():
+func check_game_reset():
 	for team : Team in score.keys():
 		if score[team] >= game_mode.max_goal:
 			if not PythonSynchronizer.is_python_training():
 				SignalsManager.game.emit_game_reset()
 			return
-
+	
 	SignalsManager.game.emit_start_next_point()
+
+
+func _on_goal_animation_finished():
+	check_game_reset()

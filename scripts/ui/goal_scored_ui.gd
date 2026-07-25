@@ -14,6 +14,7 @@ var init_position : Vector2
 
 
 func _init() -> void:
+	SignalsManager.settings.goal_animation_disable.connect(_on_goal_animation_disabled)
 	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
 
 
@@ -22,8 +23,12 @@ func _ready() -> void:
 	hide()
 
 
+func _on_goal_animation_disabled():
+	call_deferred("queue_free")
+
+
 func _on_goal_scored(_receiving_team : Team):
-	if DebugManager.instance == null || DebugManager.instance.goal_animation == false:
+	if SettingsManager.instance.disable_goal_animation == true:
 		SignalsManager.goal.emit_goal_animation_finish()
 		return
 	

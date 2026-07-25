@@ -1,6 +1,7 @@
 extends Node
 class_name CameraManager
 
+@export var camera : Camera3D
 @export var initial_camera_state : CameraState
 
 var current_camera_state : CameraState
@@ -10,6 +11,8 @@ static var instance : CameraManager
 
 func _init() -> void:
 	instance = self
+	
+	SignalsManager.settings.cameras_disable.connect(_on_camera_disabled)
 
 
 func _ready() -> void:
@@ -34,3 +37,7 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if current_camera_state != null:
 		current_camera_state.apply_input(event)
+
+
+func _on_camera_disabled():
+	call_deferred("queue_free")
