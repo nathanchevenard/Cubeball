@@ -1,13 +1,10 @@
 [gd_scene format=3 uid="uid://bhmx2ef7li351"]
 
-[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="1_2fuee"]
 [ext_resource type="Script" uid="uid://b7y1410p0iyh2" path="res://scripts/managers/teams_manager.gd" id="1_fiowe"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_v351g"]
 [ext_resource type="PackedScene" uid="uid://cadw1tm2smlnp" path="res://scenes/characters/cuboid.tscn" id="1_ybdc1"]
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
-[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_v351g"]
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
-[ext_resource type="Script" uid="uid://b8hhnqsugykly" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="3_ct0jg"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_1v1_simple.tres" id="6_3h10a"]
@@ -17,7 +14,7 @@
 [ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/python_synchronizer.gd" id="7_jtcbb"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground_cuboid_field.tscn" id="8_df41j"]
-[ext_resource type="Script" uid="uid://diham7d1gieeo" path="res://scripts/managers/camera_manager.gd" id="10_ct0jg"]
+[ext_resource type="PackedScene" uid="uid://cop7crathrf4g" path="res://scenes/managers/camera_manager.tscn" id="10_2fuee"]
 [ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_ball_field.tscn" id="10_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
@@ -31,15 +28,6 @@
 [ext_resource type="Script" uid="uid://dn6wclu4cke80" path="res://scripts/ui/timer_ui.gd" id="18_efd43"]
 [ext_resource type="Script" uid="uid://ceykxvxv2olxb" path="res://scripts/ui/big_score_ui.gd" id="21_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://bvv67jikywv4r" path="res://scenes/level_design/goal.tscn" id="25_irvof"]
-
-[sub_resource type="Resource" id="Resource_3h10a"]
-script = ExtResource("2_v351g")
-duration = 0.3
-transition = 2
-ease = 1
-
-[sub_resource type="Resource" id="Resource_agd1n"]
-script = ExtResource("3_ct0jg")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -59,7 +47,7 @@ bg_color = Color(1, 1, 1, 1)
 [node name="MainScene" type="Node3D" unique_id=1884238872]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=820187566]
-transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+transform = Transform3D(1, 0, 0, 0, 0.5705964, 0.82098067, 0, -0.82098067, 0.5705964, 0, 25, 15)
 top_level = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera3D" unique_id=1439859432]
@@ -101,50 +89,7 @@ first_cuboid_human_input = true
 goal_animation = null
 metadata/_custom_type_script = "uid://tinwq43u68p7"
 
-[node name="CameraManager" type="Node" parent="Managers" unique_id=1374108969 node_paths=PackedStringArray("focus_phantom_camera", "third_person_phantom_camera", "free_phantom_camera")]
-script = ExtResource("10_ct0jg")
-focus_phantom_camera = NodePath("FocusPhantomCamera")
-focus_offset = Vector3(3, 2, 3)
-third_person_phantom_camera = NodePath("ThirdPersonPhantomCamera")
-mouse_sensitivity = 0.1
-max_pitch = -10.0
-free_phantom_camera = NodePath("FreePhantomCamera")
-metadata/_custom_type_script = "uid://diham7d1gieeo"
-
-[node name="FocusPhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=1897387093]
-transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
-script = ExtResource("1_2fuee")
-look_at_mode = 2
-tween_resource = SubResource("Resource_3h10a")
-tween_on_load = false
-camera_3d_resource = SubResource("Resource_agd1n")
-follow_offset = Vector3(0, 2, 3)
-follow_damping = true
-follow_distance = 3.5
-vertical_rotation_offset = 0.523599
-spring_length = 3.5
-look_at_damping = true
-look_at_damping_value = 0.3
-
-[node name="ThirdPersonPhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=951100455]
-transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
-script = ExtResource("1_2fuee")
-follow_mode = 6
-tween_resource = SubResource("Resource_3h10a")
-tween_on_load = false
-camera_3d_resource = SubResource("Resource_agd1n")
-follow_offset = Vector3(0, 1.5, 0)
-follow_damping = true
-follow_distance = 3.0
-vertical_rotation_offset = 0.523599
-spring_length = 3.0
-
-[node name="FreePhantomCamera" type="Node3D" parent="Managers/CameraManager" unique_id=1374108970]
-transform = Transform3D(1, 0, 0, 0, 0.5705964, 0.82098067, 0, -0.82098067, 0.5705964, 0, 25, 15)
-script = ExtResource("1_2fuee")
-tween_resource = SubResource("Resource_3h10a")
-tween_on_load = false
-camera_3d_resource = SubResource("Resource_agd1n")
+[node name="CameraManager" parent="Managers" unique_id=249393988 instance=ExtResource("10_2fuee")]
 
 [node name="PauseManager" type="Node" parent="Managers" unique_id=1934117463]
 script = ExtResource("14_3h10a")

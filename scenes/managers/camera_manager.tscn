@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://cop7crathrf4g"]
+
+[ext_resource type="Script" uid="uid://diham7d1gieeo" path="res://scripts/managers/camera_manager.gd" id="1_fy4u2"]
+[ext_resource type="Script" uid="uid://dkjsaoryuhm1o" path="res://scripts/camera_states/behind_camera_state.gd" id="2_tmwka"]
+[ext_resource type="Script" uid="uid://csxp7jc3ea7qd" path="res://scripts/camera_states/focus_camera_state.gd" id="3_r45j0"]
+[ext_resource type="Script" uid="uid://ckwcvmpcahowf" path="res://scripts/camera_states/third_person_camera_state.gd" id="4_7p175"]
+[ext_resource type="Script" uid="uid://du3kso0k8uv65" path="res://scripts/camera_states/free_camera_state.gd" id="5_7gr4u"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="6_y6c8f"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="7_qfwl4"]
+[ext_resource type="Script" uid="uid://b8hhnqsugykly" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="8_vr6kk"]
+
+[sub_resource type="Resource" id="Resource_3h10a"]
+script = ExtResource("7_qfwl4")
+duration = 0.3
+transition = 2
+ease = 1
+
+[sub_resource type="Resource" id="Resource_agd1n"]
+script = ExtResource("8_vr6kk")
+
+[node name="CameraManager" type="Node" unique_id=249393988 node_paths=PackedStringArray("initial_camera_state")]
+script = ExtResource("1_fy4u2")
+initial_camera_state = NodePath("CameraStates/FreeCameraState")
+metadata/_custom_type_script = "uid://diham7d1gieeo"
+
+[node name="CameraStates" type="Node" parent="." unique_id=758004667]
+
+[node name="BehindCameraState" type="Node" parent="CameraStates" unique_id=2015915889 node_paths=PackedStringArray("focus_camera_state", "third_person_camera_state", "free_camera_state", "camera_manager")]
+script = ExtResource("2_tmwka")
+focus_camera_state = NodePath("../FocusCameraState")
+third_person_camera_state = NodePath("../ThirdPersonCameraState")
+free_camera_state = NodePath("../FreeCameraState")
+camera_manager = NodePath("../..")
+metadata/_custom_type_script = "uid://dkjsaoryuhm1o"
+
+[node name="FocusCameraState" type="Node" parent="CameraStates" unique_id=1899977800 node_paths=PackedStringArray("behind_camera_state", "third_person_camera_state", "free_camera_state", "camera_manager", "phantom_camera")]
+script = ExtResource("3_r45j0")
+behind_camera_state = NodePath("../BehindCameraState")
+third_person_camera_state = NodePath("../ThirdPersonCameraState")
+free_camera_state = NodePath("../FreeCameraState")
+focus_offset = Vector3(3, 2, 3)
+camera_manager = NodePath("../..")
+phantom_camera = NodePath("FocusPhantomCamera")
+metadata/_custom_type_script = "uid://csxp7jc3ea7qd"
+
+[node name="FocusPhantomCamera" type="Node3D" parent="CameraStates/FocusCameraState" unique_id=2099300225]
+transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+script = ExtResource("6_y6c8f")
+look_at_mode = 2
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")
+follow_offset = Vector3(0, 2, 3)
+follow_damping = true
+follow_distance = 3.5
+vertical_rotation_offset = 0.523599
+spring_length = 3.5
+look_at_damping = true
+look_at_damping_value = 0.3
+
+[node name="ThirdPersonCameraState" type="Node" parent="CameraStates" unique_id=582719398 node_paths=PackedStringArray("behind_camera_state", "focus_camera_state", "free_camera_state", "camera_manager", "phantom_camera")]
+script = ExtResource("4_7p175")
+behind_camera_state = NodePath("../BehindCameraState")
+focus_camera_state = NodePath("../FocusCameraState")
+free_camera_state = NodePath("../FreeCameraState")
+mouse_sensitivity = 0.1
+max_pitch = -10.0
+camera_manager = NodePath("../..")
+phantom_camera = NodePath("ThirdPersonPhantomCamera")
+metadata/_custom_type_script = "uid://ckwcvmpcahowf"
+
+[node name="ThirdPersonPhantomCamera" type="Node3D" parent="CameraStates/ThirdPersonCameraState" unique_id=176291017]
+transform = Transform3D(1, 0, 0, 0, 0.8660252, 0.5000003, 0, -0.5000003, 0.8660252, 0, 1.7500008, 3.0310884)
+script = ExtResource("6_y6c8f")
+follow_mode = 6
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")
+follow_offset = Vector3(0, 1.5, 0)
+follow_damping = true
+follow_distance = 3.0
+vertical_rotation_offset = 0.523599
+spring_length = 3.0
+
+[node name="FreeCameraState" type="Node" parent="CameraStates" unique_id=1702592862 node_paths=PackedStringArray("behind_camera_state", "camera_manager", "phantom_camera")]
+script = ExtResource("5_7gr4u")
+behind_camera_state = NodePath("../BehindCameraState")
+camera_manager = NodePath("../..")
+phantom_camera = NodePath("FreePhantomCamera")
+metadata/_custom_type_script = "uid://du3kso0k8uv65"
+
+[node name="FreePhantomCamera" type="Node3D" parent="CameraStates/FreeCameraState" unique_id=73058175]
+transform = Transform3D(1, 0, 0, 0, 0.5705964, 0.82098067, 0, -0.82098067, 0.5705964, 0, 25, 15)
+script = ExtResource("6_y6c8f")
+tween_resource = SubResource("Resource_3h10a")
+tween_on_load = false
+camera_3d_resource = SubResource("Resource_agd1n")

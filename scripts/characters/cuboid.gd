@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if input_mode == InputMode.HUMAN && event is InputEventMouseMotion\
-	&& CameraManager.instance.camera_mode == CameraManager.CameraMode.BEHIND:
+	&& CameraManager.instance.current_camera_state is BehindCameraState:
 		if abs(event.relative.x) > 2:
 			inputs["rotate_speed_coefficient"] = clampf(-event.relative.x * mouse_sensitivity, -1.0, 1.0)
 
