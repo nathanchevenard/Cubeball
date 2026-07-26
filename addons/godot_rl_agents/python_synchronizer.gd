@@ -50,6 +50,7 @@ var need_to_send_observation = false
 var args = null
 var initialized = false
 var just_reset = false
+var _pending_spaces = false
 var onnx_model = null
 var n_action_steps = 0
 ## Verbose training-flow diagnostics (handshake, per-episode config/roster info, ...)
@@ -113,11 +114,17 @@ func _on_goal_scored(receiving_team: Team):
 
 
 func _on_all_teams_initialized():
-	# Training mode's roster is (re)discovered per-episode from handle_message's
-	# "reset" branch instead — this signal fires for every arena rebuild in training
-	# mode too (including the throwaway initial one from GameModeManager._ready()), but
-	# there's nothing for it to do there.
 	if control_mode == ControlModes.TRAINING:
+		# Agents are ready now (spawned by TeamsManager just before this signal).
+		# Collect them only when a reset or spaces discovery is in progress —
+		# the throwaway initial build from GameModeManager._ready() is ignored.
+		if just_reset or _pending_spaces:
+			_get_agents()
+			_set_heuristic("model", agents_training.values())
+			_debug_log(
+				"found %d nodes in AGENT group, %d classified as training agents: %s"
+				% [all_agents.size(), agents_training.size(), agents_training.keys()]
+			)
 		return
 
 	get_tree().set_pause(true)
@@ -136,13 +143,21 @@ func _initialize():
 
 
 func _initialize_inference_agents():
+	# _on_all_teams_initialized() calls _initialize() -> this function on every
+	# team (re-)spawn (e.g. after each goal), not just once at startup. Without
+	# clearing here, _action_space_inference would grow unbounded (stale entries
+	# never read again, since indexing always uses agents_inference's current
+	# size) and every respawn would leak a brand new onnxruntime InferenceSession.
+	_action_space_inference.clear()
+
 	if agents_inference.size() > 0:
 		if control_mode == ControlModes.ONNX_INFERENCE:
 			assert(
 				FileAccess.file_exists(onnx_model_path),
 				"Onnx Model Path set on Sync node does not exist: %s" % onnx_model_path
 			)
-			onnx_models[onnx_model_path] = ONNXModel.new(onnx_model_path, 1)
+			if not onnx_models.has(onnx_model_path):
+				onnx_models[onnx_model_path] = ONNXModel.new(onnx_model_path, 1)
 
 		for agent in agents_inference:
 			var action_space = agent.get_action_space()
@@ -224,6 +239,18 @@ func _training_process():
 	if connected:
 		get_tree().set_pause(true)
 
+		if _pending_spaces:
+			_pending_spaces = false
+			var spaces_reply = {
+				"type": "spaces",
+				"observation_space": _get_training_observation_spaces(),
+				"action_space": _get_training_action_spaces(),
+				"agent_policy_names": agents_training_policy_names,
+			}
+			_send_dict_as_json_message(spaces_reply)
+			handle_message()
+			return
+
 		if just_reset:
 			just_reset = false
 
@@ -249,6 +276,19 @@ func _training_process():
 		var handled = handle_message()
 
 
+func _flatten_observation_dict(observation: Dictionary) -> Array:
+	var keys = observation.keys()
+	keys.sort()
+	var result: Array = []
+	for key in keys:
+		var value = observation[key]
+		if value is Array:
+			result.append_array(value)
+		else:
+			result.append(value)
+	return result
+
+
 func _inference_process():
 	if agents_inference.size() > 0:
 		var observations: Array = _get_observations_from_agents(agents_inference)
@@ -256,12 +296,12 @@ func _inference_process():
 
 		for agent_id in range(0, agents_inference.size()):
 			var model: ONNXModel = agents_inference[agent_id].onnx_model
-			var action = model.run_inference(
-				observations[agent_id]["observation"], 1.0
-			)
+			var flat_observation = _flatten_observation_dict(observations[agent_id])
+			var action = model.run_inference(flat_observation, 1.0)
 			var action_dict = _extract_action_dict(
 				action["output"], _action_space_inference[agent_id], model.action_means_only
 			)
+
 			actions.append(action_dict)
 
 		_set_agent_actions(actions, agents_inference)
@@ -516,12 +556,6 @@ func handle_message() -> bool:
 	if message["type"] == "reset":
 		_debug_log("starting new match with config: %s" % [message["config"]])
 		_start_new_episode(message["config"])
-		_get_agents()
-		_debug_log(
-			"found %d nodes in AGENT group, %d classified as training agents: %s"
-			% [all_agents.size(), agents_training.size(), agents_training.keys()]
-		)
-		_set_heuristic("model", agents_training.values())
 		just_reset = true
 		get_tree().set_pause(false)
 		return true
@@ -529,15 +563,9 @@ func handle_message() -> bool:
 	if message["type"] == "get_spaces":
 		_debug_log("discovering spaces with config: %s" % [message["config"]])
 		_start_new_episode(message["config"])
-		_get_agents()
-		var spaces_reply = {
-			"type": "spaces",
-			"observation_space": _get_training_observation_spaces(),
-			"action_space": _get_training_action_spaces(),
-			"agent_policy_names": agents_training_policy_names,
-		}
-		_send_dict_as_json_message(spaces_reply)
-		return handle_message()
+		_pending_spaces = true
+		get_tree().set_pause(false)
+		return true
 
 	if message["type"] == "call":
 		var method = message["method"]

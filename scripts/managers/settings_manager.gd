@@ -21,7 +21,7 @@ func _ready() -> void:
 		disable_goal_animation = true
 		disable_ui = true
 		disable_goal_nets = true
-		disable_cameras = true
+		#disable_cameras = true
 	
 	if disable_goal_animation == true:
 		SignalsManager.settings.emit_goal_animation_disable()

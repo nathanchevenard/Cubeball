@@ -53,7 +53,8 @@ func get_timer() -> float:
 
 func _on_game_mode_set(new_game_mode : GameMode):
 	game_mode = new_game_mode
-	timer_label.text = "%0.1f" % game_mode.max_duration_seconds
+	if timer_label != null:
+		timer_label.text = "%0.1f" % game_mode.max_duration_seconds
 
 
 func _on_team_initialized(team : Team):

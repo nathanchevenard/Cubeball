@@ -37,6 +37,8 @@ func exit_state():
 
 
 func _process(delta: float) -> void:
+	if followed_cuboid == null:
+		return
 	get_closest_ball()
 	update_camera_position()
 
