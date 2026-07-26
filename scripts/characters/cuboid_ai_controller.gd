@@ -34,7 +34,7 @@ func get_observation() -> Dictionary:
 	observation["dash_cooldown"] = cuboid.get_dash_cooldown()
 
 	for raycast in raycast_list:
-		observation[raycast.name] = raycast.get_observation()
+		observation[str(raycast.name).to_lower()] = raycast.get_observation()
 
 	#var dictionary : Dictionary
 	#dictionary["self"] = cuboid.get_observation_informations(cuboid)
@@ -47,6 +47,8 @@ func get_observation() -> Dictionary:
 		#dictionary["entity_" + str(i)] = entity.get_observation_informations(cuboid)
 	#
 	#dictionary["game_state"] = GameStateManager.instance.get_observation_informations(cuboid)
+
+	observation.sort()
 
 	return observation
 
@@ -67,10 +69,13 @@ func get_observation_space() -> Dictionary:
 			"space" : "continuous",
 		}
 	
+	observation_space.sort()
+	
 	return observation_space
 
+
 func get_action_space() -> Dictionary:
-	var result : Dictionary = {
+	var action_space : Dictionary = {
 		"dash_action" : {
 			"size" : 2,
 			"action_type" : "discrete"
@@ -91,9 +96,9 @@ func get_action_space() -> Dictionary:
 	
 	# Actions logit are returned in alphabetical order, so we make sure actions
 	# are in the same order to match logits
-	result.sort()
+	action_space.sort()
 	
-	return result
+	return action_space
 
 
 func set_action(action) -> void:

@@ -279,6 +279,7 @@ func _training_process():
 func _flatten_observation_dict(observation: Dictionary) -> Array:
 	var keys = observation.keys()
 	keys.sort()
+
 	var result: Array = []
 	for key in keys:
 		var value = observation[key]
@@ -361,7 +362,7 @@ func _extract_action_dict(action_array: Array, action_space: Dictionary, action_
 		var size = action_space[key]["size"]
 		var action_type = action_space[key]["action_type"]
 		if action_type == "discrete":
-			var largest_logit: float # Value of the largest logit for this action in the actions array
+			var largest_logit: float = -INF # Value of the largest logit for this action in the actions array
 			var largest_logit_idx: int # Index of the largest logit for this action in the actions array
 			for logit_idx in range(0, size):
 				var logit_value = action_array[index + logit_idx]
