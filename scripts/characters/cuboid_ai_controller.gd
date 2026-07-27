@@ -64,7 +64,7 @@ func get_observation_space() -> Dictionary:
 		"space" : "continuous",
 	}
 	for raycast in raycast_list:
-		observation_space[raycast.name] = {
+		observation_space[str(raycast.name).to_lower()] = {
 			"size" : raycast.get_observation_size(),
 			"space" : "continuous",
 		}

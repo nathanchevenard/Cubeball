@@ -105,11 +105,15 @@ func get_inputs() -> Dictionary[String, Variant]:
 
 
 func handle_inputs(delta : float):
+	var move_speed_coefficient: float = clampf(inputs["move_speed_coefficient"], -1.0, 1.0)
+	var rotate_speed_coefficient: float = clampf(inputs["rotate_speed_coefficient"], -1.0, 1.0)
+	
+	
 	if is_dashing == false:
-		linear_velocity.x = inputs["move_speed_coefficient"] * speed * transform.basis.z.x
-		linear_velocity.z = inputs["move_speed_coefficient"] * speed * transform.basis.z.z
+		linear_velocity.x = move_speed_coefficient * speed * transform.basis.z.x
+		linear_velocity.z = move_speed_coefficient * speed * transform.basis.z.z
 		
-		angular_velocity.y = inputs["rotate_speed_coefficient"] * rotation_speed
+		angular_velocity.y = rotate_speed_coefficient * rotation_speed
 	
 	if inputs.has("jump") && inputs["jump"] == true && is_on_ground():
 		linear_velocity.y = jump_force

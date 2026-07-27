@@ -194,8 +194,6 @@ func _initialize_inference_agents():
 				agent_onnx_model = onnx_models[agent.onnx_model_path]
 
 			agent.onnx_model = agent_onnx_model
-			if not agent_onnx_model.action_means_only_set:
-				agent_onnx_model.set_action_means_only(action_space)
 
 		_set_heuristic("model", agents_inference)
 
@@ -298,11 +296,10 @@ func _inference_process():
 		for agent_id in range(0, agents_inference.size()):
 			var model: ONNXModel = agents_inference[agent_id].onnx_model
 			var flat_observation = _flatten_observation_dict(observations[agent_id])
-			var action = model.run_inference(flat_observation, 1.0)
-			var action_dict = _extract_action_dict(
-				action["output"], _action_space_inference[agent_id], model.action_means_only
-			)
-
+			var raw_actions = model.run_inference(flat_observation)
+			var action_dict = _cast_onnx_actions(raw_actions, _action_space_inference[agent_id])
+			
+			print(action_dict)
 			actions.append(action_dict)
 
 		_set_agent_actions(actions, agents_inference)
@@ -355,32 +352,18 @@ func _heuristic_process():
 		_reset_agents_if_done(agents_heuristic)
 
 
-func _extract_action_dict(action_array: Array, action_space: Dictionary, action_means_only: bool):
-	var index = 0
+func _cast_onnx_actions(raw_actions: Dictionary, action_space: Dictionary) -> Dictionary:
+	# The ONNX model returns one key per action, already processed (argmax + normalize).
+	# Only cast needed: discrete outputs are float [0.0 / 1.0] → must become int.
 	var result = {}
 	for key in action_space.keys():
-		var size = action_space[key]["size"]
 		var action_type = action_space[key]["action_type"]
 		if action_type == "discrete":
-			var largest_logit: float = -INF # Value of the largest logit for this action in the actions array
-			var largest_logit_idx: int # Index of the largest logit for this action in the actions array
-			for logit_idx in range(0, size):
-				var logit_value = action_array[index + logit_idx]
-				if logit_value > largest_logit:
-					largest_logit = logit_value
-					largest_logit_idx = logit_idx
-			result[key] = largest_logit_idx # Index of the largest logit is the discrete action value
-			index += size
+			result[key] = int(round(raw_actions[key][0]))
 		elif action_type == "continuous":
-			# For continous actions, we only take the action mean values
-			result[key] = clamp_array(action_array.slice(index, index + size), -1.0, 1.0)
-			if action_means_only:
-				index += size # model only outputs action means, so we move index by size
-			else:
-				index += size * 2 # model outputs logstd after action mean, we skip the logstd part
-
+			result[key] = raw_actions[key]
 		else:
-			assert(false, 'Only "discrete" and "continuous" action types supported. Found: %s action type set.' % action_type)
+			assert(false, 'Only "discrete" and "continuous" action types supported. Found: %s' % action_type)
 
 
 	return result
