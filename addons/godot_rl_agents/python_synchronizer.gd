@@ -120,7 +120,6 @@ func _on_all_teams_initialized():
 		# the throwaway initial build from GameModeManager._ready() is ignored.
 		if just_reset or _pending_spaces:
 			_get_agents()
-			_set_heuristic("model", agents_training.values())
 			_debug_log(
 				"found %d nodes in AGENT group, %d classified as training agents: %s"
 				% [all_agents.size(), agents_training.size(), agents_training.keys()]
@@ -134,11 +133,7 @@ func _on_all_teams_initialized():
 
 func _initialize():
 	_get_agents()
-	_set_heuristic("human", all_agents)
-
 	_initialize_inference_agents()
-	_initialize_demo_recording()
-
 	initialized = true
 
 
@@ -195,32 +190,10 @@ func _initialize_inference_agents():
 
 			agent.onnx_model = agent_onnx_model
 
-		_set_heuristic("model", agents_inference)
-
-
-func _initialize_demo_recording():
-	if agent_demo_record:
-		expert_demo_save_path = agent_demo_record.expert_demo_save_path
-		assert(
-			not expert_demo_save_path.is_empty(),
-			"Expert demo save path set in %s is empty." % agent_demo_record.get_path()
-		)
-
-		InputMap.add_action("RemoveLastDemoEpisode")
-		InputMap.action_add_event(
-			"RemoveLastDemoEpisode", agent_demo_record.remove_last_episode_key
-		)
-		current_demo_trajectory.resize(2)
-		current_demo_trajectory[0] = []
-		current_demo_trajectory[1] = []
-		agent_demo_record.heuristic = "demo_record"
-
 
 func _physics_process(_delta):
 	# two modes, human control, agent control
 	# pause tree, send observation, get actions, set actions, unpause tree
-
-	_demo_record_process()
 
 	if n_action_steps % action_repeat != 0:
 		n_action_steps += 1
@@ -230,7 +203,6 @@ func _physics_process(_delta):
 
 	_training_process()
 	_inference_process()
-	_heuristic_process()
 
 
 func _training_process():
@@ -297,75 +269,21 @@ func _inference_process():
 			var model: ONNXModel = agents_inference[agent_id].onnx_model
 			var flat_observation = _flatten_observation_dict(observations[agent_id])
 			var raw_actions = model.run_inference(flat_observation)
-			var action_dict = _cast_onnx_actions(raw_actions, _action_space_inference[agent_id])
-			
-			print(action_dict)
-			actions.append(action_dict)
+			actions.append(_cast_onnx_actions(raw_actions, _action_space_inference[agent_id]))
 
 		_set_agent_actions(actions, agents_inference)
 		_reset_agents_if_done(agents_inference)
 		get_tree().set_pause(false)
 
 
-func _demo_record_process():
-	if not agent_demo_record:
-		return
-
-	if Input.is_action_just_pressed("RemoveLastDemoEpisode"):
-		print("[Sync script][Demo recorder] Removing last recorded episode.")
-		demo_trajectories.remove_at(demo_trajectories.size() - 1)
-		print("Remaining episode count: %d" % demo_trajectories.size())
-
-	if n_action_steps % agent_demo_record.action_repeat != 0:
-		return
-
-	var observation_dict: Dictionary = agent_demo_record.get_observation()
-
-	# Get the current observation from the agent
-	assert(
-		observation_dict.has("observation"),
-		"Demo recorder needs an 'observation' key in get_observation() returned dictionary to record observation from."
-	)
-	current_demo_trajectory[0].append(observation_dict.observation)
-
-	# Get the action applied for the current observation from the agent
-	agent_demo_record.set_action()
-	var acts = agent_demo_record.get_action()
-
-	var terminal = agent_demo_record.get_done()
-	# Record actions only for non-terminal states
-	if terminal:
-		agent_demo_record.set_done_false()
-	else:
-		current_demo_trajectory[1].append(acts)
-
-	if terminal:
-		#current_demo_trajectory[2].append(true)
-		demo_trajectories.append(current_demo_trajectory.duplicate(true))
-		print("[Sync script][Demo recorder] Recorded episode count: %d" % demo_trajectories.size())
-		current_demo_trajectory[0].clear()
-		current_demo_trajectory[1].clear()
-
-
-func _heuristic_process():
-	for agent in agents_heuristic:
-		_reset_agents_if_done(agents_heuristic)
-
-
 func _cast_onnx_actions(raw_actions: Dictionary, action_space: Dictionary) -> Dictionary:
-	# The ONNX model returns one key per action, already processed (argmax + normalize).
-	# Only cast needed: discrete outputs are float [0.0 / 1.0] → must become int.
 	var result = {}
 	for key in action_space.keys():
 		var action_type = action_space[key]["action_type"]
 		if action_type == "discrete":
 			result[key] = int(round(raw_actions[key][0]))
-		elif action_type == "continuous":
-			result[key] = raw_actions[key]
 		else:
-			assert(false, 'Only "discrete" and "continuous" action types supported. Found: %s' % action_type)
-
-
+			result[key] = raw_actions[key]
 	return result
 
 
@@ -411,11 +329,6 @@ func _get_agents():
 				"Currently only a single AIController can be used for recording expert demos."
 			)
 			agent_demo_record = agent
-
-
-func _set_heuristic(heuristic, agents: Array):
-	for agent in agents:
-		agent.set_heuristic(heuristic)
 
 
 func _handshake():
@@ -665,13 +578,6 @@ func _get_observations_from_agents(agents: Array = all_agents):
 func _set_agent_actions(actions, agents: Array = all_agents):
 	for i in range(len(actions)):
 		agents[i].set_action(actions[i])
-
-
-func clamp_array(arr: Array, min: float, max: float):
-	var output: Array = []
-	for a in arr:
-		output.append(clamp(a, min, max))
-	return output
 
 
 ## Save recorded export demos on window exit (Close game window instead of "Stop" button in Godot Editor)

@@ -17,23 +17,23 @@ namespace GodotONNX
 
 		private SessionOptions SessionOpt;
 
-        /// <summary>
-        /// Loads the model and returns the list of action output names (sorted alphabetically,
-        /// matching the order used during ONNX export).
-        /// </summary>
-        public Godot.Collections.Array<string> Initialize(string Path, int BatchSize)
+		/// <summary>
+		/// Loads the model and returns the list of action output names (sorted alphabetically,
+		/// matching the order used during ONNX export).
+		/// </summary>
+		public Godot.Collections.Array<string> Initialize(string Path, int BatchSize)
 		{
 			modelPath = Path;
 			batchSize = BatchSize;
-            SessionOpt = SessionConfigurator.MakeConfiguredSessionOptions();
-            session = LoadModel(modelPath);
-            outputNames = session.OutputMetadata.Keys.ToList();
+			SessionOpt = SessionConfigurator.MakeConfiguredSessionOptions();
+			session = LoadModel(modelPath);
+			outputNames = session.OutputMetadata.Keys.ToList();
 
 			var result = new Godot.Collections.Array<string>();
 			foreach (var name in outputNames)
 				result.Add(name);
 			return result;
-        }
+		}
 
 		/// <include file='docs/ONNXInference.xml' path='docs/members[@name="ONNXInference"]/Run/*'/>
 		public Godot.Collections.Dictionary<string, Godot.Collections.Array<float>> RunInference(Godot.Collections.Array<float> obs)
@@ -62,8 +62,16 @@ namespace GodotONNX
 			foreach (var result in results)
 			{
 				var arr = new Godot.Collections.Array<float>();
-				foreach (float f in result.AsEnumerable<float>())
-					arr.Add(f);
+				if (result.ElementType == TensorElementType.Float)
+				{
+					foreach (float f in result.AsEnumerable<float>())
+						arr.Add(f);
+				}
+				else if (result.ElementType == TensorElementType.Int64)
+				{
+					foreach (long l in result.AsEnumerable<long>())
+						arr.Add((float)l);
+				}
 				output[result.Name] = arr;
 			}
 

@@ -68,7 +68,7 @@ metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
 [node name="PythonSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
-onnx_model_path = "res://assets/onnx/shared_policy_v5.onnx"
+onnx_model_path = "res://assets/onnx/shared_policy_v1.onnx"
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="SettingsManager" type="Node" parent="Managers" unique_id=1804407204]
