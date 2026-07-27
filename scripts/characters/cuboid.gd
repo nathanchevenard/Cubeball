@@ -65,6 +65,12 @@ func destroy() -> void:
 	super.destroy()
 
 
+func reset():
+	dash_timer = 0
+	
+	super.reset()
+
+
 func _physics_process(delta: float) -> void:
 	inputs = get_inputs()
 	handle_inputs(delta)
