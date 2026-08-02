@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://cvj3lg7ofyfcf" path="res://resources/teams/red_team.tres" id="3_qree1"]
 [ext_resource type="Resource" uid="uid://di86mbxg10ljc" path="res://resources/teams/blue_team.tres" id="4_36cu1"]
 
-[sub_resource type="Resource" id="Resource_6wuse"]
+[sub_resource type="Resource" id="Resource_ip1nj"]
 script = ExtResource("2_kpoaq")
 team = ExtResource("3_qree1")
 players_number = 4
@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://n7sn8ufocqac"
 
 [resource]
 script = ExtResource("1_ip1nj")
-team_list = Array[ExtResource("2_kpoaq")]([SubResource("Resource_6wuse"), SubResource("Resource_4t5hi")])
+team_list = Array[ExtResource("2_kpoaq")]([SubResource("Resource_ip1nj"), SubResource("Resource_4t5hi")])
 max_duration_seconds = 300.0
 max_goal = 5
 level_size = Vector3(16, 4, 24)

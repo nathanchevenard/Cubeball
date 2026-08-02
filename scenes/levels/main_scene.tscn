@@ -68,13 +68,11 @@ metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
 [node name="PythonSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
 script = ExtResource("7_jtcbb")
-onnx_model_path = "res://assets/onnx/shared_policy_v4.onnx"
+onnx_model_path = "res://assets/onnx/shared_policy_v5.onnx"
 metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
 
 [node name="SettingsManager" type="Node" parent="Managers" unique_id=1804407204]
 script = ExtResource("6_6u8e5")
-disable_goal_animation = true
-disable_goal_nets = true
 metadata/_custom_type_script = "uid://tinwq43u68p7"
 
 [node name="CameraManager" parent="Managers" unique_id=249393988 instance=ExtResource("10_2fuee")]
