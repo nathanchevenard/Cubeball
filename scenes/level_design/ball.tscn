@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://duykws8mkjl5f"]
 
 [ext_resource type="Script" uid="uid://bobbkll6ark1d" path="res://scripts/level_design/ball.gd" id="1_rf1ju"]
+[ext_resource type="PackedScene" uid="uid://cvbl6ep2wua67" path="res://assets/models_3d/soccer_ball.fbx" id="2_jy185"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_15hso"]
 friction = 0.0
@@ -28,6 +29,10 @@ entity_type = 1
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1452663027]
 shape = SubResource("SphereShape3D_rf1ju")
 
+[node name="soccer_ball" parent="CollisionShape3D" unique_id=2029804731 instance=ExtResource("2_jy185")]
+transform = Transform3D(0.48, 0, 0, 0, 0.48, 0, 0, 0, 0.48, 0, 0, 0)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1387969326]
+visible = false
 mesh = SubResource("SphereMesh_rf1ju")
 surface_material_override/0 = SubResource("StandardMaterial3D_jy185")

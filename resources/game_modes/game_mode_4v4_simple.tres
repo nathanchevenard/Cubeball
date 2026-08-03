@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="GameMode" format=3 uid="uid://cm2g5oikbmrto"]
+
+[ext_resource type="Script" uid="uid://culgsafxumoi6" path="res://scripts/game_mode.gd" id="1_7ycno"]
+[ext_resource type="Script" uid="uid://n7sn8ufocqac" path="res://scripts/game_mode_team.gd" id="2_ato6n"]
+[ext_resource type="Resource" uid="uid://cvj3lg7ofyfcf" path="res://resources/teams/red_team.tres" id="3_cv10q"]
+[ext_resource type="Resource" uid="uid://di86mbxg10ljc" path="res://resources/teams/blue_team.tres" id="4_eo6qt"]
+
+[sub_resource type="Resource" id="Resource_6wuse"]
+script = ExtResource("2_ato6n")
+team = ExtResource("3_cv10q")
+players_number = 4
+metadata/_custom_type_script = "uid://n7sn8ufocqac"
+
+[sub_resource type="Resource" id="Resource_4t5hi"]
+script = ExtResource("2_ato6n")
+team = ExtResource("4_eo6qt")
+players_number = 4
+metadata/_custom_type_script = "uid://n7sn8ufocqac"
+
+[resource]
+script = ExtResource("1_7ycno")
+team_list = Array[ExtResource("2_ato6n")]([SubResource("Resource_6wuse"), SubResource("Resource_4t5hi")])
+max_duration_seconds = 300.0
+max_goal = 5
+level_size = Vector3(16, 4, 24)
+goal_size = Vector3(3, 4, 5)
+cuboid_field_margin = Vector3(6, 0, 6)
+metadata/_custom_type_script = "uid://culgsafxumoi6"
