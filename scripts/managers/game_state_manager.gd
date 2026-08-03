@@ -1,12 +1,14 @@
 extends Node
 class_name GameStateManager
 
+@export var timer_label : Label
+
 var game_mode : GameMode
 var score : Dictionary[Team, int]
 var timer : float
 var is_post_goal : bool = false
 
-@export var timer_label : Label
+var pending_goal_events: Array = []
 
 static var instance : GameStateManager
 
@@ -20,6 +22,11 @@ func _init() -> void:
 	SignalsManager.team.team_initialized.connect(_on_team_initialized)
 	SignalsManager.game.start_next_point.connect(_on_start_next_point)
 	SignalsManager.game.game_reset.connect(_on_game_reset)
+	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
+
+
+func _ready() -> void:
+	SignalsManager.agent.emit_environment_initialized(self)
 
 
 func _process(delta: float) -> void:
@@ -103,3 +110,31 @@ func check_game_reset():
 
 func _on_goal_animation_finished():
 	check_game_reset()
+
+
+func _on_goal_scored(receiving_team: Team):
+	pending_goal_events.append({"receiving_team_name": receiving_team.name})
+
+
+func get_training_info() -> Dictionary:
+	var entities : Array = []
+	for entity in EntityManager.instance.entity_list:
+		entities.append(entity.get_state_dictionary())
+
+	var goals : Dictionary = {}
+	for goal in Level.instance.goal_list:
+		var goal_position : Vector3 = goal.global_position
+		goals[goal.team.name] = [goal_position.x, goal_position.y, goal_position.z]
+
+	var goal_events : Array = pending_goal_events
+	pending_goal_events = []
+
+	var level_size : Vector3 = game_mode.level_size
+	var max_steps : int = ceili(game_mode.max_duration_seconds * Engine.physics_ticks_per_second / AgentsManager.instance.action_repeat)
+	return {
+		"entities": entities,
+		"goals": goals,
+		"goal_events": goal_events,
+		"level_size": [level_size.x, level_size.y, level_size.z],
+		"max_steps": max_steps,
+	}

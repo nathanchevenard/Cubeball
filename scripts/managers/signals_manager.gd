@@ -107,3 +107,8 @@ class AgentSignals:
 	signal all_agents_initialized
 	func emit_all_agents_initialized():
 		all_agents_initialized.emit()
+	
+	
+	signal environment_initialized
+	func emit_environment_initialized(environment : Node):
+		environment_initialized.emit(environment)

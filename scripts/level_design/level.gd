@@ -1,7 +1,6 @@
 extends Node3D
 class_name Level
 
-
 @export var cuboid_field_wall_height : float = 10
 @export var border_wall_width : float = 0.1
 @export var penatly_area_width : float = 1.5
@@ -27,8 +26,12 @@ var ball_field_area : Node3D
 
 var game_mode : GameMode
 
+static var instance : Level
+
 
 func _init() -> void:
+	instance = self
+	
 	SignalsManager.game.game_mode_set.connect(_on_game_mode_set)
 	SignalsManager.game.game_reset.connect(_on_game_reset)
 	SignalsManager.game.start_next_point.connect(_on_game_reset)

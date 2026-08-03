@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dm6xy753fgwpc"]
+
+[ext_resource type="Script" uid="uid://dft71ca1fyacq" path="res://scripts/agents/agents_manager.gd" id="1_k7vv5"]
+[ext_resource type="Script" uid="uid://btn00ihq8qfpe" path="res://scripts/agents/inference_manager.gd" id="2_qitk2"]
+[ext_resource type="Script" uid="uid://cn35itl7kq7ab" path="res://scripts/agents/training_manager.gd" id="3_lpnxd"]
+
+[node name="AgentsManager" type="Node" unique_id=847515932 node_paths=PackedStringArray("inference_manager", "training_manager")]
+script = ExtResource("1_k7vv5")
+inference_manager = NodePath("InferenceManager")
+training_manager = NodePath("TrainingManager")
+metadata/_custom_type_script = "uid://dft71ca1fyacq"
+
+[node name="InferenceManager" type="Node" parent="." unique_id=1947900631]
+script = ExtResource("2_qitk2")
+onnx_model_path = "res://assets/onnx/shared_policy_v5.onnx"
+onnx_inference_script_path = "res://scripts/agents/csharp/ONNXInference.cs"
+metadata/_custom_type_script = "uid://btn00ihq8qfpe"
+
+[node name="TrainingManager" type="Node" parent="." unique_id=918868372]
+script = ExtResource("3_lpnxd")
+metadata/_custom_type_script = "uid://cn35itl7kq7ab"

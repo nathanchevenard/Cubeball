@@ -1,6 +1,5 @@
 extends Resource
 class_name ONNXModel
-var inferencer_script = load("res://addons/godot_rl_agents/onnx/csharp/ONNXInference.cs")
 
 var inferencer = null
 
@@ -8,8 +7,8 @@ var inferencer = null
 var action_keys: Array[String] = []
 
 # Must provide the path to the model and the batch size
-func _init(model_path, batch_size):
-	inferencer = inferencer_script.new()
+func _init(model_path, onnx_inference_script_path, batch_size):
+	inferencer = load(onnx_inference_script_path).new()
 	action_keys = inferencer.Initialize(model_path, batch_size)
 
 # Takes the flat observation array, returns a dict keyed by action name.
