@@ -105,8 +105,10 @@ func _compute_ray_directions() -> void:
 
 
 # Casts a single ray along a local-space direction using the physics server
-# directly (no RayCast3D node involved). Reuses one query object across calls.
-func _cast_ray(local_direction: Vector3) -> Dictionary:
+# directly (no RayCast3D node involved). Reuses one query object across calls;
+# space_state is fetched once per calculate_raycasts() call by the caller,
+# not per ray.
+func _cast_ray(local_direction: Vector3, space_state: PhysicsDirectSpaceState3D) -> Dictionary:
 	if _ray_query == null:
 		_ray_query = PhysicsRayQueryParameters3D.new()
 
@@ -117,7 +119,7 @@ func _cast_ray(local_direction: Vector3) -> Dictionary:
 	_ray_query.collide_with_areas = collide_with_areas
 	_ray_query.collide_with_bodies = collide_with_bodies
 
-	return get_world_3d().direct_space_state.intersect_ray(_ray_query)
+	return space_state.intersect_ray(_ray_query)
 
 
 func _spawn_nodes():
@@ -198,8 +200,9 @@ func get_observation() -> Array:
 
 func calculate_raycasts() -> Array:
 	var result = []
+	var space_state = get_world_3d().direct_space_state
 	for local_direction in ray_directions:
-		var hit = _cast_ray(local_direction)
+		var hit = _cast_ray(local_direction, space_state)
 		var distance = _get_raycast_distance(hit)
 
 		result.append(distance)
