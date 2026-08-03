@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 		# When Python is driving training, the next match's parameters come from
 		# Python's next "reset" message (see PythonSynchronizer._start_new_match)
 		# instead of an immediate auto-restart with the same config.
-		if not PythonSynchronizer.is_python_training():
+		if AgentsManager.instance.agent_control_mode != AgentsManager.AgentControlModes.TRAINING:
 			SignalsManager.game.emit_game_reset()
 
 
@@ -94,7 +94,7 @@ func _on_ball_enter_goal(receiving_team : Team):
 func check_game_reset():
 	for team : Team in score.keys():
 		if score[team] >= game_mode.max_goal:
-			if not PythonSynchronizer.is_python_training():
+			if AgentsManager.instance.agent_control_mode != AgentsManager.AgentControlModes.TRAINING:
 				SignalsManager.game.emit_game_reset()
 			return
 	

@@ -7,6 +7,7 @@ var level : LevelSignals = LevelSignals.new()
 var game : GameSignals = GameSignals.new()
 var control : ControlSignals = ControlSignals.new()
 var settings : SettingsSignals = SettingsSignals.new()
+var agent : AgentSignals = AgentSignals.new()
 
 
 class GoalSignals:
@@ -100,3 +101,9 @@ class SettingsSignals:
 	signal ui_disable
 	func emit_ui_disable():
 		ui_disable.emit()
+
+
+class AgentSignals:
+	signal all_agents_initialized
+	func emit_all_agents_initialized():
+		all_agents_initialized.emit()

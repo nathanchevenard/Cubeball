@@ -20,6 +20,7 @@ func _on_level_initialized(level : Level):
 	_spawn_team_cuboids(level)
 
 	SignalsManager.team.emit_all_teams_initialized()
+	SignalsManager.agent.emit_all_agents_initialized()
 
 
 # Teams themselves (score, color, ...) persist for the whole process — only the cuboid

@@ -20,7 +20,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	if PythonSynchronizer.instance.control_mode == PythonSynchronizer.ControlModes.TRAINING:
+	if AgentsManager.instance.agent_control_mode == AgentsManager.AgentControlModes.TRAINING:
 		disable_goal_animation = true
 		disable_ui = true
 		disable_goal_nets = true

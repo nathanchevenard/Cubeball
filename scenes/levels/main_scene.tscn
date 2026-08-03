@@ -5,18 +5,20 @@
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
-[ext_resource type="Resource" uid="uid://bosdqv33xbqam" path="res://resources/game_modes/game_mode_11v11_simple.tres" id="5_eyj4g"]
+[ext_resource type="Resource" uid="uid://dy2be5unxbljb" path="res://resources/game_modes/game_mode_3v3_simple.tres" id="5_eyj4g"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/settings_manager.gd" id="6_6u8e5"]
 [ext_resource type="Script" uid="uid://b7fnsvb8f18gw" path="res://scripts/managers/game_state_manager.gd" id="6_84bhp"]
 [ext_resource type="Script" uid="uid://cnwlwnghcjbcu" path="res://scripts/managers/game_mode_manager.gd" id="7_84bhp"]
-[ext_resource type="Script" uid="uid://bsfn1jbchvd2e" path="res://addons/godot_rl_agents/python_synchronizer.gd" id="7_jtcbb"]
+[ext_resource type="Script" uid="uid://btn00ihq8qfpe" path="res://scripts/managers/agents/inference_manager.gd" id="7_eyj4g"]
 [ext_resource type="Script" uid="uid://bjr2aupeq81x6" path="res://scripts/ui/score_ui.gd" id="7_quawd"]
 [ext_resource type="PackedScene" uid="uid://nhgyucf6pq3b" path="res://scenes/level_design/ground_cuboid_field.tscn" id="8_df41j"]
 [ext_resource type="PackedScene" uid="uid://cop7crathrf4g" path="res://scenes/managers/camera_manager.tscn" id="10_2fuee"]
+[ext_resource type="Script" uid="uid://dft71ca1fyacq" path="res://scripts/managers/agents/agents_manager.gd" id="10_eyj4g"]
 [ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_ball_field.tscn" id="10_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
+[ext_resource type="Script" uid="uid://cn35itl7kq7ab" path="res://scripts/managers/agents/training_manager.gd" id="12_v351g"]
 [ext_resource type="PackedScene" uid="uid://dmxh8pa8cf55c" path="res://scenes/level_design/ball_field_area.tscn" id="13_irvof"]
 [ext_resource type="Script" uid="uid://bpb4blb0mfcbt" path="res://scripts/managers/pause_manager.gd" id="14_3h10a"]
 [ext_resource type="PackedScene" uid="uid://d3qggm6hymh2u" path="res://scenes/level_design/wall_invisible_cuboid.tscn" id="14_v0rl3"]
@@ -66,13 +68,14 @@ script = ExtResource("6_84bhp")
 timer_label = NodePath("../../CanvasLayer/Timer/Timer")
 metadata/_custom_type_script = "uid://b7fnsvb8f18gw"
 
-[node name="PythonSynchronizer" type="Node" parent="Managers" unique_id=1588797938]
-script = ExtResource("7_jtcbb")
-onnx_model_path = "res://assets/onnx/shared_policy_v5.onnx"
-metadata/_custom_type_script = "uid://bsfn1jbchvd2e"
-
 [node name="SettingsManager" type="Node" parent="Managers" unique_id=1804407204 node_paths=PackedStringArray("fps_label")]
 script = ExtResource("6_6u8e5")
+agent_control_mode = null
+first_cuboid_human_input = null
+disable_goal_animation = null
+disable_ui = null
+disable_goal_nets = null
+disable_cameras = null
 display_fps = true
 fps_label = NodePath("FpsLabel")
 metadata/_custom_type_script = "uid://tinwq43u68p7"
@@ -93,6 +96,21 @@ text = "<FPS>"
 [node name="PauseManager" type="Node" parent="Managers" unique_id=1934117463]
 script = ExtResource("14_3h10a")
 metadata/_custom_type_script = "uid://bpb4blb0mfcbt"
+
+[node name="AgentsManager" type="Node" parent="Managers" unique_id=2089846127 node_paths=PackedStringArray("inference_manager", "training_manager")]
+script = ExtResource("10_eyj4g")
+inference_manager = NodePath("InferenceManager")
+training_manager = NodePath("TrainingManager")
+metadata/_custom_type_script = "uid://dft71ca1fyacq"
+
+[node name="InferenceManager" type="Node" parent="Managers/AgentsManager" unique_id=1393266601]
+script = ExtResource("7_eyj4g")
+onnx_model_path = "res://assets/onnx/shared_policy_v5.onnx"
+metadata/_custom_type_script = "uid://btn00ihq8qfpe"
+
+[node name="TrainingManager" type="Node" parent="Managers/AgentsManager" unique_id=1316537511]
+script = ExtResource("12_v351g")
+metadata/_custom_type_script = "uid://cn35itl7kq7ab"
 
 [node name="Environment" type="Node3D" parent="." unique_id=569441626]
 
