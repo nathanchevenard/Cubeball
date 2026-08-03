@@ -15,7 +15,7 @@ class_name CubeballRaycast
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint() == false:
+	if Engine.is_editor_hint() == false && (display_raycasts_colliding || display_raycasts_not_colliding):
 		calculate_raycasts()
 		#print(name + " : " + str(calculate_raycasts()))
 
