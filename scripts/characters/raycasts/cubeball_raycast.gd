@@ -29,25 +29,22 @@ func _spawn_nodes():
 
 func calculate_raycasts() -> Array:
 	var result = []
-	for ray : RayCast3D in rays:
-		ray.set_enabled(true)
-		ray.force_raycast_update()
-		var distance = _get_raycast_distance(ray)
+	for local_direction in ray_directions:
+		var hit = _cast_ray(local_direction)
+		var distance = _get_raycast_distance(hit)
 		result.append(distance)
-		
-		add_ray_additional_data(ray, result)
-		
-		if display_raycasts_colliding == true && ray.is_colliding() == true:
-			var start = ray.global_position
-			var end = ray.get_collision_point()
+
+		add_ray_additional_data(hit, result)
+
+		if display_raycasts_colliding == true && hit.is_empty() == false:
+			var start = global_transform.origin
+			var end = hit["position"] as Vector3
 			DebugDraw3D.draw_line(start, end, ray_color)
-		if display_raycasts_not_colliding == true && ray.is_colliding() == false:
-			var start = ray.global_position
-			var end = ray.target_position
+		if display_raycasts_not_colliding == true && hit.is_empty() == true:
+			var start = global_transform.origin
+			var end = start + (global_transform.basis * local_direction)
 			DebugDraw3D.draw_line(start, end, ray_color)
-		
-		ray.set_enabled(false)
-	
+
 	return result
 
 
@@ -58,5 +55,5 @@ func get_observation_size() -> int:
 	return int(n_rays_width * n_rays_height)
 
 
-func add_ray_additional_data(ray : RayCast3D, result : Array):
+func add_ray_additional_data(hit : Dictionary, result : Array):
 	pass

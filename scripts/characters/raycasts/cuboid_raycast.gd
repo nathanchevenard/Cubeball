@@ -3,14 +3,15 @@ extends CubeballRaycast
 class_name CuboidRaycast
 
 
-func add_ray_additional_data(ray : RayCast3D, result : Array):
-	if ray.is_colliding() == false:
+func add_ray_additional_data(hit : Dictionary, result : Array):
+	if hit.is_empty():
 		result.append(0.0)
 		result.append(0.0)
 		return
-	
-	if ray.get_collider() is Cuboid:
-		var collider_cuboid : Cuboid = ray.get_collider() as Cuboid
+
+	var collider = hit["collider"]
+	if collider is Cuboid:
+		var collider_cuboid : Cuboid = collider as Cuboid
 		if cuboid.team == collider_cuboid.team:
 			result.append(1.0)
 		else:

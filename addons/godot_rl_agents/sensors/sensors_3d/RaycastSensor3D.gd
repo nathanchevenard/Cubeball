@@ -68,6 +68,11 @@ class_name RayCastSensor3D
 var rays : Array[RayCast3D] = []
 var geo = null
 
+# Runtime-only ray directions (local space), used instead of spawning RayCast3D
+# nodes so training doesn't pay for hundreds of Node3D instances per sensor.
+var ray_directions : Array[Vector3] = []
+var _ray_query : PhysicsRayQueryParameters3D
+
 
 func _update():
 	if Engine.is_editor_hint():
@@ -80,7 +85,39 @@ func _ready() -> void:
 		if get_child_count() == 0:
 			_spawn_nodes()
 	else:
-		_spawn_nodes()
+		_compute_ray_directions()
+
+
+func _compute_ray_directions() -> void:
+	ray_directions.clear()
+
+	var horizontal_step = cone_width / (n_rays_width)
+	var vertical_step = cone_height / (n_rays_height)
+
+	var horizontal_start = horizontal_step / 2 - cone_width / 2
+	var vertical_start = vertical_step / 2 - cone_height / 2
+
+	for i in n_rays_width:
+		for j in n_rays_height:
+			var angle_w = horizontal_start + i * horizontal_step
+			var angle_h = vertical_start + j * vertical_step
+			ray_directions.append(to_spherical_coords(ray_length, angle_w, angle_h))
+
+
+# Casts a single ray along a local-space direction using the physics server
+# directly (no RayCast3D node involved). Reuses one query object across calls.
+func _cast_ray(local_direction: Vector3) -> Dictionary:
+	if _ray_query == null:
+		_ray_query = PhysicsRayQueryParameters3D.new()
+
+	var origin = global_transform.origin
+	_ray_query.from = origin
+	_ray_query.to = origin + (global_transform.basis * local_direction)
+	_ray_query.collision_mask = collision_mask
+	_ray_query.collide_with_areas = collide_with_areas
+	_ray_query.collide_with_bodies = collide_with_bodies
+
+	return get_world_3d().direct_space_state.intersect_ray(_ray_query)
 
 
 func _spawn_nodes():
@@ -161,27 +198,25 @@ func get_observation() -> Array:
 
 func calculate_raycasts() -> Array:
 	var result = []
-	for ray in rays:
-		ray.set_enabled(true)
-		ray.force_raycast_update()
-		var distance = _get_raycast_distance(ray)
+	for local_direction in ray_directions:
+		var hit = _cast_ray(local_direction)
+		var distance = _get_raycast_distance(hit)
 
 		result.append(distance)
 		if class_sensor:
 			var hit_class: float = 0
-			if ray.get_collider():
-				var hit_collision_layer = ray.get_collider().collision_layer
+			if hit.has("collider"):
+				var hit_collision_layer = hit["collider"].collision_layer
 				hit_collision_layer = hit_collision_layer & collision_mask
 				hit_class = (hit_collision_layer & boolean_class_mask) > 0
 			result.append(float(hit_class))
-		ray.set_enabled(false)
 	return result
 
 
-func _get_raycast_distance(ray: RayCast3D) -> float:
-	if !ray.is_colliding():
+func _get_raycast_distance(hit: Dictionary) -> float:
+	if hit.is_empty():
 		return 0.0
 
-	var distance = (global_transform.origin - ray.get_collision_point()).length()
+	var distance = (global_transform.origin - (hit["position"] as Vector3)).length()
 	distance = clamp(distance, 0.0, ray_length)
 	return (ray_length - distance) / ray_length
