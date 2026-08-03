@@ -29,8 +29,9 @@ func _spawn_nodes():
 
 func calculate_raycasts() -> Array:
 	var result = []
+	var space_state = get_world_3d().direct_space_state
 	for local_direction in ray_directions:
-		var hit = _cast_ray(local_direction)
+		var hit = _cast_ray(local_direction, space_state)
 		var distance = _get_raycast_distance(hit)
 		result.append(distance)
 
