@@ -24,5 +24,6 @@ max_duration_seconds = 300.0
 max_goal = 5
 level_size = Vector3(16, 4, 24)
 goal_size = Vector3(3, 4, 5)
+cuboid_field_margin = Vector3(6, 0, 6)
 ball_number = 2
 metadata/_custom_type_script = "uid://culgsafxumoi6"

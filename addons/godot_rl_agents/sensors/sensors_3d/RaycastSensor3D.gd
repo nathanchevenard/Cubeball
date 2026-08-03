@@ -6,62 +6,62 @@ class_name RayCastSensor3D
 		return collision_mask
 	set(value):
 		collision_mask = value
-		_update()
+		
 @export_flags_3d_physics var boolean_class_mask = 1:
 	get:
 		return boolean_class_mask
 	set(value):
 		boolean_class_mask = value
-		_update()
+		
 
 @export var n_rays_width := 6.0:
 	get:
 		return n_rays_width
 	set(value):
 		n_rays_width = value
-		_update()
+		
 
 @export var n_rays_height := 6.0:
 	get:
 		return n_rays_height
 	set(value):
 		n_rays_height = value
-		_update()
+		
 
 @export var ray_length := 10.0:
 	get:
 		return ray_length
 	set(value):
 		ray_length = value
-		_update()
+		
 
 @export var cone_width := 60.0:
 	get:
 		return cone_width
 	set(value):
 		cone_width = value
-		_update()
+		
 
 @export var cone_height := 60.0:
 	get:
 		return cone_height
 	set(value):
 		cone_height = value
-		_update()
+		
 
 @export var collide_with_areas := false:
 	get:
 		return collide_with_areas
 	set(value):
 		collide_with_areas = value
-		_update()
+		
 
 @export var collide_with_bodies := true:
 	get:
 		return collide_with_bodies
 	set(value):
 		collide_with_bodies = value
-		_update()
+		
 
 @export var class_sensor := false
 
@@ -74,17 +74,8 @@ var ray_directions : Array[Vector3] = []
 var _ray_query : PhysicsRayQueryParameters3D
 
 
-func _update():
-	if Engine.is_editor_hint():
-		if is_node_ready():
-			_spawn_nodes()
-
-
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		if get_child_count() == 0:
-			_spawn_nodes()
-	else:
+	if Engine.is_editor_hint() == false:
 		_compute_ray_directions()
 
 
@@ -158,7 +149,7 @@ func _spawn_nodes():
 			add_child(ray)
 			ray.set_owner(get_tree().edited_scene_root)
 			rays.append(ray)
-			ray.force_raycast_update()
+			ray.force_raycast
 		
 		
 

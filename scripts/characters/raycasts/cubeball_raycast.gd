@@ -7,7 +7,6 @@ class_name CubeballRaycast
 		return ray_color
 	set(value):
 		ray_color = value
-		_update()
 
 @export var cuboid : Cuboid
 @export var display_raycasts_colliding : bool = false
@@ -15,7 +14,7 @@ class_name CubeballRaycast
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint() == false:
+	if Engine.is_editor_hint() == false && (display_raycasts_colliding || display_raycasts_not_colliding):
 		calculate_raycasts()
 		#print(name + " : " + str(calculate_raycasts()))
 
