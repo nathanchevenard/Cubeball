@@ -1,7 +1,15 @@
 extends Area3D
 class_name Goal
 
-@export var team : Team
+@export var team : Team:
+	get: 
+		return team
+	set(value):
+		team = value
+		if goal_mesh_instance != null:
+			var material : StandardMaterial3D = goal_mesh_instance.get_surface_override_material(1)
+			material.albedo_color = team.color
+
 @export var wall_scene : PackedScene
 @export var wall_override_material : StandardMaterial3D
 @export var wall_width : float = 1
@@ -9,6 +17,7 @@ class_name Goal
 @export var goal_net : SoftBody3D
 @export var goal_net_scene : PackedScene
 @export var net_mesh : Mesh
+@export var goal_mesh_instance : MeshInstance3D
 
 var wall_csg_box_list : Array[CSGBox3D]
 
