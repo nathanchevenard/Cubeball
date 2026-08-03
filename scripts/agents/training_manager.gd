@@ -13,7 +13,6 @@ var stream: StreamPeerTCP = null
 var connected = false
 var message_center
 var should_connect = true
-var pending_goal_events: Array = []
 
 var agents_training: Dictionary
 var agents_training_policy_names: Dictionary
@@ -25,14 +24,16 @@ var just_reset = false
 var _pending_spaces = false
 var debug_logs_enabled : bool = false
 
-var current_level: Level
+var environment : Node
 
 
 func _init() -> void:
 	instance = self
 
-	SignalsManager.level.level_initialized.connect(_on_level_initialized)
-	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
+	SignalsManager.agent.environment_initialized.connect(_on_environment_initialized)
+
+func _on_environment_initialized(new_environment : Node):
+	environment = new_environment
 
 
 func initialize_communication() -> void:
@@ -57,14 +58,6 @@ func initialize_communication() -> void:
 		)
 
 
-func _on_level_initialized(level: Level):
-	current_level = level
-
-
-func _on_goal_scored(receiving_team: Team):
-	pending_goal_events.append({"receiving_team_name": receiving_team.name})
-
-
 func _training_process():
 	if connected:
 		get_tree().set_pause(true)
@@ -87,7 +80,7 @@ func _training_process():
 			var reply = {
 				"type": "reset",
 				"observation": _get_training_observations(),
-				"info": _get_training_info(),
+				"info": environment.get_training_info(),
 			}
 			_send_dict_as_json_message(reply)
 			# this should go straight to getting the action and setting it checked the agent, no need to perform one phyics tick
@@ -98,7 +91,7 @@ func _training_process():
 			need_to_send_observation = false
 			var done = _get_training_dones()
 			var observation = _get_training_observations()
-			var info = _get_training_info()
+			var info = environment.get_training_info()
 
 			var reply = {"type": "step", "observation": observation, "done": done, "info": info}
 			_send_dict_as_json_message(reply)
@@ -282,30 +275,6 @@ func _get_training_observations() -> Dictionary:
 	for agent_id in agents_training:
 		observations[agent_id] = agents_training[agent_id].get_observation()
 	return observations
-
-
-func _get_training_info() -> Dictionary:
-	var entities : Array = []
-	for entity in EntityManager.instance.entity_list:
-		entities.append(entity.get_state_dictionary())
-
-	var goals : Dictionary = {}
-	for goal in current_level.goal_list:
-		var goal_position : Vector3 = goal.global_position
-		goals[goal.team.name] = [goal_position.x, goal_position.y, goal_position.z]
-
-	var goal_events : Array = pending_goal_events
-	pending_goal_events = []
-
-	var level_size : Vector3 = current_level.game_mode.level_size
-	var max_steps : int = ceili(current_level.game_mode.max_duration_seconds * Engine.physics_ticks_per_second / AgentsManager.instance.action_repeat)
-	return {
-		"entities": entities,
-		"goals": goals,
-		"goal_events": goal_events,
-		"level_size": [level_size.x, level_size.y, level_size.z],
-		"max_steps": max_steps,
-	}
 
 
 func _get_training_dones() -> Dictionary:

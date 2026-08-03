@@ -1,5 +1,5 @@
 @tool
-extends ISensor3D
+extends Node3D
 class_name RayCastSensor3D
 @export_flags_3d_physics var collision_mask = 1:
 	get:

@@ -75,6 +75,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dpi60")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgtwc"]
+resource_local_to_scene = true
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_sgfkh"]
 size = Vector3(0.9938965, 1.0273438, 1.0537109)
 
@@ -82,17 +85,19 @@ size = Vector3(0.9938965, 1.0273438, 1.0537109)
 transparency = 1
 albedo_color = Color(1, 1, 1, 0)
 
-[node name="Goal" type="Area3D" unique_id=547768441 node_paths=PackedStringArray("csg_box")]
+[node name="Goal" type="Area3D" unique_id=547768441 node_paths=PackedStringArray("csg_box", "goal_mesh_instance")]
 collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_34d8l")
 csg_box = NodePath("CSGBox3D")
 goal_net_scene = ExtResource("2_rgtwc")
 net_mesh = ExtResource("3_rgtwc")
+goal_mesh_instance = NodePath("Tube")
 
 [node name="Tube" type="MeshInstance3D" parent="." unique_id=2048549043]
 transform = Transform3D(-19.286, 2.238664e-06, 1.2729215e-13, 0, -6.4806505e-07, 19.286, 2.912105e-06, 14.826, 8.430178e-07, 0, 0.31309998, 0)
 mesh = SubResource("ArrayMesh_2758x")
+surface_material_override/1 = SubResource("StandardMaterial3D_rgtwc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1576794338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49705958, 0.5, 0)

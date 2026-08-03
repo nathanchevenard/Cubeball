@@ -2,6 +2,7 @@ extends Node
 class_name InferenceManager
 
 @export var onnx_model_path : String = ""
+@export var onnx_inference_script_path : String = ""
 
 static var instance : InferenceManager
 
@@ -22,7 +23,7 @@ func initialize_inference_agents(agents : Array):
 			"Onnx Model Path set on Sync node does not exist: %s" % onnx_model_path
 		)
 		if not onnx_models.has(onnx_model_path):
-			onnx_models[onnx_model_path] = ONNXModel.new(onnx_model_path, 1)
+			onnx_models[onnx_model_path] = ONNXModel.new(onnx_model_path, onnx_inference_script_path, 1)
 
 		for agent in agent_inference_list:
 			var action_space = agent.get_action_space()
@@ -55,7 +56,7 @@ func initialize_inference_agents(agents : Array):
 							% [agent.get_path(), agent.onnx_model_path]
 						)
 					)
-					onnx_models[agent.onnx_model_path] = ONNXModel.new(agent.onnx_model_path, 1)
+					onnx_models[agent.onnx_model_path] = ONNXModel.new(agent.onnx_model_path, onnx_inference_script_path, 1)
 				agent_onnx_model = onnx_models[agent.onnx_model_path]
 
 			agent.onnx_model = agent_onnx_model
