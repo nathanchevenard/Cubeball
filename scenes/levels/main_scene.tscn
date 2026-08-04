@@ -16,7 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://dm6xy753fgwpc" path="res://scenes/managers/agents_manager.tscn" id="10_eyj4g"]
 [ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_ball_field.tscn" id="10_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
+[ext_resource type="Script" uid="uid://bujo7sujt8u8x" path="res://scripts/managers/environment_manager.gd" id="11_v351g"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
+[ext_resource type="PackedScene" uid="uid://jvypwfhktkgn" path="res://scenes/environments/environment_beach.tscn" id="12_v351g"]
 [ext_resource type="PackedScene" uid="uid://dmxh8pa8cf55c" path="res://scenes/level_design/ball_field_area.tscn" id="13_irvof"]
 [ext_resource type="Script" uid="uid://bpb4blb0mfcbt" path="res://scripts/managers/pause_manager.gd" id="14_3h10a"]
 [ext_resource type="PackedScene" uid="uid://d3qggm6hymh2u" path="res://scenes/level_design/wall_invisible_cuboid.tscn" id="14_v0rl3"]
@@ -27,18 +29,6 @@
 [ext_resource type="Script" uid="uid://dn6wclu4cke80" path="res://scripts/ui/timer_ui.gd" id="18_efd43"]
 [ext_resource type="Script" uid="uid://ceykxvxv2olxb" path="res://scripts/ui/big_score_ui.gd" id="21_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://bvv67jikywv4r" path="res://scenes/level_design/goal.tscn" id="25_irvof"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
-
-[sub_resource type="Sky" id="Sky_nu5rl"]
-sky_material = SubResource("ProceduralSkyMaterial_coy0t")
-
-[sub_resource type="Environment" id="Environment_xmwv8"]
-background_mode = 2
-sky = SubResource("Sky_nu5rl")
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ssao_enabled = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jqmn"]
 bg_color = Color(1, 1, 1, 1)
@@ -95,14 +85,10 @@ metadata/_custom_type_script = "uid://bpb4blb0mfcbt"
 
 [node name="AgentsManager" parent="Managers" unique_id=847515932 instance=ExtResource("10_eyj4g")]
 
-[node name="Environment" type="Node3D" parent="." unique_id=569441626]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=1629036772]
-transform = Transform3D(0.9626256, 0.006631303, 0.2707545, -0.27083567, 0.023569504, 0.9623371, 0, -0.99970025, 0.0244846, 0.04210663, 36, 0.028419495)
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=2022907163]
-environment = SubResource("Environment_xmwv8")
+[node name="EnvironmentManager" type="Node" parent="Managers" unique_id=1276156547]
+script = ExtResource("11_v351g")
+environement_scene = ExtResource("12_v351g")
+metadata/_custom_type_script = "uid://bujo7sujt8u8x"
 
 [node name="Level" type="Node3D" parent="." unique_id=162575387]
 script = ExtResource("5_p61ap")
