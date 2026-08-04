@@ -100,6 +100,8 @@ func _training_process():
 
 
 func initialize_training_agents(agents : Array):
+	agents_training = {}
+	agents_training_policy_names = {}
 	for agent in agents:
 		agents_training[agent.agent_id] = agent
 		agents_training_policy_names[agent.agent_id] = agent.policy_name
