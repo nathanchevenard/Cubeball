@@ -121,6 +121,7 @@ offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 script = ExtResource("7_quawd")
 score_parent = NodePath("MarginContainer")
 score_container = NodePath("MarginContainer/ScoreContainer")
@@ -140,11 +141,13 @@ offset_bottom = 27.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Score/MarginContainer" unique_id=1574549550]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_right = -8
 
@@ -155,6 +158,7 @@ theme = ExtResource("15_pkib5")
 [node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Score/MarginContainer" unique_id=1826399325]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 alignment = 1
 
@@ -164,17 +168,20 @@ offset_top = 5.0
 offset_right = 63.0
 offset_bottom = 60.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 script = ExtResource("18_efd43")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Timer" unique_id=1123642984]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_right = -8
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Timer/MarginContainer" unique_id=1257340330]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("15_pkib5")
 
 [node name="Timer" type="Label" parent="CanvasLayer/Timer" unique_id=1521735442]
@@ -199,6 +206,7 @@ offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 script = ExtResource("16_x7kll")
 middle_time = 1.1
 shake_amplitude = 10.0
@@ -222,6 +230,7 @@ offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_outline_size = 40
 theme_override_constants/outline_size = 20
@@ -250,6 +259,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3jqmn")
 
 [node name="BigScore" type="Control" parent="CanvasLayer" unique_id=55827111]
@@ -262,6 +272,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 script = ExtResource("21_nxfq7")
 show_time = 0.3
 increase_score_time = 0.2
