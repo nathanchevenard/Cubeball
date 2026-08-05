@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cr001huhs65gh" path="res://scenes/level_design/obstacle_cube.tscn" id="2_3ulyp"]
 [ext_resource type="PackedScene" uid="uid://duykws8mkjl5f" path="res://scenes/level_design/ball.tscn" id="3_3ulyp"]
 [ext_resource type="Script" uid="uid://b806wpb14q2fm" path="res://scripts/managers/entity_manager.gd" id="3_jtcbb"]
-[ext_resource type="Resource" uid="uid://b0yykp3ietxuo" path="res://resources/game_modes/game_mode_1v1_simple.tres" id="5_eyj4g"]
+[ext_resource type="Resource" uid="uid://dy2be5unxbljb" path="res://resources/game_modes/game_mode_3v3_simple.tres" id="5_eyj4g"]
 [ext_resource type="Script" uid="uid://bpc4w7e580i0a" path="res://scripts/level_design/level.gd" id="5_p61ap"]
 [ext_resource type="Script" uid="uid://tinwq43u68p7" path="res://scripts/managers/settings_manager.gd" id="6_6u8e5"]
 [ext_resource type="Script" uid="uid://b7fnsvb8f18gw" path="res://scripts/managers/game_state_manager.gd" id="6_84bhp"]
@@ -16,7 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://dm6xy753fgwpc" path="res://scenes/managers/agents_manager.tscn" id="10_eyj4g"]
 [ext_resource type="PackedScene" uid="uid://d22qk8y35cwku" path="res://scenes/level_design/ground_ball_field.tscn" id="10_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://hpuywpkdjdb2" path="res://scenes/level_design/wall_invisible_ball.tscn" id="11_nxfq7"]
+[ext_resource type="Script" uid="uid://bujo7sujt8u8x" path="res://scripts/managers/environment_manager.gd" id="11_v351g"]
 [ext_resource type="PackedScene" uid="uid://m16jiou64g45" path="res://scenes/level_design/line_border_ball_field.tscn" id="12_v0rl3"]
+[ext_resource type="PackedScene" uid="uid://jvypwfhktkgn" path="res://scenes/environments/environment_beach.tscn" id="12_v351g"]
 [ext_resource type="PackedScene" uid="uid://dmxh8pa8cf55c" path="res://scenes/level_design/ball_field_area.tscn" id="13_irvof"]
 [ext_resource type="Script" uid="uid://bpb4blb0mfcbt" path="res://scripts/managers/pause_manager.gd" id="14_3h10a"]
 [ext_resource type="PackedScene" uid="uid://d3qggm6hymh2u" path="res://scenes/level_design/wall_invisible_cuboid.tscn" id="14_v0rl3"]
@@ -27,18 +29,6 @@
 [ext_resource type="Script" uid="uid://dn6wclu4cke80" path="res://scripts/ui/timer_ui.gd" id="18_efd43"]
 [ext_resource type="Script" uid="uid://ceykxvxv2olxb" path="res://scripts/ui/big_score_ui.gd" id="21_nxfq7"]
 [ext_resource type="PackedScene" uid="uid://bvv67jikywv4r" path="res://scenes/level_design/goal.tscn" id="25_irvof"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
-
-[sub_resource type="Sky" id="Sky_nu5rl"]
-sky_material = SubResource("ProceduralSkyMaterial_coy0t")
-
-[sub_resource type="Environment" id="Environment_xmwv8"]
-background_mode = 2
-sky = SubResource("Sky_nu5rl")
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ssao_enabled = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jqmn"]
 bg_color = Color(1, 1, 1, 1)
@@ -95,18 +85,10 @@ metadata/_custom_type_script = "uid://bpb4blb0mfcbt"
 
 [node name="AgentsManager" parent="Managers" unique_id=847515932 instance=ExtResource("10_eyj4g")]
 
-[node name="InferenceManager" parent="Managers/AgentsManager" index="0" unique_id=1947900631]
-onnx_model_path = "res://assets/onnx/shared_policy_lstm_v1.onnx"
-model_has_memory = true
-
-[node name="Environment" type="Node3D" parent="." unique_id=569441626]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=1629036772]
-transform = Transform3D(0.9626256, 0.006631303, 0.2707545, -0.27083567, 0.023569504, 0.9623371, 0, -0.99970025, 0.0244846, 0.04210663, 36, 0.028419495)
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=2022907163]
-environment = SubResource("Environment_xmwv8")
+[node name="EnvironmentManager" type="Node" parent="Managers" unique_id=1276156547]
+script = ExtResource("11_v351g")
+environement_scene = ExtResource("12_v351g")
+metadata/_custom_type_script = "uid://bujo7sujt8u8x"
 
 [node name="Level" type="Node3D" parent="." unique_id=162575387]
 script = ExtResource("5_p61ap")
@@ -139,6 +121,7 @@ offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 script = ExtResource("7_quawd")
 score_parent = NodePath("MarginContainer")
 score_container = NodePath("MarginContainer/ScoreContainer")
@@ -158,11 +141,13 @@ offset_bottom = 27.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Score/MarginContainer" unique_id=1574549550]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_right = -8
 
@@ -173,6 +158,7 @@ theme = ExtResource("15_pkib5")
 [node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Score/MarginContainer" unique_id=1826399325]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 alignment = 1
 
@@ -182,17 +168,20 @@ offset_top = 5.0
 offset_right = 63.0
 offset_bottom = 60.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 script = ExtResource("18_efd43")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Timer" unique_id=1123642984]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_right = -8
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Timer/MarginContainer" unique_id=1257340330]
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("15_pkib5")
 
 [node name="Timer" type="Label" parent="CanvasLayer/Timer" unique_id=1521735442]
@@ -217,6 +206,7 @@ offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 script = ExtResource("16_x7kll")
 middle_time = 1.1
 shake_amplitude = 10.0
@@ -240,6 +230,7 @@ offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_outline_size = 40
 theme_override_constants/outline_size = 20
@@ -268,6 +259,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3jqmn")
 
 [node name="BigScore" type="Control" parent="CanvasLayer" unique_id=55827111]
@@ -280,9 +272,8 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 script = ExtResource("21_nxfq7")
 show_time = 0.3
 increase_score_time = 0.2
 text_theme = ExtResource("16_o6frn")
-
-[editable path="Managers/AgentsManager"]

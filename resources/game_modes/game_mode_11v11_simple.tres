@@ -25,5 +25,4 @@ max_goal = 5
 level_size = Vector3(20, 4, 30)
 goal_size = Vector3(3, 4, 8)
 cuboid_field_margin = Vector3(6, 0, 6)
-ball_number = 5
 metadata/_custom_type_script = "uid://culgsafxumoi6"
