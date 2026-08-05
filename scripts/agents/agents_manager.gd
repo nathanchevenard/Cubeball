@@ -46,7 +46,7 @@ func get_agents():
 		elif agent_control_mode == AgentControlModes.ONNX_INFERENCE:
 			agent.control_mode = agent.ControlModes.ONNX_INFERENCE
 	
-	print("found %d nodes in AGENT group" % [agent_list.size()])
+	#print("found %d nodes in AGENT group" % [agent_list.size()])
 
 
 func _physics_process(_delta):

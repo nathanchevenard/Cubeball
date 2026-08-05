@@ -4,7 +4,11 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_coy0t"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nu5rl"]
+albedo_color = Color(0.4, 0.4, 0.4, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_nu5rl"]
+material = SubResource("StandardMaterial3D_nu5rl")
 
 [node name="ObstacleCube" type="RigidBody3D" unique_id=697217802]
 collision_layer = 8

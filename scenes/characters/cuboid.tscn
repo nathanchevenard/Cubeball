@@ -18,17 +18,18 @@ friction = 0.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_4hqto"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1hxw"]
-resource_local_to_scene = true
+resource_local_to_scene = false
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_k8rju"]
+material = SubResource("StandardMaterial3D_c1hxw")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_asqqw"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4hqto"]
+material = SubResource("StandardMaterial3D_asqqw")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8rju"]
-resource_local_to_scene = true
 albedo_color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tsay5"]
@@ -57,10 +58,12 @@ cuboid_ai_controller = NodePath("CuboidAIController")
 behind_phantom_camera = NodePath("BehindPlayerPhantomCamera3D")
 mouse_sensitivity = 0.02
 
-[node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh")]
+[node name="CuboidTool" type="Node" parent="." unique_id=1692329800 node_paths=PackedStringArray("cuboid", "cube_mesh", "eye_mesh", "eye2_mesh")]
 script = ExtResource("2_6oqb7")
 cuboid = NodePath("..")
 cube_mesh = NodePath("../CollisionShape3D/cuboid/Cube")
+eye_mesh = NodePath("../CollisionShape3D/cuboid/Eye")
+eye2_mesh = NodePath("../CollisionShape3D/cuboid/Eye2")
 color = Color(0.6857328, 3.1044335e-06, 5.7756904e-07, 1)
 
 [node name="CuboidAIController" type="Node3D" parent="." unique_id=128244418 node_paths=PackedStringArray("raycast_list")]
@@ -81,6 +84,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_c1hxw")
 [node name="Eye" type="MeshInstance3D" parent="CollisionShape3D/cuboid" unique_id=539927535]
 transform = Transform3D(-1.7484554e-08, -0.017118478, 0, 0.39999998, -7.4827244e-10, 0, 0, 0, 0.4, 0.9959005, 0.5062386, 0.5171171)
 mesh = SubResource("CylinderMesh_k8rju")
+surface_material_override/0 = SubResource("StandardMaterial3D_c1hxw")
 
 [node name="Pupil" type="MeshInstance3D" parent="CollisionShape3D/cuboid/Eye" unique_id=454627416]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.025826216, -0.86190796, -0.05772257)
@@ -90,6 +94,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_asqqw")
 [node name="Eye2" type="MeshInstance3D" parent="CollisionShape3D/cuboid" unique_id=868085672]
 transform = Transform3D(-1.7484554e-08, -0.017118478, 0, 0.39999998, -7.4827244e-10, 0, 0, 0, 0.4, 0.996, 0.50600004, -0.518)
 mesh = SubResource("CylinderMesh_k8rju")
+surface_material_override/0 = SubResource("StandardMaterial3D_c1hxw")
 
 [node name="Pupil" type="MeshInstance3D" parent="CollisionShape3D/cuboid/Eye2" unique_id=1472280693]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.025826216, -0.86190796, 0.022875905)

@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://d22qk8y35cwku"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_teueu"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glway"]
 albedo_color = Color(0, 0.49882656, 0.037528414, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_teueu"]
+material = SubResource("StandardMaterial3D_glway")
 
 [node name="GroundField" type="Node3D" unique_id=881915485]
 

@@ -8,7 +8,8 @@ class_name Goal
 		team = value
 		if goal_mesh_instance != null:
 			var material : StandardMaterial3D = goal_mesh_instance.get_surface_override_material(1)
-			material.albedo_color = team.color
+			if material != null:
+				material.albedo_color = team.color
 
 @export var wall_scene : PackedScene
 @export var wall_override_material : StandardMaterial3D
@@ -96,8 +97,19 @@ func scale_net(spawn_scale : Vector3, spawn_position : Vector3, spawn_rotation :
 	
 	scaled_mesh.regen_normal_maps()
 	
+	# `net_mesh`'s own material is always null (its source .mtl is empty). The
+	# rendering server queries the mesh RESOURCE's own per-surface material directly
+	# (material_casts_shadows/material_is_animated/etc.) independently of any node-level
+	# `surface_material_override` -- so `scaled_mesh` still needs a real material here,
+	# even though `GoalNet`'s `surface_material_override/0` (see goal_net.tscn) is what
+	# actually determines what's visible. Fall back to that same loaded override
+	# material instead of propagating the mesh's null one.
 	if net_mesh.get_surface_count() > 0:
-		scaled_mesh.surface_set_material(0, net_mesh.surface_get_material(0))
+		var net_material := net_mesh.surface_get_material(0)
+		if net_material == null:
+			net_material = goal_net.get_surface_override_material(0)
+		if net_material != null:
+			scaled_mesh.surface_set_material(0, net_material)
 	
 	goal_net.mesh = scaled_mesh
 	goal_net.transform = Transform3D()  # identité car position/orientation déjà dans le mesh
