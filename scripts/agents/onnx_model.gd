@@ -20,6 +20,13 @@ func run_inference(obs: Array) -> Dictionary:
 	return inferencer.RunInference(obs)
 
 
+func run_inference_with_state(obs: Array, state_h: Array, state_c: Array) -> Dictionary:
+	if inferencer == null:
+		printerr("Inferencer not initialized")
+		return {}
+	return inferencer.RunInferenceWithState(obs, state_h, state_c)
+
+
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
 		inferencer.FreeDisposables()

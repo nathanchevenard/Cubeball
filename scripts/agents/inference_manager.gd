@@ -3,6 +3,14 @@ class_name InferenceManager
 
 @export var onnx_model_path : String = ""
 @export var onnx_inference_script_path : String = ""
+## Whether the ONNX model is recurrent (was exported with an LSTM hidden state
+## in/out). Must match how the model was exported (see
+## executables/export_rl_module_to_onnx.py) -- there is no way to detect this
+## automatically from the model file, it must be set explicitly here.
+@export var model_has_memory : bool = false
+## Size of the LSTM hidden state (h and c vectors). Only used when
+## model_has_memory is true; must match the architecture's lstm_cell_size.
+@export var memory_state_size : int = 128
 
 static var instance : InferenceManager
 
@@ -11,11 +19,23 @@ var onnx_model = null
 
 var agent_inference_list: Array
 var action_space_inference: Array[Dictionary] = []
+var agent_memory_states: Dictionary = {}
+
+
+func _zero_memory_state() -> Dictionary:
+	var h: Array = []
+	var c: Array = []
+	h.resize(memory_state_size)
+	c.resize(memory_state_size)
+	h.fill(0.0)
+	c.fill(0.0)
+	return {'h': h, 'c': c}
 
 
 func initialize_inference_agents(agents : Array):
 	action_space_inference.clear()
 	agent_inference_list = agents
+	agent_memory_states.clear()
 
 	if agent_inference_list.size() > 0:
 		assert(
@@ -28,6 +48,9 @@ func initialize_inference_agents(agents : Array):
 		for agent in agent_inference_list:
 			var action_space = agent.get_action_space()
 			action_space_inference.append(action_space)
+
+			if model_has_memory:
+				agent_memory_states[agent] = _zero_memory_state()
 
 			var agent_onnx_model: ONNXModel
 			if agent.onnx_model_path.is_empty():
@@ -82,9 +105,18 @@ func _inference_process():
 		var actions = []
 
 		for agent_id in range(0, agent_inference_list.size()):
-			var model: ONNXModel = agent_inference_list[agent_id].onnx_model
+			var agent = agent_inference_list[agent_id]
+			var model: ONNXModel = agent.onnx_model
 			var flat_observation = _flatten_observation_dict(observations[agent_id])
-			var raw_actions = model.run_inference(flat_observation)
+
+			var raw_actions: Dictionary
+			if model_has_memory:
+				var state: Dictionary = agent_memory_states[agent]
+				raw_actions = model.run_inference_with_state(flat_observation, state['h'], state['c'])
+				agent_memory_states[agent] = {'h': raw_actions['state_out_h'], 'c': raw_actions['state_out_c']}
+			else:
+				raw_actions = model.run_inference(flat_observation)
+
 			actions.append(_cast_onnx_actions(raw_actions, action_space_inference[agent_id]))
 
 		_set_agent_actions(actions, agent_inference_list)
@@ -107,6 +139,8 @@ func _reset_agents_if_done(agents):
 	for agent in agents:
 		if agent.get_done():
 			agent.set_done_false()
+			if model_has_memory and agent_memory_states.has(agent):
+				agent_memory_states[agent] = _zero_memory_state()
 
 
 func _get_observations_from_agents(agents: Array):

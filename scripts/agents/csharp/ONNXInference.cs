@@ -35,18 +35,16 @@ namespace GodotONNX
 			return result;
 		}
 
-		/// <include file='docs/ONNXInference.xml' path='docs/members[@name="ONNXInference"]/Run/*'/>
-		public Godot.Collections.Dictionary<string, Godot.Collections.Array<float>> RunInference(Godot.Collections.Array<float> obs)
+		private static DenseTensor<float> ToTensor(Godot.Collections.Array<float> values, int batchSize)
 		{
-			var span = new float[obs.Count];
-			for (int i = 0; i < obs.Count; i++)
-				span[i] = obs[i];
+			var span = new float[values.Count];
+			for (int i = 0; i < values.Count; i++)
+				span[i] = values[i];
+			return new DenseTensor<float>(span, new int[] { batchSize, values.Count });
+		}
 
-			IReadOnlyCollection<NamedOnnxValue> inputs = new List<NamedOnnxValue>
-			{
-				NamedOnnxValue.CreateFromTensor("obs", new DenseTensor<float>(span, new int[] { batchSize, obs.Count })),
-			};
-
+		private Godot.Collections.Dictionary<string, Godot.Collections.Array<float>> RunSession(IReadOnlyCollection<NamedOnnxValue> inputs)
+		{
 			IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results;
 			try
 			{
@@ -77,6 +75,37 @@ namespace GodotONNX
 
 			results.Dispose();
 			return output;
+		}
+
+		/// <include file='docs/ONNXInference.xml' path='docs/members[@name="ONNXInference"]/Run/*'/>
+		public Godot.Collections.Dictionary<string, Godot.Collections.Array<float>> RunInference(Godot.Collections.Array<float> obs)
+		{
+			IReadOnlyCollection<NamedOnnxValue> inputs = new List<NamedOnnxValue>
+			{
+				NamedOnnxValue.CreateFromTensor("obs", ToTensor(obs, batchSize)),
+			};
+			return RunSession(inputs);
+		}
+
+		/// <summary>
+		/// Same as RunInference, but for recurrent (LSTM) models exported with a
+		/// hidden state in/out (see executables/export_rl_module_to_onnx.py).
+		/// Only called by callers that know the loaded model is recurrent
+		/// (GDScript side: InferenceManager.model_has_memory) -- this class does
+		/// not inspect the model to decide which method should be used.
+		/// </summary>
+		public Godot.Collections.Dictionary<string, Godot.Collections.Array<float>> RunInferenceWithState(
+			Godot.Collections.Array<float> obs,
+			Godot.Collections.Array<float> stateH,
+			Godot.Collections.Array<float> stateC)
+		{
+			IReadOnlyCollection<NamedOnnxValue> inputs = new List<NamedOnnxValue>
+			{
+				NamedOnnxValue.CreateFromTensor("obs", ToTensor(obs, batchSize)),
+				NamedOnnxValue.CreateFromTensor("state_in_h", ToTensor(stateH, batchSize)),
+				NamedOnnxValue.CreateFromTensor("state_in_c", ToTensor(stateC, batchSize)),
+			};
+			return RunSession(inputs);
 		}
 
 		/// <include file='docs/ONNXInference.xml' path='docs/members[@name="ONNXInference"]/Load/*'/>
