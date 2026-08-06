@@ -1,9 +1,22 @@
 [gd_scene format=4 uid="uid://jvypwfhktkgn"]
 
+[ext_resource type="Material" uid="uid://vhm2g7yugk6e" path="res://assets/materials/sand_material.tres" id="1_1jga4"]
 [ext_resource type="PackedScene" uid="uid://0bp3e2jjx6ar" path="res://assets/models_3d/beach/models/Palm.fbx" id="1_6m0mf"]
 [ext_resource type="Shader" uid="uid://bssbmsgusfkht" path="res://assets/shaders/water_shader.tres" id="1_ig0dj"]
 [ext_resource type="Texture2D" uid="uid://c44s1qjp143fl" path="res://assets/models_3d/beach/textures/BeachPropsAtlas_Default.png" id="2_yx30a"]
 [ext_resource type="PackedScene" uid="uid://cnokwsq6msri0" path="res://assets/models_3d/beach/models/Beach_Umbrella.fbx" id="3_yx30a"]
+[ext_resource type="PackedScene" uid="uid://bxbokn536ywjn" path="res://assets/models_3d/beach/models/Beach_Towel_1.fbx" id="6_48w62"]
+[ext_resource type="Texture2D" uid="uid://dn0dlkq8ygqo7" path="res://assets/models_3d/beach/textures/BeachPropAtlas.png" id="7_vu5w1"]
+[ext_resource type="PackedScene" uid="uid://ccshsdqabjom0" path="res://assets/models_3d/beach/models/Beach_Towel_2.fbx" id="8_wtmqu"]
+[ext_resource type="PackedScene" uid="uid://pd4q5lij53tm" path="res://assets/models_3d/beach/models/Beach_Towel_3.fbx" id="9_1prix"]
+[ext_resource type="PackedScene" uid="uid://b3nccq46ha6yj" path="res://assets/models_3d/beach/models/Beach_Umbrella_2.fbx" id="10_1prix"]
+[ext_resource type="PackedScene" uid="uid://8puidrftc6i8" path="res://assets/models_3d/beach/models/Beach_Umbrella_3.fbx" id="11_81dx1"]
+[ext_resource type="PackedScene" uid="uid://dottkanoedac2" path="res://assets/models_3d/beach/models/Beach_Umbrella_1.fbx" id="12_ut51i"]
+[ext_resource type="PackedScene" uid="uid://devsvwuqi5ka" path="res://assets/models_3d/beach/models/crab.fbx" id="13_ut51i"]
+[ext_resource type="Texture2D" uid="uid://dy428xifeoxad" path="res://assets/models_3d/beach/textures/crab.png" id="14_jr8pe"]
+[ext_resource type="PackedScene" uid="uid://dsj3gutb62pan" path="res://assets/models_3d/beach/models/shell.fbx" id="15_ayfsv"]
+[ext_resource type="Texture2D" uid="uid://ubvo7p5g4cqd" path="res://assets/models_3d/beach/textures/shell.jpg" id="16_a8glr"]
+[ext_resource type="Script" uid="uid://dj4p0dwl7nsa3" path="res://scripts/environments/crab.gd" id="16_pkop4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
 
@@ -24,9 +37,6 @@ albedo_color = Color(0, 0.20036936, 4.813075e-08, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6m0mf"]
 albedo_color = Color(0.1610013, 0.15628594, 0.163291, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g6780"]
-albedo_color = Color(0.8820245, 0.6763835, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1jga4"]
 render_priority = 0
@@ -83,7 +93,18 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_enx74")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jga4"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81dx1"]
+albedo_texture = ExtResource("7_vu5w1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ut51i"]
+albedo_color = Color(0.36812395, 0.73025334, 1, 1)
+albedo_texture = ExtResource("7_vu5w1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jr8pe"]
+albedo_texture = ExtResource("7_vu5w1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ayfsv"]
+albedo_color = Color(0.6713188, 0.9871742, 0.9999998, 1)
 albedo_texture = ExtResource("2_yx30a")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6w5i1"]
@@ -124,6 +145,25 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_g55qs")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jga4"]
+albedo_texture = ExtResource("2_yx30a")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a8glr"]
+albedo_texture = ExtResource("7_vu5w1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkop4"]
+albedo_color = Color(0.9505506, 0.69746405, 0, 1)
+albedo_texture = ExtResource("7_vu5w1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0dsk0"]
+albedo_texture = ExtResource("7_vu5w1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goldj"]
+albedo_texture = ExtResource("16_a8glr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dskne"]
+albedo_texture = ExtResource("14_jr8pe")
+
 [node name="EnvironmentBeach" type="Node3D" unique_id=1769381127]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406651310]
@@ -148,12 +188,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_6m0mf")
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1137210688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 217.91673, -0.55, 0)
 size = Vector3(500, 1, 500)
-material = SubResource("StandardMaterial3D_g6780")
+material = ExtResource("1_1jga4")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=1018746887]
 transform = Transform3D(0.9816371, -0.19075759, 0, 0.19075759, 0.9816371, 0, 0, 0, 1, -495.281, -47.684, 0)
 size = Vector3(500, 1, 500)
-material = SubResource("StandardMaterial3D_g6780")
+material = ExtResource("1_1jga4")
 
 [node name="Water" type="MeshInstance3D" parent="." unique_id=1471476165]
 transform = Transform3D(251.845, 0, 0, 0, 1, 0, 0, 0, 250, -283.609, -1.275, 0)
@@ -161,95 +201,222 @@ mesh = SubResource("PlaneMesh_ncajm")
 
 [node name="Props" type="Node3D" parent="." unique_id=55112122]
 
-[node name="Palm" parent="Props" unique_id=613670302 instance=ExtResource("1_6m0mf")]
+[node name="Trees" type="Node3D" parent="Props" unique_id=163833884]
+
+[node name="Palm" parent="Props/Trees" unique_id=613670302 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.129405, 0, -14.375122)
 
-[node name="Palm" parent="Props/Palm" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm" index="0" unique_id=825887874]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm2" type="MeshInstance3D" parent="Props/Palm" unique_id=718631718]
+[node name="Palm2" type="MeshInstance3D" parent="Props/Trees/Palm" unique_id=718631718]
 transform = Transform3D(0.5291939, 0, 0.84850097, 0, 1, 0, -0.84850097, 0, 0.5291939, 29.389252, 0, 4.169525)
 mesh = SubResource("ArrayMesh_v0p7a")
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm2" parent="Props" unique_id=2051162598 instance=ExtResource("1_6m0mf")]
+[node name="Palm2" parent="Props/Trees" unique_id=2051162598 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(0.57909817, 0, -0.68894494, 0, 0.8999998, 0, 0.68894494, 0, 0.57909817, 22.616573, 0, -3.879139)
 
-[node name="Palm" parent="Props/Palm2" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm2" index="0" unique_id=825887874]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm3" parent="Props" unique_id=1942215344 instance=ExtResource("1_6m0mf")]
+[node name="Palm3" parent="Props/Trees" unique_id=1942215344 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(1.0227494, 0, -0.2376626, 0, 1.05, 0, 0.2376626, 0, 1.0227494, 16.83517, 1.9073486e-06, 6.1359425)
 
-[node name="Palm" parent="Props/Palm3" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm3" index="0" unique_id=825887874]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm4" parent="Props" unique_id=1810507505 instance=ExtResource("1_6m0mf")]
+[node name="Palm4" parent="Props/Trees" unique_id=1810507505 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(0.77205735, 0, 0.6355529, 0, 1, 0, -0.6355529, 0, 0.77205735, 13.146977, 0, -28.153046)
 
-[node name="Palm" parent="Props/Palm4" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm4" index="0" unique_id=825887874]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm5" parent="Props" unique_id=875794155 instance=ExtResource("1_6m0mf")]
+[node name="Palm5" parent="Props/Trees" unique_id=875794155 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(0.8849579, 0, -0.16385746, 0, 0.89999974, 0, 0.16385746, 0, 0.8849579, 28.836596, 0, -24.808037)
 
-[node name="Palm" parent="Props/Palm5" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm5" index="0" unique_id=825887874]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm6" parent="Props" unique_id=1356041901 instance=ExtResource("1_6m0mf")]
+[node name="Palm6" parent="Props/Trees" unique_id=1356041901 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(0.9406684, 0, 0.46652222, 0, 1.0499998, 0, -0.46652222, 0, 0.9406684, 28.847242, 1.9073486e-06, -12.149414)
 
-[node name="Palm" parent="Props/Palm6" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm6" index="0" unique_id=825887874]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9663734, 0, 2.4449263)
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm7" parent="Props" unique_id=1294914705 instance=ExtResource("1_6m0mf")]
+[node name="Palm7" parent="Props/Trees" unique_id=1294914705 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(-0.9979615, 0, 0.06381812, 0, 1, 0, -0.06381812, 0, -0.9979615, 39.33841, 0, 10.247429)
 
-[node name="Palm" parent="Props/Palm7" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm7" index="0" unique_id=825887874]
 transform = Transform3D(1.0000002, 0, 0, 0, 1, 0, 0, 0, 1.0000002, -9.095474, -3.8146973e-06, 40.242092)
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm8" parent="Props" unique_id=285223473 instance=ExtResource("1_6m0mf")]
+[node name="Palm8" parent="Props/Trees" unique_id=285223473 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(-0.53395045, 0, 0.72449744, 0, 0.89999974, 0, -0.72449744, 0, -0.53395045, 32.53634, 0, -0.7049751)
 
-[node name="Palm" parent="Props/Palm8" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm8" index="0" unique_id=825887874]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm9" parent="Props" unique_id=1919342449 instance=ExtResource("1_6m0mf")]
+[node name="Palm9" parent="Props/Trees" unique_id=1919342449 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(-1.0054973, 0, 0.3024481, 0, 1.0499998, 0, -0.3024481, 0, -1.0054973, 41.181095, 1.9073486e-06, -9.95208)
 
-[node name="Palm" parent="Props/Palm9" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm9" index="0" unique_id=825887874]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 8.416916, 0, 22.702478)
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm10" parent="Props" unique_id=1720241581 instance=ExtResource("1_6m0mf")]
+[node name="Palm10" parent="Props/Trees" unique_id=1720241581 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(-0.8110433, 0, -0.5849861, 0, 1, 0, 0.5849861, 0, -0.8110433, 40.437515, 0, 24.12378)
 
-[node name="Palm" parent="Props/Palm10" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm10" index="0" unique_id=825887874]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.37404, 0, 37.08098)
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm11" parent="Props" unique_id=548943906 instance=ExtResource("1_6m0mf")]
+[node name="Palm11" parent="Props/Trees" unique_id=548943906 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(-0.8726968, 0, 0.21999979, 0, 0.89999986, 0, -0.21999979, 0, -0.8726968, 24.986755, 0, 19.990974)
 
-[node name="Palm" parent="Props/Palm11" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm11" index="0" unique_id=825887874]
 transform = Transform3D(1.0000001, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1.0000001, 17.545004, -4.238553e-06, 63.665874)
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
-[node name="Palm12" parent="Props" unique_id=540876868 instance=ExtResource("1_6m0mf")]
+[node name="Palm12" parent="Props/Trees" unique_id=540876868 instance=ExtResource("1_6m0mf")]
 transform = Transform3D(-0.96852344, 0, -0.40553954, 0, 1.0499998, 0, 0.40553954, 0, -0.96852344, 29.022316, 1.9073486e-06, 7.3574753)
 
-[node name="Palm" parent="Props/Palm12" index="0" unique_id=825887874]
+[node name="Palm" parent="Props/Trees/Palm12" index="0" unique_id=825887874]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1899128, 0, -2.2683449)
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
 
+[node name="Palm13" parent="Props/Trees" unique_id=678991143 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(-0.9597858, 0, 0.28073364, 0, 1, 0, -0.28073364, 0, -0.9597858, 49.05091, 0, 34.357334)
+
+[node name="Palm" parent="Props/Trees/Palm13" index="0" unique_id=825887874]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm2" type="MeshInstance3D" parent="Props/Trees/Palm13" unique_id=1069740423]
+transform = Transform3D(0.5291939, 0, 0.84850097, 0, 1, 0, -0.84850097, 0, 0.5291939, 29.389252, 0, 4.169525)
+mesh = SubResource("ArrayMesh_v0p7a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm14" parent="Props/Trees" unique_id=2113859801 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(-0.36240008, 0, 0.8238119, 0, 0.89999986, 0, -0.8238119, 0, -0.36240008, 44.81141, 0, 22.181543)
+
+[node name="Palm" parent="Props/Trees/Palm14" index="0" unique_id=825887874]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm15" parent="Props/Trees" unique_id=1131606005 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(-0.91490036, 0, 0.5152253, 0, 1.0499998, 0, -0.5152253, 0, -0.91490036, 53.171886, 1.9073486e-06, 14.192244)
+
+[node name="Palm" parent="Props/Trees/Palm15" index="0" unique_id=825887874]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm16" parent="Props/Trees" unique_id=1456933267 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(-0.9194307, 0, -0.39325213, 0, 1, 0, 0.39325213, 0, -0.9194307, 47.08569, 0, 48.137722)
+
+[node name="Palm" parent="Props/Trees/Palm16" index="0" unique_id=825887874]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm17" parent="Props/Trees" unique_id=1191997519 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(-0.8033696, 0, 0.40570545, 0, 0.89999986, 0, -0.40570545, 0, -0.8033696, 32.966076, 0, 40.52263)
+
+[node name="Palm" parent="Props/Trees/Palm17" index="0" unique_id=825887874]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm18" parent="Props/Trees" unique_id=1809349143 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(-1.0338085, 0, -0.1836841, 0, 1.05, 0, 0.1836841, 0, -1.0338085, 36.50956, 1.9073486e-06, 28.370075)
+
+[node name="Palm" parent="Props/Trees/Palm18" index="0" unique_id=825887874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9663734, 0, 2.4449263)
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm19" parent="Props/Trees" unique_id=1023407309 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(0.9399134, 0, -0.34141314, 0, 1, 0, 0.34141314, 0, 0.9399134, 32.727833, 0, 3.9286833)
+
+[node name="Palm" parent="Props/Trees/Palm19" index="0" unique_id=825887874]
+transform = Transform3D(1.0000002, 0, 0, 0, 1, 0, 0, 0, 1.0000002, -9.095474, -3.8146973e-06, 40.242092)
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm20" parent="Props/Trees" unique_id=1097558090 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(0.3090872, 0, -0.8452601, 0, 0.89999986, 0, 0.8452601, 0, 0.3090872, 36.181656, 0, 16.350214)
+
+[node name="Palm" parent="Props/Trees/Palm20" index="0" unique_id=825887874]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm21" parent="Props/Trees" unique_id=20670072 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(0.88015467, 0, -0.5725623, 0, 1.05, 0, 0.5725623, 0, 0.88015467, 25.288567, 1.9073486e-06, 22.79858)
+
+[node name="Palm" parent="Props/Trees/Palm21" index="0" unique_id=825887874]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 8.416916, 0, 22.702478)
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm22" parent="Props/Trees" unique_id=414089260 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(0.9426531, 0, 0.3337742, 0, 1, 0, -0.3337742, 0, 0.9426531, 35.568485, 0, -9.6981945)
+
+[node name="Palm" parent="Props/Trees/Palm22" index="0" unique_id=825887874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.37404, 0, 37.08098)
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm23" parent="Props/Trees" unique_id=1752201065 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(0.77584064, 0, -0.4561481, 0, 0.89999986, 0, 0.4561481, 0, 0.77584064, 49.237686, 0, -1.3940411)
+
+[node name="Palm" parent="Props/Trees/Palm23" index="0" unique_id=825887874]
+transform = Transform3D(1.0000001, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1.0000001, 17.545004, -4.238553e-06, 63.665874)
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Palm24" parent="Props/Trees" unique_id=1570591280 instance=ExtResource("1_6m0mf")]
+transform = Transform3D(1.0434237, 0, 0.11733396, 0, 1.0499998, 0, -0.11733396, 0, 1.0434237, 41.817764, 1.9073486e-06, 9.598493)
+
+[node name="Palm" parent="Props/Trees/Palm24" index="0" unique_id=825887874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1899128, 0, -2.2683449)
+surface_material_override/0 = SubResource("StandardMaterial3D_ig0dj")
+
+[node name="Beach_Towel_1" parent="Props" unique_id=174722914 instance=ExtResource("6_48w62")]
+transform = Transform3D(1.1375157, 0, 0.38217542, 0, 1.1999999, 0, -0.38217542, 0, 1.1375157, -25.181105, 0, 1.8653097)
+
+[node name="Beach_Towel_1" parent="Props/Beach_Towel_1" index="0" unique_id=737858592]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_81dx1")
+
+[node name="Beach_Towel_4" parent="Props" unique_id=845337543 instance=ExtResource("6_48w62")]
+transform = Transform3D(1.1491038, 0, 0.34577534, 0, 1.1999999, 0, -0.34577534, 0, 1.1491038, -18.138107, -1.9073486e-06, -21.511675)
+
+[node name="Beach_Towel_1" parent="Props/Beach_Towel_4" index="0" unique_id=737858592]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_81dx1")
+
+[node name="Beach_Towel_2" parent="Props" unique_id=1839609150 instance=ExtResource("8_wtmqu")]
+transform = Transform3D(1.1669611, 0, 0.27964565, 0, 1.1999999, 0, -0.27964565, 0, 1.1669611, -25.541258, 9.536743e-07, -0.1163246)
+
+[node name="Beach_Towel_2" parent="Props/Beach_Towel_2" index="0" unique_id=862504808]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_ut51i")
+
+[node name="Beach_Towel_6" parent="Props" unique_id=263970146 instance=ExtResource("8_wtmqu")]
+transform = Transform3D(0.9475051, 0, 0.7363652, 0, 1.1999999, 0, -0.7363652, 0, 0.9475051, -23.086653, 9.536743e-07, -35.518917)
+
+[node name="Beach_Towel_2" parent="Props/Beach_Towel_6" index="0" unique_id=862504808]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_ut51i")
+
+[node name="Beach_Towel_3" parent="Props" unique_id=1967902583 instance=ExtResource("9_1prix")]
+transform = Transform3D(0.8979815, 0, -0.44003323, 0, 1, 0, 0.44003323, 0, 0.8979815, -21.523306, 0, -10.150521)
+
+[node name="Beach_Towel_2_001" parent="Props/Beach_Towel_3" index="0" unique_id=47419370]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_jr8pe")
+
+[node name="Beach_Towel_5" parent="Props" unique_id=957930163 instance=ExtResource("9_1prix")]
+transform = Transform3D(0.0105416775, 0, 0.99994445, 0, 1, 0, -0.99994445, 0, 0.0105416775, -17.183533, 0, 14.272855)
+
+[node name="Beach_Towel_2_001" parent="Props/Beach_Towel_5" index="0" unique_id=47419370]
+transform = Transform3D(100, 0, 0, 0, -1.1920929e-05, 99.99999, 0, -99.99999, -1.1920929e-05, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_jr8pe")
+
 [node name="Beach_Umbrella" parent="Props" unique_id=939898969 instance=ExtResource("3_yx30a")]
-transform = Transform3D(0.8166435, 0.25972936, -0.5153971, -0.30308518, 0.9529635, 1.4622482e-07, 0.4911546, 0.1562091, 0.8569515, -21.093, -0.453, -11.281)
+transform = Transform3D(0.2665392, 0.084771305, 0.96008885, -0.4933499, 0.86773497, 0.060346566, -0.82798725, -0.48974454, 0.2731072, -22.496178, -0.9863166, -33.38924)
 
 [node name="Beach_Umbrella" parent="Props/Beach_Umbrella" index="0" unique_id=534271089]
-transform = Transform3D(1, 0, 0, 0, 1, 1.6292066e-07, 0, -1.6292067e-07, 0.99999994, 0, 0, 0)
-surface_material_override/0 = SubResource("StandardMaterial3D_1jga4")
+transform = Transform3D(0.99776834, 0.0033688545, -0.06668964, -0.005894631, 0.99927145, -0.037711814, 0.066514075, 0.03802076, 0.9970611, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_ayfsv")
 
 [node name="Beach_Umbrella2" parent="Props" unique_id=1577203755 instance=ExtResource("3_yx30a")]
 transform = Transform3D(-0.62157416, 0.19717492, -0.7581343, 0.3023699, 0.9531907, 0, 0.72264653, -0.22923699, -0.6520984, -24.546, 0, 3.165)
@@ -259,17 +426,366 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 mesh = SubResource("ArrayMesh_o7qku")
 surface_material_override/0 = SubResource("StandardMaterial3D_1jga4")
 
-[editable path="Props/Palm"]
-[editable path="Props/Palm2"]
-[editable path="Props/Palm3"]
-[editable path="Props/Palm4"]
-[editable path="Props/Palm5"]
-[editable path="Props/Palm6"]
-[editable path="Props/Palm7"]
-[editable path="Props/Palm8"]
-[editable path="Props/Palm9"]
-[editable path="Props/Palm10"]
-[editable path="Props/Palm11"]
-[editable path="Props/Palm12"]
+[node name="Beach_Umbrella_2" parent="Props" unique_id=456497769 instance=ExtResource("10_1prix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.934679, 0, -19.854044)
+
+[node name="Beach_Umbrella2" parent="Props/Beach_Umbrella_2" index="0" unique_id=311421488]
+transform = Transform3D(92.66141, -15.71376, 34.160583, -37.1745, -24.632343, 89.50589, -5.6501846, -95.63643, -28.666182, 2.219656, -0.04007, 0.4181633)
+surface_material_override/0 = SubResource("StandardMaterial3D_a8glr")
+
+[node name="Beach_Umbrella_3" parent="Props" unique_id=865321166 instance=ExtResource("11_81dx1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.555561, 1.9073486e-06, 10.5310135)
+
+[node name="Beach_Umbrella2_001" parent="Props/Beach_Umbrella_3" index="0" unique_id=983619120]
+transform = Transform3D(88.36024, -5.5818355e-06, 46.82383, -46.823833, -1.053336e-05, 88.36023, 0, -100.00001, -1.1920929e-05, 4, -0.04007, 4)
+surface_material_override/0 = SubResource("StandardMaterial3D_pkop4")
+
+[node name="Beach_Umbrella_1" parent="Props" unique_id=1630482326 instance=ExtResource("12_ut51i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.129405, 0, -17.807644)
+
+[node name="Beach_Umbrella_1" parent="Props/Beach_Umbrella_1" index="0" unique_id=931261905]
+transform = Transform3D(77.728516, 53.55468, 33.017826, -39.097214, -1.0972054e-05, 92.04026, 49.291862, -84.450554, 20.938374, -7.2312784, -0.32049683, 6.410288)
+surface_material_override/0 = SubResource("StandardMaterial3D_0dsk0")
+
+[node name="shell" parent="Props" unique_id=77053656 instance=ExtResource("15_ayfsv")]
+transform = Transform3D(0.21537797, 0.25885358, -0.36960405, -0.38435397, 0.3198, -1.9061565e-08, 0.23639873, 0.28411758, 0.33673853, -29.591639, 2.3841858e-07, 21.46191)
+
+[node name="Skeleton3D" parent="Props/shell/Armature-coquillage" parent_id_path=PackedInt32Array(77053656, 1494158254) index="0" unique_id=1694917503]
+bones/1/position = Vector3(-1.6418932e-11, 0.0002783537, -0.00016791232)
+bones/1/rotation = Quaternion(1.05830765e-07, 0.8841215, 0.4672571, 6.674934e-08)
+bones/1/scale = Vector3(1, 0.9999999, 0.9999999)
+
+[node name="Coquillage" parent="Props/shell/Armature-coquillage/Skeleton3D" index="0" unique_id=901927418]
+surface_material_override/0 = SubResource("StandardMaterial3D_goldj")
+
+[node name="shell2" parent="Props" unique_id=1747977352 instance=ExtResource("15_ayfsv")]
+transform = Transform3D(-0.25554985, -0.42879426, -0.028804678, -0.42930427, 0.25624847, -0.005876009, 0.019801479, 0.021728726, -0.49913505, -33.14674, -0.27222523, -3.9928951)
+
+[node name="Skeleton3D" parent="Props/shell2/Armature-coquillage" parent_id_path=PackedInt32Array(1747977352, 1494158254) index="0" unique_id=1694917503]
+bones/1/position = Vector3(-1.6418932e-11, 0.0002783537, -0.00016791232)
+bones/1/rotation = Quaternion(1.05830765e-07, 0.8841215, 0.4672571, 6.674934e-08)
+bones/1/scale = Vector3(1, 0.9999999, 0.9999999)
+
+[node name="Coquillage" parent="Props/shell2/Armature-coquillage/Skeleton3D" index="0" unique_id=901927418]
+surface_material_override/0 = SubResource("StandardMaterial3D_goldj")
+
+[node name="shell3" parent="Props" unique_id=12534902 instance=ExtResource("15_ayfsv")]
+transform = Transform3D(-0.29782492, -0.35794306, -0.1821458, -0.38435397, 0.3198, -2.8087538e-08, 0.1165005, 0.14001691, -0.46564248, -25.44572, 2.3841858e-07, -21.676601)
+
+[node name="Skeleton3D" parent="Props/shell3/Armature-coquillage" parent_id_path=PackedInt32Array(12534902, 1494158254) index="0" unique_id=1694917503]
+bones/1/position = Vector3(-1.6418932e-11, 0.0002783537, -0.00016791232)
+bones/1/rotation = Quaternion(1.05830765e-07, 0.8841215, 0.4672571, 6.674934e-08)
+bones/1/scale = Vector3(1, 0.9999999, 0.9999999)
+
+[node name="Coquillage" parent="Props/shell3/Armature-coquillage/Skeleton3D" index="0" unique_id=901927418]
+surface_material_override/0 = SubResource("StandardMaterial3D_goldj")
+
+[node name="shell4" parent="Props" unique_id=1315900495 instance=ExtResource("15_ayfsv")]
+transform = Transform3D(-0.13254781, -0.15930347, 0.4550313, -0.38435397, 0.3198, -4.2297845e-08, -0.291038, -0.34978616, -0.2072354, -18.721277, 2.3841858e-07, -44.060467)
+
+[node name="Skeleton3D" parent="Props/shell4/Armature-coquillage" parent_id_path=PackedInt32Array(1315900495, 1494158254) index="0" unique_id=1694917503]
+bones/1/position = Vector3(-1.6418932e-11, 0.0002783537, -0.00016791232)
+bones/1/rotation = Quaternion(1.05830765e-07, 0.8841215, 0.4672571, 6.674934e-08)
+bones/1/scale = Vector3(1, 0.9999999, 0.9999999)
+
+[node name="Coquillage" parent="Props/shell4/Armature-coquillage/Skeleton3D" index="0" unique_id=901927418]
+surface_material_override/0 = SubResource("StandardMaterial3D_goldj")
+
+[node name="crab" parent="Props" unique_id=1244485724 node_paths=PackedStringArray("animation_player") instance=ExtResource("13_ut51i")]
+transform = Transform3D(0.005644284, 0, 0.5999735, 0, 0.6000001, 0, -0.5999735, 0, 0.005644284, -31.081636, -9.536743e-07, -9.29531)
+script = ExtResource("16_pkop4")
+walk_speed = 2.0
+walk_duration = 10.0
+animation_player = NodePath("AnimationPlayer")
+
+[node name="Skeleton3D" parent="Props/crab/rig crab" parent_id_path=PackedInt32Array(1244485724, 1429519924) index="0" unique_id=1828788999]
+bones/0/rotation = Quaternion(0.7069118, 0.016606318, -0.01660632, 0.7069117)
+bones/1/position = Vector3(0.0025, 0.0015, 0.0035)
+bones/1/rotation = Quaternion(0.5914034, 0.3488564, -0.3753443, 0.6226219)
+bones/2/position = Vector3(-1.2143064e-17, 0.00375, 8.3446514e-11)
+bones/2/rotation = Quaternion(-0.01245106, -0.022699062, 0.52580965, 0.8502082)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/position = Vector3(4.3368087e-19, 0.00375, 0)
+bones/3/rotation = Quaternion(-1.0533775e-08, -3.6733162e-08, 0.35299417, 0.93562555)
+bones/5/position = Vector3(4.3368087e-19, 0.00375, 0)
+bones/5/rotation = Quaternion(-0.010057866, -0.026187541, 0.55747974, 0.82971644)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/position = Vector3(4.3368087e-19, 0.002625, 0)
+bones/6/rotation = Quaternion(7.947286e-08, 0, 1.2000068e-14, 1)
+bones/6/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.0129700005, 0.36457232, -0.4894638, 0.79205054)
+bones/8/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/9/position = Vector3(2.3850324e-10, 0.004, -1.5384945e-10)
+bones/9/rotation = Quaternion(0.13838372, 0.00033876716, -0.41307554, 0.90012145)
+bones/9/scale = Vector3(1, 0.9999999, 1)
+bones/10/position = Vector3(4.0790885e-11, 0.003999999, -5.8027744e-10)
+bones/10/rotation = Quaternion(0.13157085, 5.998521e-05, -0.39154434, 0.91070426)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/position = Vector3(-1.4401694e-09, 0.0040000007, 8.772599e-10)
+bones/11/rotation = Quaternion(2.3144733e-07, 1.9437121e-07, 1.1957786e-07, 1)
+bones/11/scale = Vector3(0.99999994, 1.0000001, 1)
+bones/13/rotation = Quaternion(0.2195662, 0.54537094, -0.40832773, 0.6983049)
+bones/13/scale = Vector3(1.0000001, 0.99999994, 0.99999994)
+bones/14/position = Vector3(-5.455775e-11, 0.0043333336, -1.7353914e-10)
+bones/14/rotation = Quaternion(0.45965403, 0.0047694067, -0.24937612, 0.8523538)
+bones/14/scale = Vector3(0.99999994, 1, 1)
+bones/15/position = Vector3(-3.063844e-10, 0.0043333326, 2.1511788e-10)
+bones/15/rotation = Quaternion(0.4480868, 0.0013432433, -0.24272072, 0.86040866)
+bones/15/scale = Vector3(0.99999994, 0.9999999, 0.9999999)
+bones/16/position = Vector3(3.209287e-10, 0.0043333345, 4.35684e-10)
+bones/16/rotation = Quaternion(-1.1884609e-09, -1.31257005e-08, 4.6692996e-08, 1)
+bones/16/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/18/rotation = Quaternion(0.3077902, 0.6366044, -0.30779016, 0.6366045)
+bones/19/position = Vector3(2.5587171e-17, 0.0046666665, 1.3113022e-10)
+bones/19/rotation = Quaternion(0.5189379, -1.6887217e-08, -1.01425115e-07, 0.85481197)
+bones/20/position = Vector3(-4.943962e-17, 0.0046666665, -2.5033942e-10)
+bones/20/rotation = Quaternion(0.51702344, -8.194687e-09, -1.04744096e-07, 0.8559713)
+bones/21/position = Vector3(2.6020852e-17, 0.004666669, 1.3113007e-10)
+bones/21/rotation = Quaternion(3.6188474e-08, -3.6188474e-08, -9.319893e-15, 1)
+bones/23/position = Vector3(0.0035, 0.0015000004, 0.0025000004)
+bones/23/rotation = Quaternion(0.37617213, 0.6863797, -0.23142928, 0.5777699)
+bones/23/scale = Vector3(1.0000001, 1.0000002, 1.0000002)
+bones/24/position = Vector3(1.9668739e-10, 0.005, 1.853044e-10)
+bones/24/rotation = Quaternion(0.44545203, -0.00093302457, 0.17996992, 0.8770306)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/position = Vector3(-8.211826e-11, 0.005, 1.3121773e-10)
+bones/25/rotation = Quaternion(0.44153044, -0.00026329485, 0.1784197, 0.8793278)
+bones/25/scale = Vector3(1.0000001, 1, 1)
+bones/26/position = Vector3(5.9467695e-11, 0.0049999994, 5.031036e-10)
+bones/26/rotation = Quaternion(-4.057648e-08, 1.556163e-07, 3.11346e-08, 1)
+bones/26/scale = Vector3(1, 1.0000001, 1)
+bones/28/position = Vector3(-0.0025, 0.0015, 0.0035)
+bones/28/rotation = Quaternion(0.59478754, -0.35434198, 0.37938195, 0.6137907)
+bones/29/position = Vector3(1.2143064e-17, 0.00375, 8.3446514e-11)
+bones/29/rotation = Quaternion(-0.008426144, 0.018964708, -0.51161593, 0.8589637)
+bones/29/scale = Vector3(1, 1, 1)
+bones/30/position = Vector3(-4.3368087e-19, 0.00375, 0)
+bones/30/rotation = Quaternion(-1.1025754e-08, 3.6696452e-08, -0.3616951, 0.9322965)
+bones/30/scale = Vector3(1, 1, 1)
+bones/32/position = Vector3(-4.3368087e-19, 0.00375, 0)
+bones/32/rotation = Quaternion(-0.021878136, 0.016869951, -0.55802155, 0.8293665)
+bones/32/scale = Vector3(1, 1, 1)
+bones/33/position = Vector3(-4.3368087e-19, 0.002625, 0)
+bones/33/rotation = Quaternion(7.947286e-08, 0, -1.2000068e-14, 1)
+bones/33/scale = Vector3(1, 1, 1)
+bones/35/rotation = Quaternion(0.007355146, -0.36435586, 0.5416304, 0.7575139)
+bones/35/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/36/position = Vector3(-2.3850324e-10, 0.004, -1.5384945e-10)
+bones/36/rotation = Quaternion(0.15243724, -0.006253668, 0.40770787, 0.9002768)
+bones/36/scale = Vector3(1, 0.9999999, 1)
+bones/37/position = Vector3(-4.0790885e-11, 0.003999999, -5.8027744e-10)
+bones/37/rotation = Quaternion(0.1378005, -0.001616575, 0.36515278, 0.920691)
+bones/37/scale = Vector3(1, 1, 1)
+bones/38/position = Vector3(1.4401694e-09, 0.0040000007, 8.772599e-10)
+bones/38/rotation = Quaternion(2.3144733e-07, -1.9437121e-07, -1.1957786e-07, 1)
+bones/40/rotation = Quaternion(0.24057057, -0.5287503, 0.45578402, 0.67439604)
+bones/40/scale = Vector3(1.0000001, 0.99999994, 0.99999994)
+bones/41/position = Vector3(5.455775e-11, 0.0043333336, -1.7353914e-10)
+bones/41/rotation = Quaternion(0.45912784, -0.0038863397, 0.25054434, 0.8522993)
+bones/41/scale = Vector3(0.99999994, 1, 1)
+bones/42/position = Vector3(3.063844e-10, 0.0043333326, 2.1511788e-10)
+bones/42/rotation = Quaternion(0.42459506, -0.0011522524, 0.23154154, 0.875275)
+bones/42/scale = Vector3(0.99999994, 0.9999999, 0.9999999)
+bones/43/position = Vector3(-3.209287e-10, 0.0043333345, 4.35684e-10)
+bones/43/rotation = Quaternion(-1.1884609e-09, 1.31257005e-08, -4.6692996e-08, 1)
+bones/43/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/45/rotation = Quaternion(0.3513723, -0.6136265, 0.35137227, 0.6136266)
+bones/46/position = Vector3(-2.5587171e-17, 0.0046666665, 1.3113022e-10)
+bones/46/rotation = Quaternion(0.52076983, 2.1716737e-08, 1.3436397e-07, 0.8536972)
+bones/46/scale = Vector3(1, 1, 1)
+bones/47/position = Vector3(4.943962e-17, 0.0046666665, -2.5033942e-10)
+bones/47/rotation = Quaternion(0.48802495, 3.8009667e-09, 1.3639034e-07, 0.8728298)
+bones/47/scale = Vector3(1, 1, 1)
+bones/48/position = Vector3(-2.6020852e-17, 0.004666669, 1.3113007e-10)
+bones/48/rotation = Quaternion(3.6188474e-08, 3.6188474e-08, 9.319893e-15, 1)
+bones/50/position = Vector3(-0.0035, 0.0015000004, 0.0025000004)
+bones/50/rotation = Quaternion(0.42127356, -0.66349274, 0.25555563, 0.5630251)
+bones/50/scale = Vector3(1.0000001, 1.0000002, 1.0000002)
+bones/51/position = Vector3(-1.9668739e-10, 0.005, 1.853044e-10)
+bones/51/rotation = Quaternion(0.44998837, 0.0023766814, -0.17728384, 0.87525725)
+bones/51/scale = Vector3(1, 1, 1)
+bones/52/position = Vector3(8.211826e-11, 0.005, 1.3121773e-10)
+bones/52/rotation = Quaternion(0.42214966, 0.00067425694, -0.16606891, 0.89118487)
+bones/52/scale = Vector3(1.0000001, 1, 1)
+bones/53/position = Vector3(-5.9467695e-11, 0.0049999994, 5.031036e-10)
+bones/53/rotation = Quaternion(-4.057648e-08, -1.556163e-07, -3.11346e-08, 1)
+bones/53/scale = Vector3(1, 1.0000001, 1)
+bones/55/rotation = Quaternion(-1.4926418e-07, 5.6535235e-08, -0.08672354, 0.9962324)
+bones/57/rotation = Quaternion(-1.4926418e-07, -5.6535235e-08, 0.08672354, 0.9962324)
+
+[node name="crab" parent="Props/crab/rig crab/Skeleton3D" index="0" unique_id=116648633]
+surface_material_override/0 = SubResource("StandardMaterial3D_dskne")
+
+[node name="AnimationPlayer" parent="Props/crab" index="1" unique_id=2145396673]
+autoplay = &"idle"
+
+[node name="crab2" parent="Props" unique_id=558041732 node_paths=PackedStringArray("animation_player") instance=ExtResource("13_ut51i")]
+transform = Transform3D(0.16372082, 0, -0.5772308, 0, 0.6, 0, 0.5772308, 0, 0.16372082, 21.09442, 9.536743e-07, 4.0628767)
+script = ExtResource("16_pkop4")
+walk_speed = 1.8
+walk_duration = 14.0
+stop_duration = 7.0
+animation_player = NodePath("AnimationPlayer")
+
+[node name="Skeleton3D" parent="Props/crab2/rig crab" parent_id_path=PackedInt32Array(558041732, 1429519924) index="0" unique_id=1828788999]
+bones/0/rotation = Quaternion(0.7069118, 0.016606318, -0.01660632, 0.7069117)
+bones/1/position = Vector3(0.0025, 0.0015, 0.0035)
+bones/1/rotation = Quaternion(0.5914034, 0.3488564, -0.3753443, 0.6226219)
+bones/2/position = Vector3(-1.2143064e-17, 0.00375, 8.3446514e-11)
+bones/2/rotation = Quaternion(-0.01245106, -0.022699062, 0.52580965, 0.8502082)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/position = Vector3(4.3368087e-19, 0.00375, 0)
+bones/3/rotation = Quaternion(-1.0533775e-08, -3.6733162e-08, 0.35299417, 0.93562555)
+bones/5/position = Vector3(4.3368087e-19, 0.00375, 0)
+bones/5/rotation = Quaternion(-0.010057866, -0.026187541, 0.55747974, 0.82971644)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/position = Vector3(4.3368087e-19, 0.002625, 0)
+bones/6/rotation = Quaternion(7.947286e-08, 0, 1.2000068e-14, 1)
+bones/6/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.0129700005, 0.36457232, -0.4894638, 0.79205054)
+bones/8/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/9/position = Vector3(2.3850324e-10, 0.004, -1.5384945e-10)
+bones/9/rotation = Quaternion(0.13838372, 0.00033876716, -0.41307554, 0.90012145)
+bones/9/scale = Vector3(1, 0.9999999, 1)
+bones/10/position = Vector3(4.0790885e-11, 0.003999999, -5.8027744e-10)
+bones/10/rotation = Quaternion(0.13157085, 5.998521e-05, -0.39154434, 0.91070426)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/position = Vector3(-1.4401694e-09, 0.0040000007, 8.772599e-10)
+bones/11/rotation = Quaternion(2.3144733e-07, 1.9437121e-07, 1.1957786e-07, 1)
+bones/11/scale = Vector3(0.99999994, 1.0000001, 1)
+bones/13/rotation = Quaternion(0.2195662, 0.54537094, -0.40832773, 0.6983049)
+bones/13/scale = Vector3(1.0000001, 0.99999994, 0.99999994)
+bones/14/position = Vector3(-5.455775e-11, 0.0043333336, -1.7353914e-10)
+bones/14/rotation = Quaternion(0.45965403, 0.0047694067, -0.24937612, 0.8523538)
+bones/14/scale = Vector3(0.99999994, 1, 1)
+bones/15/position = Vector3(-3.063844e-10, 0.0043333326, 2.1511788e-10)
+bones/15/rotation = Quaternion(0.4480868, 0.0013432433, -0.24272072, 0.86040866)
+bones/15/scale = Vector3(0.99999994, 0.9999999, 0.9999999)
+bones/16/position = Vector3(3.209287e-10, 0.0043333345, 4.35684e-10)
+bones/16/rotation = Quaternion(-1.1884609e-09, -1.31257005e-08, 4.6692996e-08, 1)
+bones/16/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/18/rotation = Quaternion(0.3077902, 0.6366044, -0.30779016, 0.6366045)
+bones/19/position = Vector3(2.5587171e-17, 0.0046666665, 1.3113022e-10)
+bones/19/rotation = Quaternion(0.5189379, -1.6887217e-08, -1.01425115e-07, 0.85481197)
+bones/20/position = Vector3(-4.943962e-17, 0.0046666665, -2.5033942e-10)
+bones/20/rotation = Quaternion(0.51702344, -8.194687e-09, -1.04744096e-07, 0.8559713)
+bones/21/position = Vector3(2.6020852e-17, 0.004666669, 1.3113007e-10)
+bones/21/rotation = Quaternion(3.6188474e-08, -3.6188474e-08, -9.319893e-15, 1)
+bones/23/position = Vector3(0.0035, 0.0015000004, 0.0025000004)
+bones/23/rotation = Quaternion(0.37617213, 0.6863797, -0.23142928, 0.5777699)
+bones/23/scale = Vector3(1.0000001, 1.0000002, 1.0000002)
+bones/24/position = Vector3(1.9668739e-10, 0.005, 1.853044e-10)
+bones/24/rotation = Quaternion(0.44545203, -0.00093302457, 0.17996992, 0.8770306)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/position = Vector3(-8.211826e-11, 0.005, 1.3121773e-10)
+bones/25/rotation = Quaternion(0.44153044, -0.00026329485, 0.1784197, 0.8793278)
+bones/25/scale = Vector3(1.0000001, 1, 1)
+bones/26/position = Vector3(5.9467695e-11, 0.0049999994, 5.031036e-10)
+bones/26/rotation = Quaternion(-4.057648e-08, 1.556163e-07, 3.11346e-08, 1)
+bones/26/scale = Vector3(1, 1.0000001, 1)
+bones/28/position = Vector3(-0.0025, 0.0015, 0.0035)
+bones/28/rotation = Quaternion(0.59478754, -0.35434198, 0.37938195, 0.6137907)
+bones/29/position = Vector3(1.2143064e-17, 0.00375, 8.3446514e-11)
+bones/29/rotation = Quaternion(-0.008426144, 0.018964708, -0.51161593, 0.8589637)
+bones/29/scale = Vector3(1, 1, 1)
+bones/30/position = Vector3(-4.3368087e-19, 0.00375, 0)
+bones/30/rotation = Quaternion(-1.1025754e-08, 3.6696452e-08, -0.3616951, 0.9322965)
+bones/30/scale = Vector3(1, 1, 1)
+bones/32/position = Vector3(-4.3368087e-19, 0.00375, 0)
+bones/32/rotation = Quaternion(-0.021878136, 0.016869951, -0.55802155, 0.8293665)
+bones/32/scale = Vector3(1, 1, 1)
+bones/33/position = Vector3(-4.3368087e-19, 0.002625, 0)
+bones/33/rotation = Quaternion(7.947286e-08, 0, -1.2000068e-14, 1)
+bones/33/scale = Vector3(1, 1, 1)
+bones/35/rotation = Quaternion(0.007355146, -0.36435586, 0.5416304, 0.7575139)
+bones/35/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/36/position = Vector3(-2.3850324e-10, 0.004, -1.5384945e-10)
+bones/36/rotation = Quaternion(0.15243724, -0.006253668, 0.40770787, 0.9002768)
+bones/36/scale = Vector3(1, 0.9999999, 1)
+bones/37/position = Vector3(-4.0790885e-11, 0.003999999, -5.8027744e-10)
+bones/37/rotation = Quaternion(0.1378005, -0.001616575, 0.36515278, 0.920691)
+bones/37/scale = Vector3(1, 1, 1)
+bones/38/position = Vector3(1.4401694e-09, 0.0040000007, 8.772599e-10)
+bones/38/rotation = Quaternion(2.3144733e-07, -1.9437121e-07, -1.1957786e-07, 1)
+bones/40/rotation = Quaternion(0.24057057, -0.5287503, 0.45578402, 0.67439604)
+bones/40/scale = Vector3(1.0000001, 0.99999994, 0.99999994)
+bones/41/position = Vector3(5.455775e-11, 0.0043333336, -1.7353914e-10)
+bones/41/rotation = Quaternion(0.45912784, -0.0038863397, 0.25054434, 0.8522993)
+bones/41/scale = Vector3(0.99999994, 1, 1)
+bones/42/position = Vector3(3.063844e-10, 0.0043333326, 2.1511788e-10)
+bones/42/rotation = Quaternion(0.42459506, -0.0011522524, 0.23154154, 0.875275)
+bones/42/scale = Vector3(0.99999994, 0.9999999, 0.9999999)
+bones/43/position = Vector3(-3.209287e-10, 0.0043333345, 4.35684e-10)
+bones/43/rotation = Quaternion(-1.1884609e-09, 1.31257005e-08, -4.6692996e-08, 1)
+bones/43/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/45/rotation = Quaternion(0.3513723, -0.6136265, 0.35137227, 0.6136266)
+bones/46/position = Vector3(-2.5587171e-17, 0.0046666665, 1.3113022e-10)
+bones/46/rotation = Quaternion(0.52076983, 2.1716737e-08, 1.3436397e-07, 0.8536972)
+bones/46/scale = Vector3(1, 1, 1)
+bones/47/position = Vector3(4.943962e-17, 0.0046666665, -2.5033942e-10)
+bones/47/rotation = Quaternion(0.48802495, 3.8009667e-09, 1.3639034e-07, 0.8728298)
+bones/47/scale = Vector3(1, 1, 1)
+bones/48/position = Vector3(-2.6020852e-17, 0.004666669, 1.3113007e-10)
+bones/48/rotation = Quaternion(3.6188474e-08, 3.6188474e-08, 9.319893e-15, 1)
+bones/50/position = Vector3(-0.0035, 0.0015000004, 0.0025000004)
+bones/50/rotation = Quaternion(0.42127356, -0.66349274, 0.25555563, 0.5630251)
+bones/50/scale = Vector3(1.0000001, 1.0000002, 1.0000002)
+bones/51/position = Vector3(-1.9668739e-10, 0.005, 1.853044e-10)
+bones/51/rotation = Quaternion(0.44998837, 0.0023766814, -0.17728384, 0.87525725)
+bones/51/scale = Vector3(1, 1, 1)
+bones/52/position = Vector3(8.211826e-11, 0.005, 1.3121773e-10)
+bones/52/rotation = Quaternion(0.42214966, 0.00067425694, -0.16606891, 0.89118487)
+bones/52/scale = Vector3(1.0000001, 1, 1)
+bones/53/position = Vector3(-5.9467695e-11, 0.0049999994, 5.031036e-10)
+bones/53/rotation = Quaternion(-4.057648e-08, -1.556163e-07, -3.11346e-08, 1)
+bones/53/scale = Vector3(1, 1.0000001, 1)
+bones/55/rotation = Quaternion(-1.4926418e-07, 5.6535235e-08, -0.08672354, 0.9962324)
+bones/57/rotation = Quaternion(-1.4926418e-07, -5.6535235e-08, 0.08672354, 0.9962324)
+
+[node name="crab" parent="Props/crab2/rig crab/Skeleton3D" index="0" unique_id=116648633]
+surface_material_override/0 = SubResource("StandardMaterial3D_dskne")
+
+[node name="AnimationPlayer" parent="Props/crab2" index="1" unique_id=2145396673]
+autoplay = &"idle"
+
+[editable path="Props/Trees/Palm"]
+[editable path="Props/Trees/Palm2"]
+[editable path="Props/Trees/Palm3"]
+[editable path="Props/Trees/Palm4"]
+[editable path="Props/Trees/Palm5"]
+[editable path="Props/Trees/Palm6"]
+[editable path="Props/Trees/Palm7"]
+[editable path="Props/Trees/Palm8"]
+[editable path="Props/Trees/Palm9"]
+[editable path="Props/Trees/Palm10"]
+[editable path="Props/Trees/Palm11"]
+[editable path="Props/Trees/Palm12"]
+[editable path="Props/Trees/Palm13"]
+[editable path="Props/Trees/Palm14"]
+[editable path="Props/Trees/Palm15"]
+[editable path="Props/Trees/Palm16"]
+[editable path="Props/Trees/Palm17"]
+[editable path="Props/Trees/Palm18"]
+[editable path="Props/Trees/Palm19"]
+[editable path="Props/Trees/Palm20"]
+[editable path="Props/Trees/Palm21"]
+[editable path="Props/Trees/Palm22"]
+[editable path="Props/Trees/Palm23"]
+[editable path="Props/Trees/Palm24"]
+[editable path="Props/Beach_Towel_1"]
+[editable path="Props/Beach_Towel_4"]
+[editable path="Props/Beach_Towel_2"]
+[editable path="Props/Beach_Towel_6"]
+[editable path="Props/Beach_Towel_3"]
+[editable path="Props/Beach_Towel_5"]
 [editable path="Props/Beach_Umbrella"]
 [editable path="Props/Beach_Umbrella2"]
+[editable path="Props/Beach_Umbrella_2"]
+[editable path="Props/Beach_Umbrella_3"]
+[editable path="Props/Beach_Umbrella_1"]
+[editable path="Props/shell"]
+[editable path="Props/shell2"]
+[editable path="Props/shell3"]
+[editable path="Props/shell4"]
+[editable path="Props/crab"]
+[editable path="Props/crab2"]

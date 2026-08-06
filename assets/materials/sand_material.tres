@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://vhm2g7yugk6e"]
+
+[ext_resource type="Texture2D" uid="uid://ckhs5vccjwkh3" path="res://assets/textures/sand_texture.png" id="1_pkdfl"]
+
+[resource]
+albedo_color = Color(0.9999998, 0.80957973, 0.27612755, 1)
+albedo_texture = ExtResource("1_pkdfl")
+uv1_scale = Vector3(0.05, 0.05, 0.05)
+uv1_triplanar = true
