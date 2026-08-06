@@ -51,11 +51,11 @@ func _assign_goals_to_teams(level : Level) -> void:
 # the original team_list entries are populated. Each cuboid's agent_id ("team{i}_{slot}")
 # is how Python identifies it in the training wire protocol (see agent_synchronizer.gd).
 func _spawn_team_cuboids(level : Level) -> void:
-	var is_first_cuboid : bool = true
-
 	for team_index in range(mini(team_list.size(), level.game_mode.team_list.size())):
 		var team : Team = team_list[team_index]
-		var players_number : int = level.game_mode.team_list[team_index].players_number
+		var game_mode_team : GameModeTeam = level.game_mode.team_list[team_index]
+		var players_number : int = game_mode_team.players_number
+		var onnx_data : OnnxData = game_mode_team.onnx_data
 
 		for slot_index in players_number:
 			var cuboid : Cuboid = cuboid_scene.instantiate() as Cuboid
@@ -64,6 +64,9 @@ func _spawn_team_cuboids(level : Level) -> void:
 			cuboid.set_team(team)
 			cuboid.cuboid_ai_controller.agent_id = "team%d_cuboid%d" % [team_index, slot_index]
 			SignalsManager.level.emit_level_spawn_node_at_random_pos(cuboid)
+			
+			if onnx_data != null:
+				cuboid.cuboid_ai_controller.onnx_data = onnx_data
 
 
 func _on_game_reset():

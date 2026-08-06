@@ -23,6 +23,7 @@ func _init() -> void:
 	SignalsManager.game.start_next_point.connect(_on_start_next_point)
 	SignalsManager.game.game_reset.connect(_on_game_reset)
 	SignalsManager.goal.goal_scored.connect(_on_goal_scored)
+	SignalsManager.game.game_finish.connect(_on_game_finished)
 
 
 func _ready() -> void:
@@ -114,6 +115,10 @@ func _on_goal_animation_finished():
 
 func _on_goal_scored(receiving_team: Team):
 	pending_goal_events.append({"receiving_team_name": receiving_team.name})
+
+
+func _on_game_finished():
+	SignalsManager.agent.emit_episode_done()
 
 
 func get_training_info() -> Dictionary:

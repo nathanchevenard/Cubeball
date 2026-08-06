@@ -8,16 +8,11 @@ var cuboid : Cuboid
 var action_dictionary : Dictionary
 
 
-func _init() -> void:
-	SignalsManager.game.game_finish.connect(_on_game_finish)
-
-
 func _ready():
 	super()
 
 
 func init(player: Node3D):
-	super.init(player)
 	cuboid = player as Cuboid
 
 
@@ -105,7 +100,3 @@ func set_action(action) -> void:
 	#print("action : " + str(action))
 	#print("action : " + str(action["dash_action"] == 1))
 	action_dictionary = action
-
-
-func _on_game_finish():
-	done = true

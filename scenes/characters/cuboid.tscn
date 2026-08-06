@@ -18,7 +18,6 @@ friction = 0.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_4hqto"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1hxw"]
-resource_local_to_scene = false
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_k8rju"]
 material = SubResource("StandardMaterial3D_c1hxw")

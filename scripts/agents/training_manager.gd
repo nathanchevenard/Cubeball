@@ -281,9 +281,9 @@ func _get_training_dones() -> Dictionary:
 	var dones : Dictionary = {}
 	for agent_id in agents_training:
 		var agent = agents_training[agent_id]
-		var done = agent.get_done()
+		var done = agent.done
 		if done:
-			agent.set_done_false()
+			agent.done = false
 		dones[agent_id] = done
 	return dones
 

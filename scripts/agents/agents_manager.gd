@@ -40,12 +40,6 @@ func _on_all_agents_initialized():
 func get_agents():
 	agent_list = get_tree().get_nodes_in_group("AGENT")
 	
-	for agent in agent_list:
-		if agent_control_mode == AgentControlModes.TRAINING:
-			agent.control_mode = agent.ControlModes.TRAINING
-		elif agent_control_mode == AgentControlModes.ONNX_INFERENCE:
-			agent.control_mode = agent.ControlModes.ONNX_INFERENCE
-	
 	#print("found %d nodes in AGENT group" % [agent_list.size()])
 
 

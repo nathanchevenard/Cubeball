@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OnnxData" format=3 uid="uid://bc7ybje1uygtk"]
+
+[ext_resource type="Script" uid="uid://brxgdync7pq7i" path="res://scripts/agents/onnx_data.gd" id="1_xpkjh"]
+
+[resource]
+script = ExtResource("1_xpkjh")
+onnx_model_path = "res://assets/onnx/shared_policy_lstm_v2.onnx"
+model_has_memory = true
+metadata/_custom_type_script = "uid://brxgdync7pq7i"

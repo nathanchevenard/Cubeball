@@ -112,3 +112,8 @@ class AgentSignals:
 	signal environment_initialized
 	func emit_environment_initialized(environment : Node):
 		environment_initialized.emit(environment)
+	
+	
+	signal episode_done
+	func emit_episode_done():
+		episode_done.emit()
