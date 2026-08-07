@@ -3,6 +3,7 @@
 [ext_resource type="Material" uid="uid://vhm2g7yugk6e" path="res://assets/materials/sand_material.tres" id="1_1jga4"]
 [ext_resource type="PackedScene" uid="uid://0bp3e2jjx6ar" path="res://assets/models_3d/beach/models/Palm.fbx" id="1_6m0mf"]
 [ext_resource type="Shader" uid="uid://bssbmsgusfkht" path="res://assets/shaders/water_shader.tres" id="1_ig0dj"]
+[ext_resource type="Script" uid="uid://qrkjyv8g7o5n" path="res://scripts/environments/level_environment.gd" id="1_pkop4"]
 [ext_resource type="Texture2D" uid="uid://c44s1qjp143fl" path="res://assets/models_3d/beach/textures/BeachPropsAtlas_Default.png" id="2_yx30a"]
 [ext_resource type="PackedScene" uid="uid://cnokwsq6msri0" path="res://assets/models_3d/beach/models/Beach_Umbrella.fbx" id="3_yx30a"]
 [ext_resource type="PackedScene" uid="uid://bxbokn536ywjn" path="res://assets/models_3d/beach/models/Beach_Towel_1.fbx" id="6_48w62"]
@@ -18,7 +19,18 @@
 [ext_resource type="Texture2D" uid="uid://ubvo7p5g4cqd" path="res://assets/models_3d/beach/textures/shell.jpg" id="16_a8glr"]
 [ext_resource type="Script" uid="uid://dj4p0dwl7nsa3" path="res://scripts/environments/crab.gd" id="16_pkop4"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ia3sd"]
+albedo_color = Color(0.9467121, 0.65027183, 7.70092e-07, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0p4dm"]
+transparency = 1
+albedo_color = Color(1, 0.7372549, 0.21176471, 0)
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_coy0t"]
+sky_top_color = Color(0, 0.44140795, 0.84391326, 1)
+sky_horizon_color = Color(0.34808096, 0.6906934, 0.923579, 1)
+ground_bottom_color = Color(0.34808096, 0.6906934, 0.923579, 1)
+ground_horizon_color = Color(0.34808096, 0.6906934, 0.923579, 1)
 
 [sub_resource type="Sky" id="Sky_nu5rl"]
 sky_material = SubResource("ProceduralSkyMaterial_coy0t")
@@ -47,6 +59,7 @@ shader_parameter/WaterAlpha = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ncajm"]
 material = SubResource("ShaderMaterial_1jga4")
+size = Vector2(8, 8)
 subdivide_width = 300
 subdivide_depth = 300
 
@@ -165,6 +178,9 @@ albedo_texture = ExtResource("16_a8glr")
 albedo_texture = ExtResource("14_jr8pe")
 
 [node name="EnvironmentBeach" type="Node3D" unique_id=1769381127]
+script = ExtResource("1_pkop4")
+ball_field_ground_material = SubResource("StandardMaterial3D_ia3sd")
+cuboid_field_ground_material = SubResource("StandardMaterial3D_0p4dm")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=406651310]
 transform = Transform3D(0.9626256, 0.006631303, 0.2707545, -0.27083567, 0.023569504, 0.9623371, 0, -0.99970025, 0.0244846, 0.04210663, 36, 0.028419495)
@@ -186,17 +202,17 @@ mesh = SubResource("BoxMesh_g6780")
 surface_material_override/0 = SubResource("StandardMaterial3D_6m0mf")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1137210688]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 217.91673, -0.55, 0)
-size = Vector3(500, 1, 500)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 468.38593, -0.55, 0)
+size = Vector3(1000, 1, 2000)
 material = ExtResource("1_1jga4")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=1018746887]
-transform = Transform3D(0.9816371, -0.19075759, 0, 0.19075759, 0.9816371, 0, 0, 0, 1, -495.281, -47.684, 0)
-size = Vector3(500, 1, 500)
+transform = Transform3D(0.9816371, -0.19075759, 0, 0.19075759, 0.9816371, 0, 0, 0, 1, -745.305, -47.684, 0)
+size = Vector3(500, 1, 2000)
 material = ExtResource("1_1jga4")
 
 [node name="Water" type="MeshInstance3D" parent="." unique_id=1471476165]
-transform = Transform3D(251.845, 0, 0, 0, 1, 0, 0, 0, 250, -283.609, -1.275, 0)
+transform = Transform3D(251.845, 0, 0, 0, 1, 0, 0, 0, 250, -1017.42206, -1.275, 0)
 mesh = SubResource("PlaneMesh_ncajm")
 
 [node name="Props" type="Node3D" parent="." unique_id=55112122]
@@ -498,7 +514,7 @@ walk_speed = 2.0
 walk_duration = 10.0
 animation_player = NodePath("AnimationPlayer")
 
-[node name="Skeleton3D" parent="Props/crab/rig crab" parent_id_path=PackedInt32Array(1244485724, 1429519924) index="0" unique_id=1828788999]
+[node name="Skeleton3D" parent="Props/crab/rig crab" parent_id_path=PackedInt32Array(1244485724, 1682641413) index="0" unique_id=991447571]
 bones/0/rotation = Quaternion(0.7069118, 0.016606318, -0.01660632, 0.7069117)
 bones/1/position = Vector3(0.0025, 0.0015, 0.0035)
 bones/1/rotation = Quaternion(0.5914034, 0.3488564, -0.3753443, 0.6226219)
@@ -613,10 +629,10 @@ bones/53/scale = Vector3(1, 1.0000001, 1)
 bones/55/rotation = Quaternion(-1.4926418e-07, 5.6535235e-08, -0.08672354, 0.9962324)
 bones/57/rotation = Quaternion(-1.4926418e-07, -5.6535235e-08, 0.08672354, 0.9962324)
 
-[node name="crab" parent="Props/crab/rig crab/Skeleton3D" index="0" unique_id=116648633]
+[node name="crab" parent="Props/crab/rig crab/Skeleton3D" index="0" unique_id=869333957]
 surface_material_override/0 = SubResource("StandardMaterial3D_dskne")
 
-[node name="AnimationPlayer" parent="Props/crab" index="1" unique_id=2145396673]
+[node name="AnimationPlayer" parent="Props/crab" index="1" unique_id=1405624783]
 autoplay = &"idle"
 
 [node name="crab2" parent="Props" unique_id=558041732 node_paths=PackedStringArray("animation_player") instance=ExtResource("13_ut51i")]
@@ -627,7 +643,7 @@ walk_duration = 14.0
 stop_duration = 7.0
 animation_player = NodePath("AnimationPlayer")
 
-[node name="Skeleton3D" parent="Props/crab2/rig crab" parent_id_path=PackedInt32Array(558041732, 1429519924) index="0" unique_id=1828788999]
+[node name="Skeleton3D" parent="Props/crab2/rig crab" parent_id_path=PackedInt32Array(558041732, 1682641413) index="0" unique_id=991447571]
 bones/0/rotation = Quaternion(0.7069118, 0.016606318, -0.01660632, 0.7069117)
 bones/1/position = Vector3(0.0025, 0.0015, 0.0035)
 bones/1/rotation = Quaternion(0.5914034, 0.3488564, -0.3753443, 0.6226219)
@@ -742,10 +758,10 @@ bones/53/scale = Vector3(1, 1.0000001, 1)
 bones/55/rotation = Quaternion(-1.4926418e-07, 5.6535235e-08, -0.08672354, 0.9962324)
 bones/57/rotation = Quaternion(-1.4926418e-07, -5.6535235e-08, 0.08672354, 0.9962324)
 
-[node name="crab" parent="Props/crab2/rig crab/Skeleton3D" index="0" unique_id=116648633]
+[node name="crab" parent="Props/crab2/rig crab/Skeleton3D" index="0" unique_id=869333957]
 surface_material_override/0 = SubResource("StandardMaterial3D_dskne")
 
-[node name="AnimationPlayer" parent="Props/crab2" index="1" unique_id=2145396673]
+[node name="AnimationPlayer" parent="Props/crab2" index="1" unique_id=1405624783]
 autoplay = &"idle"
 
 [editable path="Props/Trees/Palm"]
